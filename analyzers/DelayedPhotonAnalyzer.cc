@@ -205,7 +205,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   rms_G12_all=0;
   detID_all=0 ;
 
-  cout<< "[DEBUG] opening f_pedestal"<<endl; 
+  std::cout<< "[DEBUG] opening f_pedestal"<<endl; 
   //TFile *f_pedestal = TFile::Open("root://cms-xrd-global.cern.ch//store/group/phys_susy/razor/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1.root","READ"); // use this if you run on lxplus
   TFile *f_pedestal = 0;//TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1.root","READ"); // use this if you run on Caltech T2
   TTree *tree_pedestal = 0;//(TTree*)f_pedestal->Get("pedestal");
@@ -1324,7 +1324,7 @@ if(nPho>=2) HT += pho2Pt;
 if(pho1isStandardPhoton) 
 {
 photonEffSF = helper_GED->getPhotonScaleFactor_Tight(pho1Pt, pho1Eta, true);
-cout<<"DEBUG getPhotonScaleFactor_Tight_GED, pt = "<<pho1Pt<<", eta ="<<pho1Eta<<", sf = "<<photonEffSF<<endl;
+if (_phodebug) std::cout << "DEBUG getPhotonScaleFactor_Tight_GED, pt = "<<pho1Pt<<", eta ="<<pho1Eta<<", sf = "<<photonEffSF<<endl;
 }
 else photonEffSF = helper->getPhotonScaleFactor_Tight(pho1Pt, pho1Eta, true);
 
