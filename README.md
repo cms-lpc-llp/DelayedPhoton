@@ -10,8 +10,8 @@ Setup
 
     cmsrel CMSSW_7_1_5
     cd CMSSW_7_1_5/src
-    git clone https://github.com/RazorCMS/RazorAnalyzer.git
-    cd RazorAnalyzer
+    git clone https://github.com/cms-lpc-llp/DelayedPhoton.git
+    cd DelayedPhoton
     make
   
 Defining a new analysis
@@ -53,16 +53,16 @@ Setup combine from lxplus:
 	cd ~/work/RAZORRUN2/
     cmsrel CMSSW_7_1_5
     cd CMSSW_7_1_5/src/
-    git clone https://github.com/RazorCMS/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
+    git clone https://github.com/cms-lpc-llp/HiggsAnalysis-CombinedLimit.git HiggsAnalysis/CombinedLimit
     cd HiggsAnalysis/CombinedLimit
     git pull origin razor1dpdf_71X
     scramv1 b clean; scramv1 b
     cd ../..
 
-Proceed with the usual setup of RazorAnalyzer:
+Proceed with the usual setup of DelayedPhoton:
 
-    git clone https://github.com/RazorCMS/RazorAnalyzer.git
-    cd RazorAnalyzer
+    git clone https://github.com/cms-lpc-llp/DelayedPhoton.git
+    cd DelayedPhoton
     make
   
 Make output directories to make workflow easier 
@@ -121,7 +121,7 @@ just created
 
 To make the final (expected) limit plot, we need to check out a different repository. 
 
-     git clone git@github.com:RazorCMS/PlotsSMS
+     git clone git@github.com:cms-lpc-llp/PlotsSMS
      cd PlotsSMS
 
 Note you have to change the smoothed cross section limit file location
