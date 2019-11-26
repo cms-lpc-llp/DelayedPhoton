@@ -1,7 +1,9 @@
-RazorAnalyzer
+DelayedPhoton
 =============
 
-Class for analyzing the 2015 razor ntuples
+Class for analyzing the 2015 razor ntuples, derived from https://github.com/RazorCMS/RazorAnalyzer
+
+To run the latest DelayedPhoton analyzer, refer to [Delayed Photon Instruction](README_DelayedPhoton.md)
 
 Setup
 -------------

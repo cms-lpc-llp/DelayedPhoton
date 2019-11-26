@@ -1,4 +1,4 @@
-RazorAnalyzer for Delayed photon analysis (2016)
+DelayedPhoton analyzer for Delayed photon analysis (2016)
 =============
 
 Setup
@@ -6,8 +6,8 @@ Setup
 
     cmsrel CMSSW_9_4_9
     cd CMSSW_9_4_9/src
-    git clone -b 94X_DelayedPhoton_2016 git@github.com:zhangzc11/RazorAnalyzer.git
-    cd RazorAnalyzer
+    git clone git@github.com:cms-lpc-llp/DelayedPhoton.git
+    cd DelayedPhoton
     make
 
 Run
