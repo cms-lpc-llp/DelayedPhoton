@@ -17,7 +17,7 @@ Run
 
 Example: to process the DY sample, do:
 	
-     ./RazorRun_T2 lists/Run2/razorNtuplerV4p1/MC_Summer16_reMINIAOD/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-madgraphMLM-pythia8.caltech.txt DelayedPhotonAnalyzer -d=no -f=DelayedPhoton_DY.root
+     ./RazorRun_T2 lists/Run2/razorNtuplerV4p1/MC_Summer16_reMINIAOD/onefile.txt DelayedPhotonAnalyzer -d=no -f=DelayedPhoton_DY.root
 
 (we use V4p1 razorNtupler for 2016 paper; they are all in: lists/Run2/razorNtuplerV4p1/)
 
