@@ -26,9 +26,11 @@ submit condor jobs to run all samples
 
      cd scripts_condor
      source submit_delayedphoton_signal.sh
-
+     source resubmit_delayedphoton_signal.sh # to check failed jobs and resubmit
+     source hadd_delayedphoton_signal.sh # to hadd the files
+    
 (might need to update the scripts since Caltech T2 condor configs keep changing...)
-
 
 The razoranalyzer ntupler we use for the 2016 paper are in: /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/orderByPt/withcut
 
+For 2016 analysis, only need to run MC signal and DoubleEG data. No need for MC background.
