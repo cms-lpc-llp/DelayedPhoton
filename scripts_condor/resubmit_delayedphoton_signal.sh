@@ -3,6 +3,12 @@
 mkdir -p log
 mkdir -p submit
 
+if [ -z "${CMSSW_BASE}" ]
+then
+    CMSSW_BASE=/storage/user/qnguyen/DelayedPhoton/CMSSW_9_4_9/
+    echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
+fi
+
 cd ../
 RazorAnalyzerDir=`pwd`
 cd -
@@ -86,7 +92,7 @@ GMSB_L400TeV_Ctau800cm_13TeV-pythia8
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/RazorAnalyzer/lists/Run2/razorNtuplerV4p1/MC_Summer16_reMINIAOD/${sample}.caltech.txt
+	inputfilelist=/src/DelayedPhoton/lists/Run2/razorNtuplerV4p1/MC_Summer16_reMINIAOD/${sample}.caltech.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	filesPerJob=`python -c "print int($nfiles.0/$maximumjob)+1"`
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
