@@ -1,5 +1,5 @@
 #!/bin/sh
-export X509_USER_PROXY='/storage/user/$(whoami)/my_proxy'
+export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
 mkdir -p log
 mkdir -p submit
 
