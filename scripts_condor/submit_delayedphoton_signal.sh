@@ -1,14 +1,13 @@
 #!/bin/sh
-export X509_USER_PROXY='/storage/user/qnguyen/my_proxy'
+export X509_USER_PROXY='/storage/user/$(whoami)/my_proxy'
 mkdir -p log
 mkdir -p submit
 
 if [ -z "${CMSSW_BASE}" ]
 then
-    CMSSW_BASE=/storage/user/qnguyen/DelayedPhoton/CMSSW_9_4_9/
+    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_9_4_9/
     echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
 fi
-
 
 cd ../
 RazorAnalyzerDir=`pwd`
