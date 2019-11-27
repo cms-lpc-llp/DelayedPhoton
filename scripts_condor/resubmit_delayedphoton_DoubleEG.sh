@@ -1,7 +1,14 @@
 #!/bin/sh
+export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
 
 mkdir -p log
 mkdir -p submit
+
+if [ -z "${CMSSW_BASE}" ]
+then
+    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_9_4_9/
+    echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
+fi
 
 cd ../
 RazorAnalyzerDir=`pwd`
@@ -22,7 +29,7 @@ DoubleEG_2016H_25Mar2019
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/RazorAnalyzer/lists/Run2/razorNtuplerV4p1/Data_2016_reMINIAOD/${sample}.caltech.txt
+	inputfilelist=/src/DelayedPhoton/lists/Run2/razorNtuplerV4p1/Data_2016_reMINIAOD/${sample}.caltech.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
 	analyzer=DelayedPhotonAnalyzer
@@ -33,7 +40,7 @@ do
 	do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		#noFail=`grep YYYY log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}*.out`
-		outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/orderByPt/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
+		outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
 
 		minimumsize=50000
                 actualsize=0
