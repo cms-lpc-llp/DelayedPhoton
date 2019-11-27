@@ -20,22 +20,22 @@ jobnumber=$8
 outputfile=$9
 
 currentDir=`pwd`
-homeDir=/data/zhicaiz/
-runDir=${currentDir}/zhicaiz_${code_dir_suffix}/
+homeDir=/storage/user/$(whoami)/
+runDir=${currentDir}/$(whoami)_${code_dir_suffix}/
 rm -rf ${runDir}
 mkdir -p ${runDir}
 
-rm -rf /tmp/zhicaiz*
+rm -rf /tmp/$(whoami)*
 
 if [ -f /cvmfs/cms.cern.ch/cmsset_default.sh ]
 then
 
 	#setup cmssw
-	cd ${homeDir}release/RazorAnalyzer/CMSSW_9_4_9/src/RazorAnalyzer/
+	cd ${homeDir}/DelayedPhoton/CMSSW_9_4_9/src/DelayedPhoton/
 	workDir=`pwd`
 	echo "entering directory: ${workDir}"
 	source /cvmfs/cms.cern.ch/cmsset_default.sh
-	export SCRAM_ARCH=slc7_amd64_gcc630
+	export SCRAM_ARCH=slc6_amd64_gcc700
 	ulimit -c 0
 	eval `scram runtime -sh`
 	echo `which root`
@@ -43,12 +43,12 @@ then
 	cd ${runDir}
 	echo "entering directory: ${runDir}"
 
-	if [ -f $CMSSW_BASE/src/RazorAnalyzer/RazorRun_T2 ]
+	if [ -f $CMSSW_BASE/src/DelayedPhoton/RazorRun_T2 ]
 	then 
-		cp $CMSSW_BASE/src/RazorAnalyzer/RazorRun_T2 ./
+		cp $CMSSW_BASE/src/DelayedPhoton/RazorRun_T2 ./
 
 		#get grid proxy
-		export X509_USER_PROXY=${homeDir}x509_proxy
+		export X509_USER_PROXY=/storage/user/qnguyen/my_proxy
 		
 		#run the job
 		cat ${CMSSW_BASE}${inputfilelist} | awk "NR > (${jobnumber}*${filePerJob}) && NR <= ((${jobnumber}+1)*${filePerJob})" > inputfilelistForThisJob_${jobnumber}.txt
