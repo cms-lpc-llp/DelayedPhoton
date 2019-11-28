@@ -1,12 +1,12 @@
 #!/bin/sh
-
 export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
-outdir=/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/hadd/
 
-if [! -d $(outdir)]
+OUTDIR=/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/hadd/
+
+if [ ! -d ${OUTDIR}]
 then
-    echo "$(outdir) does not exist. Creating one..."
-    hadoop fs -mkdir $(outdir)
+    echo "${OUTDIR} does not exist. Creating one..."
+    hadoop fs -mkdir ${OUTDIR}
 fi
     
 for sample in \
@@ -86,7 +86,7 @@ for sample in \
 do
 
     hadd -k -f /tmp/${sample}.root /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/jobs/${sample}_Job*.root
-    hadoop fs -put /tmp/${sample}.root $(outdir)
-
+    hadoop fs -put /tmp/${sample}.root ${OUTDIR}
+    rm /tmp/${sample}.root
 done
 
