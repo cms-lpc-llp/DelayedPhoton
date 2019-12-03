@@ -22,8 +22,8 @@ DoubleEG_2016H_25Mar2019
 
 do
 
-    hadd -k -f /tmp/${sample}.root /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/jobs/${sample}_Job*.root
-    hadoop fs -put /tmp/${sample}.root ${OUTDIR}
-    rm /tmp/${sample}.root
+    hadd -k -f ${sample}.root /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/jobs/${sample}_Job*.root
+    hadoop fs -put ${sample}.root ${OUTDIR}
+    rm ${sample}.root
 done
 
