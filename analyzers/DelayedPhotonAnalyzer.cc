@@ -77,32 +77,6 @@ TVector3 DelayedPhotonAnalyzer::intersectPoint(float x0,float y0,float z0,float 
   return sol;
 };
 
-float DelayedPhotonAnalyzer::getTimeCalibConstant(TTree *tree, vector <uint> & start_run, vector <uint> & end_run, uint run, uint detID) {
-  float timeCalib = 1.0;
-
-  // accessing variables for the seed hit information
-  
-  int N_entries = tree->GetEntries(); 
-  int i_entry=0;
-  for(uint i=0;i<start_run.size();i++) {
-    if(run>= start_run[i] && run<= end_run[i]) {
-      i_entry = i;
-      break;
-    }
-  }
-
-  
-  if(i_entry> N_entries) return timeCalib;
-  tree->GetEntry(i_entry);
-  std::vector<int>::iterator p_id;
-  p_id = std::find(detID_all->begin(), detID_all->end(), detID);
-  if (p_id == detID_all->end()) return timeCalib;
-  uint idx = std::distance(detID_all->begin(), p_id);
-  
-  if(idx<=IC_time_all->size()) timeCalib = IC_time_all->at(idx);  
-  
-  return timeCalib;
-};
 
 float DelayedPhotonAnalyzer::getPedestalNoise(TTree *tree, vector <uint> & start_time, vector <uint> & end_time, uint time, uint detID) {
   float pedestalNoise = 1.0;
