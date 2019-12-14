@@ -142,7 +142,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   TRandom3 random(3003);
   bool doPhotonScaleCorrection = true;
 
-  string analysisTag = "Razor2016_07Aug2017Rereco";
+  string analysisTag = "Razor2017_31Mar2018Rereco";
   if ( label != "") analysisTag = label;
 
   if ( label != "") analysisTag = label;
