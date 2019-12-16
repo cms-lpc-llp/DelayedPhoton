@@ -2618,10 +2618,10 @@ bool RazorAnalyzer::photonPassTightIso(int i, bool use25nsCuts, bool usePrivateP
 
   if (use25nsCuts) {
     if(fabs(pho_superClusterEta[i]) < 1.479){
-      if(!usePFClusterIso)  return photonPassesIsolation(i, 0.202, 0.264 + 0.0148*phoPt[i] + 0.000017*phoPt[i]*phoPt[i], 2.362 + 0.0047*phoPt[i], true, usePrivatePF);
-      else return photonPassesIsolation(i, 5.5 + 0.001158*phoPt[i], 0.264 + 0.0148*phoPt[i] + 0.000017*phoPt[i]*phoPt[i], 5.0+0.001508*phoPt[i], true, usePrivatePF, true );
+      if(!usePFClusterIso)  return photonPassesIsolation(i, 0.65, 0.317 + 0.01512*phoPt[i] + 2.259e-5*phoPt[i]*phoPt[i], 2.044 + 0.004017*phoPt[i], true, usePrivatePF);
+      else return photonPassesIsolation(i, 4.0, 4.0 - 0.0058*phoPt[i] + 2.92e-5*phoPt[i]*phoPt[i], 5.0+0.00301*phoPt[i], true, usePrivatePF, true );
     } else {
-      return photonPassesIsolation(i, 0.034, 0.586 + 0.0163*phoPt[i] + 0.000014*phoPt[i]*phoPt[i], 2.617 + 0.0034*phoPt[i], true, usePrivatePF);
+      return photonPassesIsolation(i, 0.517, 2.716 + 0.0117*phoPt[i] + 2.3e-5*phoPt[i]*phoPt[i], 3.032 + 0.0037*phoPt[i], true, usePrivatePF);
     }
   }  else {
     cout << "Warning: you are not using 25nsCuts. return false.\n";

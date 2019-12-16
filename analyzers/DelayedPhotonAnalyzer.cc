@@ -1756,10 +1756,10 @@ mll = (lep1+lep2).M();
 
 	pho1passSigmaIetaIetaLoose = pho1SigmaIetaIeta < 0.022;
 	pho1passSigmaIetaIetaMedium = pho1SigmaIetaIeta < 0.019;
-	pho1passSigmaIetaIetaTight = pho1SigmaIetaIeta < 0.017;
+	pho1passSigmaIetaIetaTight = pho1SigmaIetaIeta < 0.014;
 	pho2passSigmaIetaIetaLoose = pho2SigmaIetaIeta < 0.022;
 	pho2passSigmaIetaIetaMedium = pho2SigmaIetaIeta < 0.019;
-	pho2passSigmaIetaIetaTight = pho2SigmaIetaIeta < 0.017;
+	pho2passSigmaIetaIetaTight = pho2SigmaIetaIeta < 0.014;
 
 	pho1passSmajorLoose  =  pho1isStandardPhoton ?  true : (pho1Smajor < 1.7);
 	pho1passSmajorMedium  =  pho1isStandardPhoton ?  true : (pho1Smajor < 1.5);
@@ -1768,6 +1768,14 @@ mll = (lep1+lep2).M();
 	pho2passSmajorLoose  =  pho2isStandardPhoton ?  true : (pho2Smajor < 1.7);
 	pho2passSmajorMedium  =  pho2isStandardPhoton ?  true : (pho2Smajor < 1.5);
 	pho2passSmajorTight  =  pho2isStandardPhoton ?  true : (pho2Smajor < 1.3);
+	
+    pho1passSminorLoose  =  pho1isStandardPhoton ?  true : (pho1Sminor < 0.8);
+	pho1passSminorMedium  =  pho1isStandardPhoton ?  true : (pho1Sminor < 0.6);
+	pho1passSminorTight  =  pho1isStandardPhoton ?  true : (pho1Sminor < 0.4);
+
+	pho2passSminorLoose  =  pho2isStandardPhoton ?  true : (pho2Sminor < 0.8);
+	pho2passSminorMedium  =  pho2isStandardPhoton ?  true : (pho2Sminor < 0.6);
+	pho2passSminorTight  =  pho2isStandardPhoton ?  true : (pho2Sminor < 0.4);
 
 	outputTree->Fill();		
 
