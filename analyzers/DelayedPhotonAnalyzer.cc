@@ -78,40 +78,6 @@ TVector3 DelayedPhotonAnalyzer::intersectPoint(float x0,float y0,float z0,float 
 };
 
 
-float DelayedPhotonAnalyzer::getPedestalNoise(TTree *tree, vector <uint> & start_time, vector <uint> & end_time, uint time, uint detID) {
-  float pedestalNoise = 1.0;
-  
-  int N_entries = tree->GetEntries();
-  int i_entry=0;
-  for(uint i=0;i<start_time.size();i++) {
-    if(time>= start_time[i] && time<= end_time[i])
-    {
-      i_entry = i;
-      break;
-    }
-  }
-  
-  if(i_entry> N_entries) return pedestalNoise;
-  tree->GetEntry(i_entry);
-  std::vector<int>::iterator p_id;
-  p_id = std::find(detID_all->begin(), detID_all->end(), detID);
-  if (p_id == detID_all->end()) 
-  {
-	rms_G12_all->clear();
-	//rms_G12_all->shrink_to_fit();
-	return pedestalNoise;
-  }
-  uint idx = std::distance(detID_all->begin(), p_id);
-  
-  if(idx<=rms_G12_all->size()) pedestalNoise = rms_G12_all->at(idx);  
-  
-  rms_G12_all->clear();
-  //rms_G12_all->shrink_to_fit();
-
-  return pedestalNoise;
-};
-
-
 float DelayedPhotonAnalyzer::getADCToGeV( uint run, int isFromEB) {
   double ADCToGeV = 0;
   //EB
@@ -927,8 +893,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 		
         	double corrT = calibratedSeedHitTime_this + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
 
-        	//double pedNoise = 1.0;//isData ? (getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex])) : 1.0;
-        	double pedNoise = isData ? (getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex])) : 1.0;
+        	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.0;  
         	//double pedNoise = 1;
         	double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1;
         	double sigmaE = pedNoise * ADCToGeV;

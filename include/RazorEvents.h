@@ -350,6 +350,9 @@ public :
    std::vector<bool>    *ecalRechit_GainSwitch1;
    std::vector<bool>    *ecalRechit_GainSwitch6;
    std::vector<float>   *ecalRechit_transpCorr;
+   std::vector<float>   *ecalRechit_pedrms12;
+   std::vector<float>   *ecalRechit_pedrms6;
+   std::vector<float>   *ecalRechit_pedrms1;
    Int_t           nGenJets;
    Float_t         genJetE[50];   //[nGenJets]
    Float_t         genJetPt[50];   //[nGenJets]
