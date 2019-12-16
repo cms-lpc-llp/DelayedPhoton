@@ -76,6 +76,11 @@ RazorHelper::RazorHelper(std::string tag_, bool isData_, bool isFastsim_):
     else if (tag == "Razor2017_31Mar2018Rereco") {
         loadTag_Razor2017_31Mar2018Rereco();
     }
+    
+    // tag for 2017 31Mar2018 Rereco delayed photon
+    else if (tag == "Razor2017_31Mar2018Rereco_DelayedPhoton") {
+        loadTag_Razor2017_31Mar2018Rereco_DelayedPhoton();
+    }
 
    // tag not found
     else {
@@ -1973,6 +1978,39 @@ void RazorHelper::loadTrigger_Razor2017_92X() {
     hadronicTriggerNums = { 106, 107, 108, 109, 110, 111 };
 }
 
+void RazorHelper::loadTrigger_Razor2017_92X_DelayedPhoton() {
+    // single lepton trigger scale factors
+    // LAST UPDATED: 30 July 2017
+    std::cout << "RazorHelper: loading 2016 trigger efficiency histograms" << std::endl;
+    eleTrigSFFile = TFile::Open("root://eoscms:///store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2016_Golden/efficiency_results_EleTriggerEleCombinedEffDenominatorTight_2016_Rereco_Golden.root");
+    eleTrigSFHist = (TH2D*)eleTrigSFFile->Get("ScaleFactor_EleTriggerEleCombinedEffDenominatorTight");
+
+    muTrigSFFile = TFile::Open("root://eoscms:///store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2016_Golden/efficiency_results_MuTriggerIsoMu27ORMu50EffDenominatorTight_2016_Rereco_Golden.root");
+    muTrigSFHist = (TH2D*)muTrigSFFile->Get("ScaleFactor_MuTriggerIsoMu27ORMu50EffDenominatorTight");
+
+    eleTrigEffFile = TFile::Open("root://eoscms:///store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2016_Golden/SingleElectronTriggerEfficiency_2016_Rereco_Golden.root");
+    eleTrigEffHist = (TH2D*)eleTrigEffFile->Get("hEffEtaPt");
+
+    muTrigEffFile = TFile::Open("root://eoscms:///store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2016_Golden/SingleMuonTriggerEfficiency_2016_Rereco_Golden.root");
+    muTrigEffHist = (TH2D*)muTrigEffFile->Get("hEffEtaPt");
+
+    //diphoton trigger scale factors
+    diphotonTrigLeadingLegEffFile = TFile::Open("root://eoscms:///store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonEfficiencies/2016/PhoHLTLeadingLegEffDenominatorLoose_2016_Rereco.root");
+    diphotonTrigLeadingLegEffHist = (TH2D*)diphotonTrigLeadingLegEffFile->Get("hEffEtaPt");
+    diphotonTrigTrailingLegEffFile = TFile::Open("root://eoscms:///store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonEfficiencies/2016/PhoHLTTrailingLegEffDenominatorLoose_2016_Rereco.root");
+    diphotonTrigTrailingLegEffHist = (TH2D*)diphotonTrigTrailingLegEffFile->Get("hEffEtaPt");
+
+    diphotonTrigLeadingLegEffSFFile = TFile::Open("root://eoscms:///store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonEfficiencies/2016/efficiency_results_PhoHLTLeadingLegEffDenominatorLoose_2016_Rereco.root");
+    diphotonTrigLeadingLegEffSFHist = (TH2D*)diphotonTrigLeadingLegEffSFFile->Get("ScaleFactor_PhoHLTLeadingLegEffDenominatorLoose");
+    diphotonTrigTrailingLegEffSFFile = TFile::Open("root://eoscms:///store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonEfficiencies/2016/efficiency_results_PhoHLTTrailingLegEffDenominatorLoose_2016_Rereco.root");
+    diphotonTrigTrailingLegEffSFHist = (TH2D*)diphotonTrigTrailingLegEffSFFile->Get("ScaleFactor_PhoHLTTrailingLegEffDenominatorLoose");
+
+    //get trigger index numbers
+    std::cout << "RazorHelper: loading 2017 trigger indices" << std::endl;
+    dileptonTriggerNums = { 16, 17,18, 19, 20, 21, 22, 23,24 };
+    singleLeptonTriggerNums = { 1,2,3,4,5,6,7,12,13,14,15 };
+    hadronicTriggerNums = { 106, 107, 108, 109, 110, 111 };
+}
 
 void RazorHelper::loadPhoton_Razor2017_92X(){
     // photon efficiency scale factors
@@ -2299,11 +2337,37 @@ void RazorHelper::loadTag_Razor2017_31Mar2018Rereco() {
   loadLepton_Razor2017_31Mar2018Rereco();
   loadPhoton_Razor2017_31Mar2018Rereco();
   loadBTag_Razor2017_17Nov2017Rereco();
-  loadTrigger_Razor2017_92X();
+  loadTrigger_Razor2017_92X_DelayedPhoton(); // To be updated
   loadJECs_Razor2017_31Mar2018Rereco();
 }
 
+////////////////////////////////////////////////
+//  2017 31Mar2018 Rereco Delayed Photon
+////////////////////////////////////////////////
+void RazorHelper::loadTag_Razor2017_31Mar2018Rereco_DelayedPhoton() {
+  loadPileup_Razor2017_17Nov2017Rereco();
+  loadLepton_Razor2017_31Mar2018Rereco();
+  loadPhoton_Razor2017_31Mar2018Rereco_DelayedPhoton();
+  loadBTag_Razor2017_17Nov2017Rereco();
+  loadTrigger_Razor2017_92X_DelayedPhoton();
+  loadJECs_Razor2017_31Mar2018Rereco();
+}
+
+
 void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco(){
+//identical to loadPhoton_Razor2017_92X, would check if there's new version released
+    // photon efficiency scale factors
+    // use avaerage results for run 2017BCDEF for now
+    std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
+    phoEffSFFile = TFile::Open("root://eoscms:///store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonEfficiencies/2017/efficiency_results_PhoLooseEffDenominatorReco_2017BCDEF_94X.root");
+    phoLooseEffSFHist = (TH2D*)phoEffSFFile->Get("EGamma_SF2D");
+
+    // results for 2017MC is not available yet, use 2016 version for now
+    phoEffFastsimSFFile = TFile::Open("PhotonEffFastsimToFullsimCorrectionFactors.2016.root");
+    phoLooseEffFastsimSFHist = (TH2D*)phoEffFastsimSFFile->Get("ElectronLoose_FastsimScaleFactor");
+}
+
+void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco_DelayedPhoton(){
 //identical to loadPhoton_Razor2017_92X, would check if there's new version released
     // photon efficiency scale factors
     // use avaerage results for run 2017BCDEF for now
