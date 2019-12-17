@@ -815,7 +815,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     if (scaleCorr!=NULL) 
     {
         scale  = scaleCorr->scale();
-        scaleUnc = scaleCorr->scaleErr(EnergyScaleCorrection_class_2017::kErrSystBitNr);
+        scaleUnc = scaleCorr->scaleErr(EnergyScaleCorrection_class_2017::kErrGainBitNr);
         scaleUp = scale + scaleUnc;
         scaleDown = scale - scaleUnc;
     }
