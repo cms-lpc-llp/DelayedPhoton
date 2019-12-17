@@ -1248,21 +1248,21 @@ else
         trailingPhoPt = pho1Pt;
         trailingPhoEta= pho1Eta;
 }
-
-if(nPho==1)
-{
-	triggerEffWeight = helper->getDiphotonTrigLeadingLegEff( pho1Pt, pho1Eta );
-	triggerEffSFWeight = helper->getDiphotonTrigLeadingLegEffSF( pho1Pt, pho1Eta );
-}
-else
-{
-	double triggerEffLeadingLeg = helper->getDiphotonTrigLeadingLegEff( leadPhoPt, leadPhoEta );
-	double triggerEffTrailingLeg = helper->getDiphotonTrigTrailingLegEff( trailingPhoPt, trailingPhoEta );
-	triggerEffWeight = triggerEffLeadingLeg*triggerEffTrailingLeg;
-	double triggerEffSFLeadingLeg = helper->getDiphotonTrigLeadingLegEffSF( leadPhoPt, leadPhoEta );
-	double triggerEffSFTrailingLeg = helper->getDiphotonTrigTrailingLegEffSF( trailingPhoPt, trailingPhoEta );
-	triggerEffSFWeight = triggerEffSFLeadingLeg*triggerEffSFTrailingLeg;
-}
+// Comment out because we assume trigger efficiency scale factor is 1.0
+//if(nPho==1)
+//{
+//	triggerEffWeight = helper->getDiphotonTrigLeadingLegEff( pho1Pt, pho1Eta );
+//	triggerEffSFWeight = helper->getDiphotonTrigLeadingLegEffSF( pho1Pt, pho1Eta );
+//}
+//else
+//{
+//	double triggerEffLeadingLeg = helper->getDiphotonTrigLeadingLegEff( leadPhoPt, leadPhoEta );
+//	double triggerEffTrailingLeg = helper->getDiphotonTrigTrailingLegEff( trailingPhoPt, trailingPhoEta );
+//	triggerEffWeight = triggerEffLeadingLeg*triggerEffTrailingLeg;
+//	double triggerEffSFLeadingLeg = helper->getDiphotonTrigLeadingLegEffSF( leadPhoPt, leadPhoEta );
+//	double triggerEffSFTrailingLeg = helper->getDiphotonTrigTrailingLegEffSF( trailingPhoPt, trailingPhoEta );
+//	triggerEffSFWeight = triggerEffSFLeadingLeg*triggerEffSFTrailingLeg;
+//}
 
 //jet loop
 
