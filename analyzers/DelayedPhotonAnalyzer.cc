@@ -82,19 +82,11 @@ TVector3 DelayedPhotonAnalyzer::intersectPoint(float x0,float y0,float z0,float 
 float DelayedPhotonAnalyzer::getADCToGeV( uint run, int isFromEB) {
   double ADCToGeV = 0;
   //EB
-  if (isFromEB == 1) {
-    if (run >= 1 && run <= 271950) ADCToGeV = 0.039680;
-    else if (run >= 271951 && run <= 277366) ADCToGeV = 0.039798;
-    else if (run >= 277367 && run <= 281825) ADCToGeV = 0.039436;
-    else if (run >= 281826 && run <= 999999) ADCToGeV = 0.039298;
-  }   
+  if (isFromEB == 1)  ADCToGeV = 0.039510;
+  
   //EE
-  else if (isFromEB == 0) {
-    if (run >= 1 && run <= 271950) ADCToGeV = 0.067230;
-    else if (run >= 271951 && run <= 277366) ADCToGeV = 0.067370;
-    else if (run >= 277367 && run <= 281825) ADCToGeV = 0.066764;
-    else if (run >= 281826 && run <= 999999) ADCToGeV = 0.065957;
-  }
+  else if (isFromEB == 0) ADCToGeV = 0.068182;
+  
   return ADCToGeV;
 }
 
