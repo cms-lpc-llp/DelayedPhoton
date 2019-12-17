@@ -898,36 +898,36 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 	double phoSminor_private = 0.0;
 	double phoSmajor_private = 0.0;
 	
-      	for (uint k=0; k<(*pho_EcalRechitIndex)[ind_pho].size(); ++k) 
-	{
-        	uint rechitIndex = (*pho_EcalRechitIndex)[ind_pho][k];
+    for (uint k=0; k<(*pho_EcalRechitIndex)[ind_pho].size(); ++k) 
+    {
+        uint rechitIndex = (*pho_EcalRechitIndex)[ind_pho][k];
 
-		if((*ecalRechit_E)[rechitIndex] < 1.0) continue;	
-      
-        	double rawT = (*ecalRechit_T)[rechitIndex];
-        	//apply intercalibration
-		double IC_time_SeptRereco_this = 0.0;//isData ? (getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[rechitIndex]) ) : 0.0;
-        	double IC_time_LagacyRereco_this = 0.0;//isData ? (getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[rechitIndex])) : 0.0;
-        	double calibratedSeedHitTime_this = rawT + IC_time_LagacyRereco_this - IC_time_SeptRereco_this;
+        if((*ecalRechit_E)[rechitIndex] < 1.0) continue;	
 
-		
-        	double corrT = calibratedSeedHitTime_this + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
+        double rawT = (*ecalRechit_T)[rechitIndex];
+        //apply intercalibration
+        double IC_time_SeptRereco_this = 0.0;
+        double IC_time_LagacyRereco_this = 0.0;
+        double calibratedSeedHitTime_this = rawT + IC_time_LagacyRereco_this - IC_time_SeptRereco_this;
 
-        	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.0;  
-        	//double pedNoise = 1;
-        	double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1;
-        	double sigmaE = pedNoise * ADCToGeV;
- 
-		double sigmaT2 = N_EB*N_EB / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + 2.0 * C_EB * C_EB;
-		
-		if(!isData) sigmaT2 = 0.5*N_EB_MC*N_EB_MC / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + C_EB_MC * C_EB_MC;
 
-		tmpSumWeightedTime += corrT * ( 1.0 / sigmaT2 );
-		tmpSumWeight += ( 1.0 / sigmaT2 );
-        	// cout << "\n";
-        	tmpSumE += (*ecalRechit_E)[rechitIndex];	
-		
-      	}
+        double corrT = calibratedSeedHitTime_this + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
+
+        double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.0;  
+        //double pedNoise = 1;
+        double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1;
+        double sigmaE = pedNoise * ADCToGeV;
+
+        double sigmaT2 = N_EB*N_EB / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + 2.0 * C_EB * C_EB;
+
+        if(!isData) sigmaT2 = 0.5*N_EB_MC*N_EB_MC / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + C_EB_MC * C_EB_MC;
+
+        tmpSumWeightedTime += corrT * ( 1.0 / sigmaT2 );
+        tmpSumWeight += ( 1.0 / sigmaT2 );
+        // cout << "\n";
+        tmpSumE += (*ecalRechit_E)[rechitIndex];	
+
+    }
 	
 	for (uint k=0; k<(*pho_EcalRechitIndex)[ind_pho].size(); ++k)
         {
