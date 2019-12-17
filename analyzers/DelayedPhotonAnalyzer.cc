@@ -5,6 +5,7 @@
 #include "RazorHelper.h"
 #include "BTagCalibrationStandalone.h"
 #include "EnergyScaleCorrection_class.hh"
+#include "EnergyScaleCorrection_class_2017.hh"
 
 //C++ includes
 #include <sys/stat.h>
@@ -117,15 +118,21 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   RazorHelper *helper_GED = 0;
   helper = new RazorHelper(analysisTag, isData, false); 
   helper_GED = new RazorHelper("loadTag_Razor2017_31Mar2018Rereco", isData, false); 
-
+ 
+  //Get CMSSW Directory
+  char* cmsswPath;
+  cmsswPath = getenv("CMSSW_BASE");
 
   //--------------------------------
   //Photon Energy Scale and Resolution Corrections
   //--------------------------------
-  std::string photonCorrectionPath = "./";//eos/cms/store/user/zhicaiz/Run2Analysis/ScaleFactors/PhotonCorrections/";
+  std::string photonCorrectionPath = "./";
+  if ( cmsswPath != NULL ) photonCorrectionPath = string(cmsswPath) + "/src/DelayedPhoton/data/PhotonCorrections/";
   EnergyScaleCorrection_class *photonCorrector = 0;
+  EnergyScaleCorrection_class_2017 *photonCorrector_2017 = 0;
   if (analysisTag == "Razor2016_MoriondRereco") photonCorrector = new EnergyScaleCorrection_class(Form("%s/Winter_2016_reReco_v1_ele", photonCorrectionPath.c_str()));
   else if (analysisTag == "Razor2016_07Aug2017Rereco") photonCorrector = new EnergyScaleCorrection_class(Form("%s/Winter_2016_reReco_v1_ele", photonCorrectionPath.c_str()));
+  else if (analysisTag == "Razor2017_31Mar2018Rereco") photonCorrector = new EnergyScaleCorrection_class_2017(Form("%s/Run2017_17Nov2017_v1_ele_unc", photonCorrectionPath.c_str()));
   if(!isData) {
     photonCorrector->doScale = false;
     photonCorrector->doSmearings = true;
