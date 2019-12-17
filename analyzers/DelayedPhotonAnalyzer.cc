@@ -128,11 +128,8 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   //--------------------------------
   std::string photonCorrectionPath = "./";
   if ( cmsswPath != NULL ) photonCorrectionPath = string(cmsswPath) + "/src/DelayedPhoton/data/PhotonCorrections/";
-  EnergyScaleCorrection_class *photonCorrector = 0;
-  EnergyScaleCorrection_class_2017 *photonCorrector_2017 = 0;
-  if (analysisTag == "Razor2016_MoriondRereco") photonCorrector = new EnergyScaleCorrection_class(Form("%s/Winter_2016_reReco_v1_ele", photonCorrectionPath.c_str()));
-  else if (analysisTag == "Razor2016_07Aug2017Rereco") photonCorrector = new EnergyScaleCorrection_class(Form("%s/Winter_2016_reReco_v1_ele", photonCorrectionPath.c_str()));
-  else if (analysisTag == "Razor2017_31Mar2018Rereco") photonCorrector = new EnergyScaleCorrection_class_2017(Form("%s/Run2017_17Nov2017_v1_ele_unc", photonCorrectionPath.c_str()));
+  EnergyScaleCorrection_class_2017 *photonCorrector = 0;
+  if (analysisTag == "Razor2017_31Mar2018Rereco") photonCorrector = new EnergyScaleCorrection_class_2017(Form("%s/Run2017_17Nov2017_v1_ele_unc", photonCorrectionPath.c_str()));
   if(!isData) {
     photonCorrector->doScale = false;
     photonCorrector->doSmearings = true;
@@ -802,11 +799,27 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 	float pho_pt_corr_scaleDown = phoPt[ind_pho];
 	float pho_pt_corr_smearUp = phoPt[ind_pho];
 	float pho_pt_corr_smearDown = phoPt[ind_pho];
-	double scale = photonCorrector->ScaleCorrection(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
-	double scaleUnc = photonCorrector->ScaleCorrectionUncertainty(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
-	double scaleUp = scale + scaleUnc;
-	double scaleDown = scale - scaleUnc;
-        double smear = photonCorrector->getSmearingSigma(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), 0., 0.);
+//    double scale = photonCorrector->ScaleCorrection(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
+//    double scaleUnc = photonCorrector->ScaleCorrectionUncertainty(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
+//    double scaleUp = scale + scaleUnc;
+//    double scaleDown = scale - scaleUnc;
+//    double smear = photonCorrector->getSmearingSigma(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), 0., 0.);
+
+    double scale = 1;
+    double scaleUnc = 0;
+    double scaleUp = 1;
+    double scaleDown = 1;
+    double smear = 0;
+    const EnergyScaleCorrection_class_2017::ScaleCorrection_class_2017* scaleCorr = photonCorrector->EnergyScaleCorrection_class_2017::getScaleCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), pho_superClusterEta[ind_pho], phoR9[ind_pho], 12);
+    const EnergyScaleCorrection_class_2017::SmearCorrection_class_2017* smearCorr = photonCorrector->EnergyScaleCorrection_class_2017::getSmearCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), pho_superClusterEta[ind_pho], phoR9[ind_pho], 12);
+    if (scaleCorr!=NULL) 
+    {
+        scale  = scaleCorr->scale();
+        scaleUnc = scaleCorr->scaleErr(EnergyScaleCorrection_class_2017::kErrSystBitNr);
+        scaleUp = scale + scaleUnc;
+        scaleDown = scale - scaleUnc;
+    }
+    if (smearCorr!=NULL) smear  = smearCorr->sigma(phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
 
 	if (doPhotonScaleCorrection) {
             if (isData) {
