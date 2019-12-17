@@ -225,8 +225,8 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   
   int n_Photons;
   int n_Photons_reco;
-  float pho1E, pho1Pt, pho1Pt_scaleUp, pho1Pt_scaleDown, pho1Pt_smearUp, pho1Pt_smearDown, pho1Eta, pho1Phi, pho1SeedE, pho1SeedPt, pho1SeedEta, pho1SeedPhi, pho1SC_E, pho1SC_Pt, pho1SC_Eta, pho1SC_Phi, pho1angle_xtal, pho1SigmaIetaIeta, pho1R9, pho1HoverE, pho1sumChargedHadronPt, pho1sumNeutralHadronEt, pho1sumPhotonEt, pho1PFsumChargedHadronPt, pho1PFsumNeutralHadronEt, pho1PFsumPhotonEt, pho1ecalPFClusterIso, pho1hcalPFClusterIso, pho1trkSumPtHollowConeDR03, pho1sigmaEOverE, pho1SeedTimeRaw, pho1SeedTimeCalib, pho1SeedTimeCalibTOF, pho1SeedTimeGenV, pho1ClusterTime, pho1ClusterTime_SmearToData, pho1Sminor_private, pho1Smajor_private, pho1Sminor, pho1Smajor, pho1Setaeta, pho1Sphiphi, pho1Setaphi, pho1GenE, pho1GenPt, pho1GenEta, pho1GenPhi, pho1ClusterTime_scaleUp, pho1ClusterTime_scaleDown, pho1ClusterTime_smearUp, pho1ClusterTime_smearDown;
-  float pho2E, pho2Pt, pho2Pt_scaleUp, pho2Pt_scaleDown, pho2Pt_smearUp, pho2Pt_smearDown, pho2Eta, pho2Phi, pho2SeedE, pho2SeedPt, pho2SeedEta, pho2SeedPhi, pho2SC_E, pho2SC_Pt, pho2SC_Eta, pho2SC_Phi, pho2angle_xtal, pho2SigmaIetaIeta, pho2R9, pho2HoverE, pho2sumChargedHadronPt, pho2sumNeutralHadronEt, pho2sumPhotonEt, pho2PFsumChargedHadronPt, pho2PFsumNeutralHadronEt, pho2PFsumPhotonEt, pho2ecalPFClusterIso, pho2hcalPFClusterIso, pho2trkSumPtHollowConeDR03, pho2sigmaEOverE, pho2SeedTimeRaw, pho2SeedTimeCalib, pho2SeedTimeCalibTOF, pho2SeedTimeGenV, pho2ClusterTime, pho2ClusterTime_SmearToData, pho2Sminor_private, pho2Smajor_private, pho2Smajor, pho2Sminor, pho2Setaeta, pho2Sphiphi, pho2Setaphi, pho2GenE, pho2GenPt, pho2GenEta, pho2GenPhi;
+  float pho1E, pho1Pt, pho1Pt_scaleUp, pho1Pt_scaleDown, pho1Pt_smearUp, pho1Pt_smearDown, pho1Eta, pho1Phi, pho1SeedE, pho1SeedPt, pho1SeedEta, pho1SeedPhi, pho1SC_E, pho1SC_Pt, pho1SC_Eta, pho1SC_Phi, pho1angle_xtal, pho1SigmaIetaIeta, pho1R9, pho1HoverE, pho1sumChargedHadronPt, pho1sumNeutralHadronEt, pho1sumPhotonEt, pho1PFsumChargedHadronPt, pho1PFsumNeutralHadronEt, pho1PFsumPhotonEt, pho1ecalPFClusterIso, pho1hcalPFClusterIso, pho1trkSumPtHollowConeDR03, pho1sigmaEOverE, pho1SeedTimeRaw, pho1SeedTimeCalib, pho1SeedTimeCalibTOF, pho1SeedTimeGenV, pho1ClusterTime, pho1ClusterTime_SmearToData, pho1Sminor, pho1Smajor, pho1Setaeta, pho1Sphiphi, pho1Setaphi, pho1GenE, pho1GenPt, pho1GenEta, pho1GenPhi, pho1ClusterTime_scaleUp, pho1ClusterTime_scaleDown, pho1ClusterTime_smearUp, pho1ClusterTime_smearDown;
+  float pho2E, pho2Pt, pho2Pt_scaleUp, pho2Pt_scaleDown, pho2Pt_smearUp, pho2Pt_smearDown, pho2Eta, pho2Phi, pho2SeedE, pho2SeedPt, pho2SeedEta, pho2SeedPhi, pho2SC_E, pho2SC_Pt, pho2SC_Eta, pho2SC_Phi, pho2angle_xtal, pho2SigmaIetaIeta, pho2R9, pho2HoverE, pho2sumChargedHadronPt, pho2sumNeutralHadronEt, pho2sumPhotonEt, pho2PFsumChargedHadronPt, pho2PFsumNeutralHadronEt, pho2PFsumPhotonEt, pho2ecalPFClusterIso, pho2hcalPFClusterIso, pho2trkSumPtHollowConeDR03, pho2sigmaEOverE, pho2SeedTimeRaw, pho2SeedTimeCalib, pho2SeedTimeCalibTOF, pho2SeedTimeGenV, pho2ClusterTime, pho2ClusterTime_SmearToData, pho2Smajor, pho2Sminor, pho2Setaeta, pho2Sphiphi, pho2Setaphi, pho2GenE, pho2GenPt, pho2GenEta, pho2GenPhi;
   bool pho1passEleVeto, pho1passIsoLoose, pho1passIsoMedium, pho1passIsoTight, pho1isStandardPhoton, pho1isPromptPhoton, pho1isDelayedPhoton;
   bool pho1passIsoLoose_privatePF, pho1passIsoMedium_privatePF, pho1passIsoTight_privatePF;
   bool pho1passIsoLoose_OOT, pho1passIsoMedium_OOT, pho1passIsoTight_OOT;
@@ -426,9 +426,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho1ClusterTime_scaleDown", &pho1ClusterTime_scaleDown, "pho1ClusterTime_scaleDown/F");
   outputTree->Branch("pho1ClusterTime_smearUp", &pho1ClusterTime_smearUp, "pho1ClusterTime_smearUp/F");
   outputTree->Branch("pho1ClusterTime_smearDown", &pho1ClusterTime_smearDown, "pho1ClusterTime_smearDown/F");
-  outputTree->Branch("pho1Sminor_private", &pho1Sminor_private, "pho1Sminor_private/F");
   outputTree->Branch("pho1Sminor", &pho1Sminor, "pho1Sminor/F");
-  outputTree->Branch("pho1Smajor_private", &pho1Smajor_private, "pho1Smajor_private/F");
   outputTree->Branch("pho1Smajor", &pho1Smajor, "pho1Smajor/F");
   outputTree->Branch("pho1Setaeta", &pho1Setaeta, "pho1Setaeta/F");
   outputTree->Branch("pho1Sphiphi", &pho1Sphiphi, "pho1Sphiphi/F");
@@ -507,9 +505,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho2SeedTimeGenV", &pho2SeedTimeGenV, "pho2SeedTimeGenV/F");
   outputTree->Branch("pho2ClusterTime", &pho2ClusterTime, "pho2ClusterTime/F");
   outputTree->Branch("pho2ClusterTime_SmearToData", &pho2ClusterTime_SmearToData, "pho2ClusterTime_SmearToData/F");
-  outputTree->Branch("pho2Sminor_private", &pho2Sminor_private, "pho2Sminor_private/F");
   outputTree->Branch("pho2Sminor", &pho2Sminor, "pho2Sminor/F");
-  outputTree->Branch("pho2Smajor_private", &pho2Smajor_private, "pho2Smajor_private/F");
   outputTree->Branch("pho2Smajor", &pho2Smajor, "pho2Smajor/F");
   outputTree->Branch("pho2Setaeta", &pho2Setaeta, "pho2Setaeta/F");
   outputTree->Branch("pho2Sphiphi", &pho2Sphiphi, "pho2Sphiphi/F");
@@ -646,8 +642,8 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
     n_Photons = 0;
     n_Photons_reco = 0;
-    pho1E = -999, pho1Pt = -999, pho1Pt_scaleUp = -999, pho1Pt_scaleDown = -999, pho1Pt_smearUp = -999, pho1Pt_smearDown = -999, pho1Eta = -999, pho1Phi = -999, pho1SeedE = -999, pho1SeedPt = -999, pho1SeedEta = -999, pho1SeedPhi = -999, pho1SC_E = -999, pho1SC_Pt = -999, pho1SC_Eta = -999, pho1SC_Phi = -999, pho1angle_xtal = -999, pho1SigmaIetaIeta = -999, pho1R9 = -999, pho1HoverE = -999, pho1sumChargedHadronPt = -999, pho1sumNeutralHadronEt = -999, pho1sumPhotonEt = -999, pho1PFsumChargedHadronPt = -999, pho1PFsumNeutralHadronEt = -999, pho1PFsumPhotonEt = -999, pho1ecalPFClusterIso = -999, pho1hcalPFClusterIso = -999, pho1trkSumPtHollowConeDR03 = -999, pho1sigmaEOverE = -999, pho1SeedTimeRaw = -999, pho1SeedTimeCalib = -999, pho1SeedTimeCalibTOF = -999, pho1SeedTimeGenV = -999, pho1ClusterTime = -999, pho1ClusterTime_SmearToData, pho1Sminor_private = -999, pho1Smajor_private = -999, pho1Sminor = -999, pho1Smajor = -999, pho1Setaeta = -999, pho1Sphiphi = -999, pho1Setaphi = -999, pho1GenE = -999, pho1GenPt = -999, pho1GenEta = -999, pho1GenPhi = -999, pho1ClusterTime_scaleUp=-999, pho1ClusterTime_scaleDown=-999, pho1ClusterTime_smearUp=-999, pho1ClusterTime_smearDown=-999;
-    pho2E = -999, pho2Pt = -999, pho2Pt_scaleDown = -999, pho2Pt_scaleDown = -999, pho1Pt_smearUp = -999, pho2Pt_smearDown = -999, pho2Eta = -999, pho2Phi = -999, pho2SeedE = -999, pho2SeedPt = -999, pho2SeedEta = -999, pho2SeedPhi = -999, pho2SC_E = -999, pho2SC_Pt = -999, pho2SC_Eta = -999, pho2SC_Phi = -999, pho2angle_xtal = -999, pho2SigmaIetaIeta = -999, pho2R9 = -999, pho2HoverE = -999, pho2sumChargedHadronPt = -999, pho2sumNeutralHadronEt = -999, pho2sumPhotonEt = -999, pho2PFsumChargedHadronPt = -999, pho2PFsumNeutralHadronEt = -999, pho2PFsumPhotonEt = -999, pho2ecalPFClusterIso = -999, pho2hcalPFClusterIso = -999, pho2trkSumPtHollowConeDR03 = -999, pho2sigmaEOverE = -999, pho2SeedTimeRaw = -999, pho2SeedTimeCalib = -999, pho2SeedTimeCalibTOF = -999, pho2SeedTimeGenV = -999, pho2ClusterTime = -999, pho2ClusterTime_SmearToData, pho2Sminor_private = -999, pho2Smajor_private = -999, pho2Sminor = -999, pho2Smajor = -999, pho2Setaeta = -999, pho2Sphiphi = -999, pho2Setaphi = -999, pho2GenE = -999, pho2GenPt = -999, pho2GenEta = -999, pho2GenPhi = -999;
+    pho1E = -999, pho1Pt = -999, pho1Pt_scaleUp = -999, pho1Pt_scaleDown = -999, pho1Pt_smearUp = -999, pho1Pt_smearDown = -999, pho1Eta = -999, pho1Phi = -999, pho1SeedE = -999, pho1SeedPt = -999, pho1SeedEta = -999, pho1SeedPhi = -999, pho1SC_E = -999, pho1SC_Pt = -999, pho1SC_Eta = -999, pho1SC_Phi = -999, pho1angle_xtal = -999, pho1SigmaIetaIeta = -999, pho1R9 = -999, pho1HoverE = -999, pho1sumChargedHadronPt = -999, pho1sumNeutralHadronEt = -999, pho1sumPhotonEt = -999, pho1PFsumChargedHadronPt = -999, pho1PFsumNeutralHadronEt = -999, pho1PFsumPhotonEt = -999, pho1ecalPFClusterIso = -999, pho1hcalPFClusterIso = -999, pho1trkSumPtHollowConeDR03 = -999, pho1sigmaEOverE = -999, pho1SeedTimeRaw = -999, pho1SeedTimeCalib = -999, pho1SeedTimeCalibTOF = -999, pho1SeedTimeGenV = -999, pho1ClusterTime = -999, pho1ClusterTime_SmearToData, pho1Sminor = -999, pho1Smajor = -999, pho1Setaeta = -999, pho1Sphiphi = -999, pho1Setaphi = -999, pho1GenE = -999, pho1GenPt = -999, pho1GenEta = -999, pho1GenPhi = -999, pho1ClusterTime_scaleUp=-999, pho1ClusterTime_scaleDown=-999, pho1ClusterTime_smearUp=-999, pho1ClusterTime_smearDown=-999;
+    pho2E = -999, pho2Pt = -999, pho2Pt_scaleDown = -999, pho2Pt_scaleDown = -999, pho1Pt_smearUp = -999, pho2Pt_smearDown = -999, pho2Eta = -999, pho2Phi = -999, pho2SeedE = -999, pho2SeedPt = -999, pho2SeedEta = -999, pho2SeedPhi = -999, pho2SC_E = -999, pho2SC_Pt = -999, pho2SC_Eta = -999, pho2SC_Phi = -999, pho2angle_xtal = -999, pho2SigmaIetaIeta = -999, pho2R9 = -999, pho2HoverE = -999, pho2sumChargedHadronPt = -999, pho2sumNeutralHadronEt = -999, pho2sumPhotonEt = -999, pho2PFsumChargedHadronPt = -999, pho2PFsumNeutralHadronEt = -999, pho2PFsumPhotonEt = -999, pho2ecalPFClusterIso = -999, pho2hcalPFClusterIso = -999, pho2trkSumPtHollowConeDR03 = -999, pho2sigmaEOverE = -999, pho2SeedTimeRaw = -999, pho2SeedTimeCalib = -999, pho2SeedTimeCalibTOF = -999, pho2SeedTimeGenV = -999, pho2ClusterTime = -999, pho2ClusterTime_SmearToData, pho2Sminor = -999, pho2Smajor = -999, pho2Setaeta = -999, pho2Sphiphi = -999, pho2Setaphi = -999, pho2GenE = -999, pho2GenPt = -999, pho2GenEta = -999, pho2GenPhi = -999;
     pho1passEleVeto = false, pho1passIsoLoose = false, pho1passIsoMedium = false, pho1passIsoTight = false, pho1isStandardPhoton = false, pho1isPromptPhoton = false, pho1isDelayedPhoton = false;
     pho1passIsoLoose_privatePF = false, pho1passIsoMedium_privatePF = false, pho1passIsoTight_privatePF = false;
     pho1passIsoLoose_OOT = false, pho1passIsoMedium_OOT = false, pho1passIsoTight_OOT = false;
@@ -895,8 +891,6 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 	double phoSetaeta = 0.0;//second moments of eta eta
 	double phoSphiphi = 0.0;
 	double phoSetaphi = 0.0;
-	double phoSminor_private = 0.0;
-	double phoSmajor_private = 0.0;
 	
     for (uint k=0; k<(*pho_EcalRechitIndex)[ind_pho].size(); ++k) 
     {
@@ -929,58 +923,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
     }
 	
-	for (uint k=0; k<(*pho_EcalRechitIndex)[ind_pho].size(); ++k)
-        {
-		uint rechitIndex = (*pho_EcalRechitIndex)[ind_pho][k];
-		if((*ecalRechit_E)[rechitIndex] < 1.0) continue;	
-		double thisWeight = max(4.2+log(((*ecalRechit_E)[rechitIndex])/tmpSumE),0.0);
-		mTotalWeight += thisWeight;
-		//float thisIEtaIX = (*ecalRechit_Eta)[rechitIndex];
-		//float thisIPhiIY = (*ecalRechit_Phi)[rechitIndex];
-		float thisIPhiIY =  1.0 * iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , isFromEB);
-		float thisIEtaIX =  1.0 * iEta_or_iX_from_detID( (*ecalRechit_ID)[rechitIndex] , isFromEB);
-
-		etaAverage += thisWeight * (thisIEtaIX) ;	
-		phiAverage += thisWeight * (thisIPhiIY) ;	
-	}
-	
-	etaAverage = etaAverage / mTotalWeight;
-	phiAverage = phiAverage / mTotalWeight;
-
-	//cout<<"DEBUG rechit: ";	
-	//int tmp_Nxtal = 0;
-	//cout<<"\n  etaAverage = "<<etaAverage<<endl;
-	for (uint k=0; k<(*pho_EcalRechitIndex)[ind_pho].size(); ++k)
-        {
-                uint rechitIndex = (*pho_EcalRechitIndex)[ind_pho][k];
-		if((*ecalRechit_E)[rechitIndex] < 1.0) continue;	
-                double thisWeight = max(4.2+log(((*ecalRechit_E)[rechitIndex])/tmpSumE),0.0);
-		//if(thisWeight > 0) tmp_Nxtal ++;
-		//float thisIEtaIX = (*ecalRechit_Eta)[rechitIndex];
-		//float thisIPhiIY = (*ecalRechit_Phi)[rechitIndex];
-		float thisIPhiIY =  1.0 * iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , isFromEB);
-		float thisIEtaIX =  1.0 * iEta_or_iX_from_detID( (*ecalRechit_ID)[rechitIndex] , isFromEB);
-
-
-		//computing the moments of eta and phi
-		//if(thisWeight > 0) cout<<" [ i "<<k<<"  E/Et "<<((*ecalRechit_E)[rechitIndex])/tmpSumE<<" w "<<thisWeight<<" iEta "<<thisIEtaIX<<"  dd "<<(thisIEtaIX - etaAverage) * (thisIEtaIX - etaAverage)<<"  s  "<<thisWeight * (thisIEtaIX - etaAverage) * (thisIEtaIX - etaAverage)<<" ] "<<endl;
-		phoSetaeta += thisWeight * (thisIEtaIX - etaAverage) * (thisIEtaIX - etaAverage);
-		phoSphiphi += thisWeight * (thisIPhiIY - phiAverage) * (thisIPhiIY - phiAverage);
-		phoSetaphi += thisWeight * (thisIEtaIX - etaAverage) * (thisIPhiIY - phiAverage);
-        }
-	//cout<<"  ===>   setaeta "<<phoSetaeta<<endl;
-	
-      	double weightedTime = tmpSumWeightedTime / tmpSumWeight;
-
-	if(tmpSumE>0.0)
-	{
-		//cout<<"phoSetaeta = "<<phoSetaeta<<"  totalWeight = "<<mTotalWeight <<"  S/w = "<<phoSetaeta / mTotalWeight<<"   Nxtal = "<<tmp_Nxtal<<endl;
-		phoSetaeta = phoSetaeta / mTotalWeight;	
-		phoSphiphi = phoSphiphi / mTotalWeight;	
-		phoSetaphi = phoSetaphi / mTotalWeight;	
-		phoSminor_private = 0.5 * (phoSetaeta + phoSphiphi - pow(pow(phoSetaeta - phoSphiphi,2.0) + 4.0*pow(phoSetaphi,2.0),0.5));
-		phoSmajor_private = 0.5 * (phoSetaeta + phoSphiphi + pow(pow(phoSetaeta - phoSphiphi,2.0) + 4.0*pow(phoSetaphi,2.0),0.5));
-	}
+    double weightedTime = tmpSumWeightedTime / tmpSumWeight;
         
 	bool isPromptPhoton = false;
 	//photon gen matching
@@ -1056,9 +999,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         	pho2SeedTimeCalibTOF = pho1SeedTimeCalibTOF;
         	pho2SeedTimeGenV = pho1SeedTimeGenV;
         	pho2ClusterTime = pho1ClusterTime;
-		pho2Sminor_private = pho1Sminor_private;
 		pho2Sminor = pho1Sminor;
-		pho2Smajor_private = pho1Smajor_private;
 		pho2Smajor = pho1Smajor;
 		pho2Setaeta = pho1Setaeta;
 		pho2Sphiphi = pho1Sphiphi;
@@ -1126,8 +1067,6 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         	pho1SeedTimeCalibTOF = TOFCorrectedSeedHitTime;
         	pho1SeedTimeGenV = TOFCorrectedSeedHitTime_genV;
         	pho1ClusterTime = weightedTime;
-		pho1Sminor_private = phoSminor_private;
-		pho1Smajor_private = phoSmajor_private;
 		pho1Setaeta = phoSetaeta;
 		pho1Sphiphi = phoSphiphi;
 		pho1Setaphi = phoSetaphi;
@@ -1192,8 +1131,6 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         	pho2SeedTimeCalibTOF = TOFCorrectedSeedHitTime;
         	pho2SeedTimeGenV = TOFCorrectedSeedHitTime_genV;
         	pho2ClusterTime = weightedTime;
-		pho2Sminor_private = phoSminor_private;
-		pho2Smajor_private = phoSmajor_private;
 		pho2Setaeta = phoSetaeta;
 		pho2Sphiphi = phoSphiphi;
 		pho2Setaphi = phoSetaphi;
