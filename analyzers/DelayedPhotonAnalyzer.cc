@@ -252,6 +252,8 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   bool pho2passSigmaIetaIetaLoose, pho2passSigmaIetaIetaMedium, pho2passSigmaIetaIetaTight;
   bool pho1passSmajorLoose, pho1passSmajorMedium, pho1passSmajorTight;
   bool pho2passSmajorLoose, pho2passSmajorMedium, pho2passSmajorTight;
+  bool pho1passSminorLoose, pho1passSminorMedium, pho1passSminorTight;
+  bool pho2passSminorLoose, pho2passSminorMedium, pho2passSminorTight;
 
   // XYZ rechit where photon is detected
   float pho1SeedX;
@@ -422,6 +424,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho1passSmajorLoose", &pho1passSmajorLoose, "pho1passSmajorLoose/O");
   outputTree->Branch("pho1passSmajorMedium", &pho1passSmajorMedium, "pho1passSmajorMedium/O");
   outputTree->Branch("pho1passSmajorTight", &pho1passSmajorTight, "pho1passSmajorTight/O");
+  outputTree->Branch("pho1passSminorLoose", &pho1passSminorLoose, "pho1passSminorLoose/O");
+  outputTree->Branch("pho1passSminorMedium", &pho1passSminorMedium, "pho1passSminorMedium/O");
+  outputTree->Branch("pho1passSminorTight", &pho1passSminorTight, "pho1passSminorTight/O");
   outputTree->Branch("pho1SeedTimeRaw", &pho1SeedTimeRaw, "pho1SeedTimeRaw/F");
   outputTree->Branch("pho1SeedTimeCalib", &pho1SeedTimeCalib, "pho1SeedTimeCalib/F");
   outputTree->Branch("pho1SeedTimeCalibTOF", &pho1SeedTimeCalibTOF, "pho1SeedTimeCalibTOF/F");
@@ -503,6 +508,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho2passSmajorLoose", &pho2passSmajorLoose, "pho2passSmajorLoose/O");
   outputTree->Branch("pho2passSmajorMedium", &pho2passSmajorMedium, "pho2passSmajorMedium/O");
   outputTree->Branch("pho2passSmajorTight", &pho2passSmajorTight, "pho2passSmajorTight/O");
+  outputTree->Branch("pho2passSminorLoose", &pho2passSminorLoose, "pho2passSminorLoose/O");
+  outputTree->Branch("pho2passSminorMedium", &pho2passSminorMedium, "pho2passSminorMedium/O");
+  outputTree->Branch("pho2passSminorTight", &pho2passSminorTight, "pho2passSminorTight/O");
 
   outputTree->Branch("pho2SeedTimeRaw", &pho2SeedTimeRaw, "pho2SeedTimeRaw/F");
   outputTree->Branch("pho2SeedTimeCalib", &pho2SeedTimeCalib, "pho2SeedTimeCalib/F");
