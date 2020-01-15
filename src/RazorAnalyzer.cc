@@ -23,6 +23,7 @@ void RazorAnalyzer::Analyze(bool isData, int option, string outputFileName, stri
 //NOTE: the functions below need to be maintained by hand.  If variables are added or removed from the ntuple, these functions need to be updated to reflect the changes.
 
 void RazorAnalyzer::EnableAll(){
+    std::cout << "Enabling everything\n";
     EnableEventInfo();
     EnablePVAll();
     EnableMuons();
@@ -39,6 +40,7 @@ void RazorAnalyzer::EnableAll(){
 }
 
 void RazorAnalyzer::EnableAllWithEcalRechits(){
+    std::cout << "Enabling everything with ecal rechits\n";
     EnableEventInfo();
     EnablePVAll();
     //EnableMuons();
@@ -53,9 +55,11 @@ void RazorAnalyzer::EnableAllWithEcalRechits(){
 }
 
 void RazorAnalyzer::EnableGenInfo(){
+    std::cout << "Enabling MC and gen info\n";
     EnableMC();
     EnableGenParticles();
 }
+
 void RazorAnalyzer::EnableEventInfo(){
     fChain->SetBranchStatus("nPV", 1);
     fChain->SetBranchStatus("pvX", 1);
@@ -97,6 +101,7 @@ void RazorAnalyzer::EnablePileup(){
 }
 
 void RazorAnalyzer::EnableMuons(){
+    std::cout << "Enabling muons\n";
     fChain->SetBranchStatus("nMuons", 1);
     fChain->SetBranchStatus("muonE", 1);
     fChain->SetBranchStatus("muonPt", 1);

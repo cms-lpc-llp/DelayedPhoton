@@ -616,8 +616,10 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     //begin event
     if(jentry % 1000 == 0) cout << "Processing entry " << jentry << endl;
     Long64_t ientry = LoadTree(jentry);
+    std::cout << "[DEBUG] Finished loading the tree\n";
     if (ientry < 0) break;
     nb = fChain->GetEntry(jentry);   nbytes += nb;
+    std::cout << "[DEBUG] Finished getting the entry\n";
 
     //initialize branches
     run = runNum;
@@ -779,395 +781,406 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
 
     TVector3 vtx( pvX, pvY, pvZ );
+    std::cout << "[DEBUG] Starting photon loop\n";
+    std::cout << "[DEBUG] nPhotons = " << nPhotons << "\n";
+        
+    if (ecalRechit_X->empty()) continue;
 
-  for(int ind_pho = 0; ind_pho < nPhotons; ind_pho++) 
-  { //photon loop
-      	// apply cuts
-      	if(phoPt[ind_pho] < 40) continue; // basic Pt cut
-      	if(fabs(phoEta[ind_pho]) > 2.5) continue; // tracker region
-      	if(fabs(phoEta[ind_pho]) > 1.4442 && fabs(phoEta[ind_pho]) < 1.566) continue; //the eta range for photon, this takes care of the gap between barrel and endcap
-	if(ecalRechit_ID->empty() ) continue;
-	//if(!photonPassLooseIso(ind_pho)) continue;
-	//if(!pho_passEleVeto[ind_pho]) continue;
-      	//if(!(isEGammaPOGTightElectron(i))) continue;
-  	//check overlap, this is mainly for overlap within one collection
-	//float dR_pho1 = deltaR(phoEta[ind_pho], phoPhi[ind_pho], pho1Eta, pho1Phi);
-	//float dR_pho2 = deltaR(phoEta[ind_pho], phoPhi[ind_pho], pho2Eta, pho2Phi);
-	//if(dR_pho1 < 0.3 && phoPt[ind_pho]<pho1Pt) continue; // overlap, remove
-	//if(dR_pho2 < 0.3 && phoPt[ind_pho]<pho2Pt) continue; // overlap, remove
+    for(int ind_pho = 0; ind_pho < nPhotons; ind_pho++) 
+    { //photon loop
+        // apply cuts
+        std::cout << "[DEBUG] Starting inside photon loop\n";
+        if(phoPt[ind_pho] < 40) continue; // basic Pt cut
+        std::cout << "[DEBUG] After pt cut\n";
+        if(fabs(phoEta[ind_pho]) > 2.5) continue; // tracker region
+        std::cout << "[DEBUG] After eta cut\n";
+        if(fabs(phoEta[ind_pho]) > 1.4442 && fabs(phoEta[ind_pho]) < 1.566) continue; //the eta range for photon, this takes care of the gap between barrel and endcap
+        std::cout << "[DEBUG] After more eta cut\n";
+        std::cout << "[DEBUG] After ID cut\n";
+        //if(!photonPassLooseIso(ind_pho)) continue;
+        //if(!pho_passEleVeto[ind_pho]) continue;
+        //if(!(isEGammaPOGTightElectron(i))) continue;
+        //check overlap, this is mainly for overlap within one collection
+        //float dR_pho1 = deltaR(phoEta[ind_pho], phoPhi[ind_pho], pho1Eta, pho1Phi);
+        //float dR_pho2 = deltaR(phoEta[ind_pho], phoPhi[ind_pho], pho2Eta, pho2Phi);
+        //if(dR_pho1 < 0.3 && phoPt[ind_pho]<pho1Pt) continue; // overlap, remove
+        //if(dR_pho2 < 0.3 && phoPt[ind_pho]<pho2Pt) continue; // overlap, remove
 
-	nPho++;
-	float pho_pt_corr = phoPt[ind_pho];
-	float pho_pt_corr_scaleUp = phoPt[ind_pho];
-	float pho_pt_corr_scaleDown = phoPt[ind_pho];
-	float pho_pt_corr_smearUp = phoPt[ind_pho];
-	float pho_pt_corr_smearDown = phoPt[ind_pho];
-//    double scale = photonCorrector->ScaleCorrection(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
-//    double scaleUnc = photonCorrector->ScaleCorrectionUncertainty(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
-//    double scaleUp = scale + scaleUnc;
-//    double scaleDown = scale - scaleUnc;
-//    double smear = photonCorrector->getSmearingSigma(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), 0., 0.);
+        std::cout << "[DEBUG] Starting couting nPho\n";
+        nPho++;
+        float pho_pt_corr = phoPt[ind_pho];
+        float pho_pt_corr_scaleUp = phoPt[ind_pho];
+        float pho_pt_corr_scaleDown = phoPt[ind_pho];
+        float pho_pt_corr_smearUp = phoPt[ind_pho];
+        float pho_pt_corr_smearDown = phoPt[ind_pho];
+        //    double scale = photonCorrector->ScaleCorrection(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
+        //    double scaleUnc = photonCorrector->ScaleCorrectionUncertainty(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
+        //    double scaleUp = scale + scaleUnc;
+        //    double scaleDown = scale - scaleUnc;
+        //    double smear = photonCorrector->getSmearingSigma(run, (fabs(pho_superClusterEta[ind_pho]) < 1.5), phoR9[ind_pho], pho_superClusterEta[ind_pho], phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), 0., 0.);
 
-    double scale = 1;
-    double scaleUnc = 0;
-    double scaleUp = 1;
-    double scaleDown = 1;
-    double smear = 0;
-    const EnergyScaleCorrection_class_2017::ScaleCorrection_class_2017* scaleCorr = photonCorrector->EnergyScaleCorrection_class_2017::getScaleCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), pho_superClusterEta[ind_pho], phoR9[ind_pho], 12);
-    const EnergyScaleCorrection_class_2017::SmearCorrection_class_2017* smearCorr = photonCorrector->EnergyScaleCorrection_class_2017::getSmearCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), pho_superClusterEta[ind_pho], phoR9[ind_pho], 12);
-    if (scaleCorr!=NULL) 
-    {
-        scale  = scaleCorr->scale();
-        scaleUnc = scaleCorr->scaleErr(EnergyScaleCorrection_class_2017::kErrGainBitNr);
-        scaleUp = scale + scaleUnc;
-        scaleDown = scale - scaleUnc;
-    }
-    if (smearCorr!=NULL) smear  = smearCorr->sigma(phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
+        double scale = 1;
+        double scaleUnc = 0;
+        double scaleUp = 1;
+        double scaleDown = 1;
+        double smear = 0;
+        std::cout << "[DEBUG] Starting getting photon correction\n";
+        const EnergyScaleCorrection_class_2017::ScaleCorrection_class_2017* scaleCorr = photonCorrector->EnergyScaleCorrection_class_2017::getScaleCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), pho_superClusterEta[ind_pho], phoR9[ind_pho], 12);
+        const EnergyScaleCorrection_class_2017::SmearCorrection_class_2017* smearCorr = photonCorrector->EnergyScaleCorrection_class_2017::getSmearCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), pho_superClusterEta[ind_pho], phoR9[ind_pho], 12);
+        std::cout << "[DEBUG] Finished getting photon correction\n";
+        if (scaleCorr!=NULL) 
+        {
+            scale  = scaleCorr->scale();
+            scaleUnc = scaleCorr->scaleErr(EnergyScaleCorrection_class_2017::kErrGainBitNr);
+            scaleUp = scale + scaleUnc;
+            scaleDown = scale - scaleUnc;
+        }
+        if (smearCorr!=NULL) smear  = smearCorr->sigma(phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
 
-	if (doPhotonScaleCorrection) {
+        if (doPhotonScaleCorrection) {
             if (isData) {
-              pho_pt_corr = phoPt[ind_pho]*scale;
-              pho_pt_corr_scaleUp = phoPt[ind_pho]*scaleUp;
-              pho_pt_corr_scaleDown = phoPt[ind_pho]*scaleDown;
-              if (_phodebug) std::cout << "[DEBUG] : Photon Energy Scale Corrections: " << phoPt[ind_pho] << " * " << scale << " --> " << pho_pt_corr << "\n";
+                pho_pt_corr = phoPt[ind_pho]*scale;
+                pho_pt_corr_scaleUp = phoPt[ind_pho]*scaleUp;
+                pho_pt_corr_scaleDown = phoPt[ind_pho]*scaleDown;
+                if (_phodebug) std::cout << "[DEBUG] : Photon Energy Scale Corrections: " << phoPt[ind_pho] << " * " << scale << " --> " << pho_pt_corr << "\n";
             } else {
-              pho_pt_corr = phoPt[ind_pho]*(1+smear*random.Gaus());
-	      pho_pt_corr_scaleUp = pho_pt_corr/scaleUp;
-	      pho_pt_corr_scaleDown = pho_pt_corr/scaleDown;
-	      pho_pt_corr_smearUp = phoPt[ind_pho]*(1+smear);
-	      pho_pt_corr_smearDown = phoPt[ind_pho]*(1-smear);
+                pho_pt_corr = phoPt[ind_pho]*(1+smear*random.Gaus());
+                pho_pt_corr_scaleUp = pho_pt_corr/scaleUp;
+                pho_pt_corr_scaleDown = pho_pt_corr/scaleDown;
+                pho_pt_corr_smearUp = phoPt[ind_pho]*(1+smear);
+                pho_pt_corr_smearDown = phoPt[ind_pho]*(1-smear);
             }
-          }
-	
-   	//photon cluster
-   	TVector3 vec, vec_scaleUp, vec_scaleDown, vec_smearUp, vec_smearDown;
-	vec.SetPtEtaPhi( pho_pt_corr, phoEta[ind_pho], phoPhi[ind_pho] );
-	vec_scaleUp.SetPtEtaPhi( pho_pt_corr_scaleUp, phoEta[ind_pho], phoPhi[ind_pho] );
-	vec_scaleDown.SetPtEtaPhi( pho_pt_corr_scaleDown, phoEta[ind_pho], phoPhi[ind_pho] );
-	vec_smearUp.SetPtEtaPhi( pho_pt_corr_smearUp, phoEta[ind_pho], phoPhi[ind_pho] );
-	vec_smearDown.SetPtEtaPhi( pho_pt_corr_smearDown, phoEta[ind_pho], phoPhi[ind_pho] );
-      	TLorentzVector thisPhoton, thisPhoton_scaleUp, thisPhoton_scaleDown, thisPhoton_smearUp, thisPhoton_smearDown; //= makeTLorentzVector(phoPt[ind_pho], phoEta[ind_pho], phoPhi[ind_pho], phoE[ind_pho]);
-	thisPhoton.SetVectM( vec, .0 );
-	thisPhoton_scaleUp.SetVectM( vec_scaleUp, .0 );
-	thisPhoton_scaleDown.SetVectM( vec_scaleDown, .0 );
-	thisPhoton_smearUp.SetVectM( vec_smearUp, .0 );
-	thisPhoton_smearDown.SetVectM( vec_smearDown, .0 );
-      
-	//photon super cluster
-	TVector3 phoPos;
-       	if ( fabs( pho_superClusterEta[ind_pho] ) < 1.479 )
-       	{
-        	phoPos.SetXYZ( EB_R*cos( pho_superClusterPhi[ind_pho]), EB_R*sin( pho_superClusterPhi[ind_pho] ), EB_R*sinh( pho_superClusterEta[ind_pho] ) );
-      	}
+        }
+
+        //photon cluster
+        TVector3 vec, vec_scaleUp, vec_scaleDown, vec_smearUp, vec_smearDown;
+        vec.SetPtEtaPhi( pho_pt_corr, phoEta[ind_pho], phoPhi[ind_pho] );
+        vec_scaleUp.SetPtEtaPhi( pho_pt_corr_scaleUp, phoEta[ind_pho], phoPhi[ind_pho] );
+        vec_scaleDown.SetPtEtaPhi( pho_pt_corr_scaleDown, phoEta[ind_pho], phoPhi[ind_pho] );
+        vec_smearUp.SetPtEtaPhi( pho_pt_corr_smearUp, phoEta[ind_pho], phoPhi[ind_pho] );
+        vec_smearDown.SetPtEtaPhi( pho_pt_corr_smearDown, phoEta[ind_pho], phoPhi[ind_pho] );
+        TLorentzVector thisPhoton, thisPhoton_scaleUp, thisPhoton_scaleDown, thisPhoton_smearUp, thisPhoton_smearDown; //= makeTLorentzVector(phoPt[ind_pho], phoEta[ind_pho], phoPhi[ind_pho], phoE[ind_pho]);
+        thisPhoton.SetVectM( vec, .0 );
+        thisPhoton_scaleUp.SetVectM( vec_scaleUp, .0 );
+        thisPhoton_scaleDown.SetVectM( vec_scaleDown, .0 );
+        thisPhoton_smearUp.SetVectM( vec_smearUp, .0 );
+        thisPhoton_smearDown.SetVectM( vec_smearDown, .0 );
+
+        //photon super cluster
+        TVector3 phoPos;
+        if ( fabs( pho_superClusterEta[ind_pho] ) < 1.479 )
+        {
+            phoPos.SetXYZ( EB_R*cos( pho_superClusterPhi[ind_pho]), EB_R*sin( pho_superClusterPhi[ind_pho] ), EB_R*sinh( pho_superClusterEta[ind_pho] ) );
+        }
         else
         {
-              	double R = fabs( EE_Z/sinh( pho_superClusterEta[ind_pho] ) );
-              	if ( pho_superClusterEta[ind_pho] > .0 )
+            double R = fabs( EE_Z/sinh( pho_superClusterEta[ind_pho] ) );
+            if ( pho_superClusterEta[ind_pho] > .0 )
+            {
+                phoPos.SetXYZ( R*cos( pho_superClusterPhi[ind_pho] ), R*sin( pho_superClusterPhi[ind_pho] ), EE_Z);
+            }
+            else
+            {
+                phoPos.SetXYZ( R*cos( pho_superClusterPhi[ind_pho] ), R*sin( pho_superClusterPhi[ind_pho] ), -EE_Z);
+            }
+        }
+        TLorentzVector phoSC = GetCorrectedMomentum( vtx, phoPos, pho_RegressionE[ind_pho] );
+
+        //rough definition
+        uint seedhitIndex =  (*pho_SeedRechitIndex)[ind_pho];
+
+        //cout<<"reco Photon - "<<i<<" : seedX = "<<(*ecalRechit_X)[seedhitIndex]<<" : seedY = "<<(*ecalRechit_Y)[seedhitIndex]<<" : seedZ = "<<(*ecalRechit_Z)[seedhitIndex]<<"  pT = "<<phoPt[ind_pho]<<"  Energy = "<<phoE[ind_pho]<<endl;
+        //cout<<"seedhitIndex: "<<seedhitIndex<<endl;
+        //cout<<"ecalRechit_ID size: "<<ecalRechit_ID->size()<<endl;
+        //cout<<"ecalRechit_ID: "<<(*ecalRechit_ID)[seedhitIndex]<<endl;
+
+        bool isFromEB = bool( (*ecalRechit_ID)[seedhitIndex] < 840000000 ); //barrel vs. endcap
+        double rawSeedHitTime =  (*ecalRechit_T)[seedhitIndex];
+
+        //apply intercalibration2      
+        double IC_time_SeptRereco = 0.0;//isData ? getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
+        double IC_time_LagacyRereco = 0.0;//isData ? getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
+        double calibratedSeedHitTime = rawSeedHitTime + IC_time_LagacyRereco - IC_time_SeptRereco;
+
+        //apply TOF correction
+        double TOFCorrectedSeedHitTime = calibratedSeedHitTime + (std::sqrt(pow((*ecalRechit_X)[seedhitIndex],2)+pow((*ecalRechit_Y)[seedhitIndex],2)+pow((*ecalRechit_Z)[seedhitIndex],2))-std::sqrt(pow((*ecalRechit_X)[seedhitIndex]-pvX,2)+pow((*ecalRechit_Y)[seedhitIndex]-pvY,2)+pow((*ecalRechit_Z)[seedhitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
+
+        //generator xyz information
+
+        double TOFCorrectedSeedHitTime_genV = isData ? TOFCorrectedSeedHitTime : ( calibratedSeedHitTime + (std::sqrt(pow((*ecalRechit_X)[seedhitIndex],2)+pow((*ecalRechit_Y)[seedhitIndex],2)+pow((*ecalRechit_Z)[seedhitIndex],2))-std::sqrt(pow((*ecalRechit_X)[seedhitIndex]-genVertexX,2)+pow((*ecalRechit_Y)[seedhitIndex]-genVertexY,2)+pow((*ecalRechit_Z)[seedhitIndex]-genVertexZ,2)))/SPEED_OF_LIGHT );
+
+        double tmpSumWeightedTime = 0;
+        double tmpSumWeight = 0;
+
+        double etaAverage = 0.0;
+        double phiAverage = 0.0;
+        double mTotalWeight = 0.0;
+        double tmpSumE = 0.0;
+        double phoSetaeta = 0.0;//second moments of eta eta
+        double phoSphiphi = 0.0;
+        double phoSetaphi = 0.0;
+
+        for (uint k=0; k<(*pho_EcalRechitIndex)[ind_pho].size(); ++k) 
+        {
+            uint rechitIndex = (*pho_EcalRechitIndex)[ind_pho][k];
+
+            if((*ecalRechit_E)[rechitIndex] < 1.0) continue;	
+
+            double rawT = (*ecalRechit_T)[rechitIndex];
+            //apply intercalibration
+            double IC_time_SeptRereco_this = 0.0;
+            double IC_time_LagacyRereco_this = 0.0;
+            double calibratedSeedHitTime_this = rawT + IC_time_LagacyRereco_this - IC_time_SeptRereco_this;
+
+
+            double corrT = calibratedSeedHitTime_this + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
+
+            double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.0;  
+            //double pedNoise = 1;
+            double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1;
+            double sigmaE = pedNoise * ADCToGeV;
+
+            double sigmaT2 = N_EB*N_EB / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + 2.0 * C_EB * C_EB;
+
+            if(!isData) sigmaT2 = 0.5*N_EB_MC*N_EB_MC / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + C_EB_MC * C_EB_MC;
+
+            tmpSumWeightedTime += corrT * ( 1.0 / sigmaT2 );
+            tmpSumWeight += ( 1.0 / sigmaT2 );
+            // cout << "\n";
+            tmpSumE += (*ecalRechit_E)[rechitIndex];	
+
+        }
+
+        double weightedTime = tmpSumWeightedTime / tmpSumWeight;
+
+        bool isPromptPhoton = false;
+        //photon gen matching
+        if(!isData)
+        {
+            bool foundMatch = false;
+            int phoMatchingGenPhotonIndex = -1;
+            double deltaEOverEBest = 999;
+            for(int g = 0; g < nGenParticle; g++)
+            {
+                if(gParticleStatus[g] != 1) continue;
+                if(gParticleId[g] != 22) continue;
+                if(gParticleE[g] < 1.) continue;
+                if(deltaR(thisPhoton.Eta(), thisPhoton.Phi(), gParticleEta[g], gParticlePhi[g]) > 0.2) continue;		
+                float deltaEOverE = fabs(phoSC.E() - gParticleE[g])/gParticleE[g];
+                if(deltaEOverE > 1.) continue;
+
+                foundMatch = true;
+                if(deltaEOverE < deltaEOverEBest)
                 {
-                  	phoPos.SetXYZ( R*cos( pho_superClusterPhi[ind_pho] ), R*sin( pho_superClusterPhi[ind_pho] ), EE_Z);
-                }
-              	else
-                {
-                  	phoPos.SetXYZ( R*cos( pho_superClusterPhi[ind_pho] ), R*sin( pho_superClusterPhi[ind_pho] ), -EE_Z);
-                }
-     	}
-   	TLorentzVector phoSC = GetCorrectedMomentum( vtx, phoPos, pho_RegressionE[ind_pho] );
- 
-      	//rough definition
-      	uint seedhitIndex =  (*pho_SeedRechitIndex)[ind_pho];
-    
-      	//cout<<"reco Photon - "<<i<<" : seedX = "<<(*ecalRechit_X)[seedhitIndex]<<" : seedY = "<<(*ecalRechit_Y)[seedhitIndex]<<" : seedZ = "<<(*ecalRechit_Z)[seedhitIndex]<<"  pT = "<<phoPt[ind_pho]<<"  Energy = "<<phoE[ind_pho]<<endl;
-      	//cout<<"seedhitIndex: "<<seedhitIndex<<endl;
-      	//cout<<"ecalRechit_ID size: "<<ecalRechit_ID->size()<<endl;
-      	//cout<<"ecalRechit_ID: "<<(*ecalRechit_ID)[seedhitIndex]<<endl;
+                    deltaEOverEBest = deltaEOverE;
+                    phoMatchingGenPhotonIndex = g;
+                }	
+            }
 
-      	bool isFromEB = bool( (*ecalRechit_ID)[seedhitIndex] < 840000000 ); //barrel vs. endcap
-      	double rawSeedHitTime =  (*ecalRechit_T)[seedhitIndex];
-
-      	//apply intercalibration2      
-      	double IC_time_SeptRereco = 0.0;//isData ? getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
-      	double IC_time_LagacyRereco = 0.0;//isData ? getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
-      	double calibratedSeedHitTime = rawSeedHitTime + IC_time_LagacyRereco - IC_time_SeptRereco;
-
-      	//apply TOF correction
-      	double TOFCorrectedSeedHitTime = calibratedSeedHitTime + (std::sqrt(pow((*ecalRechit_X)[seedhitIndex],2)+pow((*ecalRechit_Y)[seedhitIndex],2)+pow((*ecalRechit_Z)[seedhitIndex],2))-std::sqrt(pow((*ecalRechit_X)[seedhitIndex]-pvX,2)+pow((*ecalRechit_Y)[seedhitIndex]-pvY,2)+pow((*ecalRechit_Z)[seedhitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
-      
-      	//generator xyz information
-
-      	double TOFCorrectedSeedHitTime_genV = isData ? TOFCorrectedSeedHitTime : ( calibratedSeedHitTime + (std::sqrt(pow((*ecalRechit_X)[seedhitIndex],2)+pow((*ecalRechit_Y)[seedhitIndex],2)+pow((*ecalRechit_Z)[seedhitIndex],2))-std::sqrt(pow((*ecalRechit_X)[seedhitIndex]-genVertexX,2)+pow((*ecalRechit_Y)[seedhitIndex]-genVertexY,2)+pow((*ecalRechit_Z)[seedhitIndex]-genVertexZ,2)))/SPEED_OF_LIGHT );
-
-      	double tmpSumWeightedTime = 0;
-      	double tmpSumWeight = 0;
-
-	double etaAverage = 0.0;
-	double phiAverage = 0.0;
-	double mTotalWeight = 0.0;
-	double tmpSumE = 0.0;
-	double phoSetaeta = 0.0;//second moments of eta eta
-	double phoSphiphi = 0.0;
-	double phoSetaphi = 0.0;
-	
-    for (uint k=0; k<(*pho_EcalRechitIndex)[ind_pho].size(); ++k) 
-    {
-        uint rechitIndex = (*pho_EcalRechitIndex)[ind_pho][k];
-
-        if((*ecalRechit_E)[rechitIndex] < 1.0) continue;	
-
-        double rawT = (*ecalRechit_T)[rechitIndex];
-        //apply intercalibration
-        double IC_time_SeptRereco_this = 0.0;
-        double IC_time_LagacyRereco_this = 0.0;
-        double calibratedSeedHitTime_this = rawT + IC_time_LagacyRereco_this - IC_time_SeptRereco_this;
+            if(foundMatch)
+            {	
+                int motherId = abs(gParticleMotherId[phoMatchingGenPhotonIndex]);
+                if(motherId == 25 || (motherId >= 1 && motherId <= 6) || (motherId >= 11 && motherId <= 16)) isPromptPhoton = true;
+            }
+        }	
 
 
-        double corrT = calibratedSeedHitTime_this + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
+        if ( ( photonOrderByTime ? ( weightedTime > pho1ClusterTime) : (thisPhoton.Pt() > pho1.Pt())  ) ) 
+        { // find two highest momentum photons, or two largest time photons
+            pho2 = pho1;
+            pho2_scaleUp = pho1_scaleUp;
+            pho2_scaleDown = pho1_scaleDown;
+            pho2_smearUp = pho1_smearUp;
+            pho2_smearDown = pho1_smearDown;
 
-        double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.0;  
-        //double pedNoise = 1;
-        double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1;
-        double sigmaE = pedNoise * ADCToGeV;
+            pho2E = pho2.E();
+            pho2Pt = pho2.Pt();
+            pho2Pt_scaleUp = pho2_scaleUp.Pt();
+            pho2Pt_scaleDown = pho2_scaleDown.Pt();
+            pho2Pt_smearUp = pho2_smearUp.Pt();
+            pho2Pt_smearDown = pho2_smearDown.Pt();
+            pho2Eta = pho2.Eta();
+            pho2Phi = pho2.Phi();
+            pho2SeedE = pho1SeedE;
+            pho2SeedEta = pho2SeedEta;
+            pho2SeedPhi = pho1SeedPhi;
+            pho2SeedPt = pho1SeedPt; 
+            pho2SC_E = pho1SC_E;
+            pho2SC_Pt = pho1SC_Pt; 
+            pho2SC_Eta = pho1SC_Eta;
+            pho2SC_Phi = pho1SC_Phi;
+            pho2SigmaIetaIeta = pho1SigmaIetaIeta;
+            pho2R9 = pho1R9;
+            pho2HoverE = pho1HoverE;
+            pho2sumChargedHadronPt = pho1sumChargedHadronPt;
+            pho2PFsumChargedHadronPt = pho1PFsumChargedHadronPt;
+            pho2sumNeutralHadronEt = pho1sumNeutralHadronEt;
+            pho2PFsumNeutralHadronEt = pho1PFsumNeutralHadronEt;
+            pho2sumPhotonEt = pho1sumPhotonEt;
+            pho2PFsumPhotonEt = pho1PFsumPhotonEt;
+            pho2ecalPFClusterIso = pho1ecalPFClusterIso;
+            pho2hcalPFClusterIso = pho1hcalPFClusterIso;
+            pho2trkSumPtHollowConeDR03 = pho1trkSumPtHollowConeDR03;
+            pho2sigmaEOverE = pho1sigmaEOverE;
+            pho2SeedTimeRaw = pho1SeedTimeRaw;
+            pho2SeedTimeCalib = pho1SeedTimeCalib;
+            pho2SeedTimeCalibTOF = pho1SeedTimeCalibTOF;
+            pho2SeedTimeGenV = pho1SeedTimeGenV;
+            pho2ClusterTime = pho1ClusterTime;
+            pho2Sminor = pho1Sminor;
+            pho2Smajor = pho1Smajor;
+            pho2Setaeta = pho1Setaeta;
+            pho2Sphiphi = pho1Sphiphi;
+            pho2Setaphi = pho1Setaphi;
+            pho2passEleVeto = pho1passEleVeto;
+            pho2passIsoLoose = pho1passIsoLoose;
+            pho2passIsoLoose_privatePF = pho1passIsoLoose_privatePF;
+            pho2passIsoLoose_OOT = pho1passIsoLoose_OOT;
+            pho2passIsoMedium = pho1passIsoMedium;
+            pho2passIsoMedium_privatePF = pho1passIsoMedium_privatePF;
+            pho2passIsoMedium_OOT = pho1passIsoMedium_OOT;
+            pho2passIsoTight = pho1passIsoTight;
+            pho2passIsoTight_privatePF = pho1passIsoTight_privatePF;
+            pho2passIsoTight_OOT = pho1passIsoTight_OOT;
+            pho2isStandardPhoton = pho1isStandardPhoton;
+            pho2isPromptPhoton = pho1isPromptPhoton;
+            pho2SeedX = pho1SeedX;
+            pho2SeedY = pho1SeedY;
+            pho2SeedZ = pho1SeedZ;
 
-        double sigmaT2 = N_EB*N_EB / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + 2.0 * C_EB * C_EB;
+            //	
+            pho1 = thisPhoton;
+            pho1_scaleUp = thisPhoton_scaleUp;
+            pho1_scaleDown = thisPhoton_scaleDown;
+            pho1_smearUp = thisPhoton_smearUp;
+            pho1_smearDown = thisPhoton_smearDown;
 
-        if(!isData) sigmaT2 = 0.5*N_EB_MC*N_EB_MC / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + C_EB_MC * C_EB_MC;
+            pho1E = thisPhoton.E();
+            pho1Pt = thisPhoton.Pt();
+            pho1Pt_scaleUp = thisPhoton_scaleUp.Pt();
+            pho1Pt_scaleDown = thisPhoton_scaleDown.Pt();
+            t1MET_phoScaleUp = metType1Pt - (pho1Pt_scaleUp*cos(metType1Phi - thisPhoton_scaleUp.Phi()) - pho1Pt*cos(metType1Phi - thisPhoton.Phi()));
+            t1MET_phoScaleDown = metType1Pt - (pho1Pt_scaleDown*cos(metType1Phi - thisPhoton_scaleDown.Phi()) - pho1Pt*cos(metType1Phi - thisPhoton.Phi()));
+            pho1Pt_smearUp = thisPhoton_smearUp.Pt();
+            pho1Pt_smearDown = thisPhoton_smearDown.Pt();
+            t1MET_phoSmearUp = metType1Pt - (pho1Pt_smearUp*cos(metType1Phi - thisPhoton_smearUp.Phi()) - pho1Pt*cos(metType1Phi - thisPhoton.Phi()));
+            t1MET_phoSmearDown = metType1Pt - (pho1Pt_smearDown*cos(metType1Phi - thisPhoton_smearDown.Phi()) - pho1Pt*cos(metType1Phi - thisPhoton.Phi()));
+            pho1Eta = thisPhoton.Eta();
+            pho1Phi = thisPhoton.Phi();
+            pho1SeedE = (*ecalRechit_E)[seedhitIndex];
+            pho1SeedEta = (*ecalRechit_Eta)[seedhitIndex];
+            pho1SeedPhi = (*ecalRechit_Phi)[seedhitIndex];
+            pho1SeedPt = pho1SeedE/cosh(pho1SeedEta);
+            pho1SC_E = phoSC.E();
+            pho1SC_Pt = phoSC.Pt();
+            pho1SC_Eta = phoSC.Eta();
+            pho1SC_Phi = phoSC.Phi();
+            pho1SigmaIetaIeta = phoFull5x5SigmaIetaIeta[ind_pho];
+            pho1R9 = phoR9[ind_pho];
+            pho1HoverE = pho_HoverE[ind_pho];
+            pho1Sminor = pho_sminor[ind_pho];
+            pho1Smajor = pho_smajor[ind_pho];
+            pho1sumChargedHadronPt = pho_sumChargedHadronPt[ind_pho];
+            pho1PFsumChargedHadronPt = pho_pfIsoChargedHadronIso[ind_pho];
+            pho1sumNeutralHadronEt = pho_sumNeutralHadronEt[ind_pho];
+            pho1PFsumNeutralHadronEt = pho_pfIsoNeutralHadronIso[ind_pho];
+            pho1sumPhotonEt = pho_sumPhotonEt[ind_pho];
+            pho1PFsumPhotonEt = pho_pfIsoPhotonIso[ind_pho];
+            pho1ecalPFClusterIso = pho_ecalPFClusterIso[ind_pho];
+            pho1hcalPFClusterIso = pho_hcalPFClusterIso[ind_pho];
+            pho1trkSumPtHollowConeDR03 = pho_trkSumPtHollowConeDR03[ind_pho];
+            pho1sigmaEOverE = pho_RegressionEUncertainty[ind_pho]/pho_RegressionE[ind_pho];
+            pho1SeedTimeRaw = rawSeedHitTime;
+            pho1SeedTimeCalib = calibratedSeedHitTime;
+            pho1SeedTimeCalibTOF = TOFCorrectedSeedHitTime;
+            pho1SeedTimeGenV = TOFCorrectedSeedHitTime_genV;
+            pho1ClusterTime = weightedTime;
+            pho1Setaeta = phoSetaeta;
+            pho1Sphiphi = phoSphiphi;
+            pho1Setaphi = phoSetaphi;
+            pho1passEleVeto = pho_passEleVeto[ind_pho];
+            pho1passIsoLoose = photonPassLooseIso(ind_pho);
+            pho1passIsoLoose_privatePF = photonPassLooseIso(ind_pho, true, true);
+            pho1passIsoLoose_OOT = photonPassLooseIso_OOT2016(ind_pho);
+            pho1passIsoMedium = photonPassMediumIso(ind_pho);
+            pho1passIsoMedium_privatePF = photonPassMediumIso(ind_pho, true, true);
+            pho1passIsoMedium_OOT = photonPassMediumIso_OOT2016(ind_pho);
+            pho1passIsoTight = photonPassTightIso(ind_pho);
+            pho1passIsoTight_privatePF = photonPassTightIso(ind_pho, true, true);
+            pho1passIsoTight_OOT = photonPassTightIso_OOT2016(ind_pho);
+            pho1isStandardPhoton = pho_isStandardPhoton[ind_pho];
+            pho1isPromptPhoton = isPromptPhoton;
 
-        tmpSumWeightedTime += corrT * ( 1.0 / sigmaT2 );
-        tmpSumWeight += ( 1.0 / sigmaT2 );
-        // cout << "\n";
-        tmpSumE += (*ecalRechit_E)[rechitIndex];	
+            pho1SeedX = (*ecalRechit_X)[seedhitIndex];
+            pho1SeedY = (*ecalRechit_Y)[seedhitIndex];
+            pho1SeedZ = (*ecalRechit_Z)[seedhitIndex];
+        } 
+        else if ( ( photonOrderByTime ? ( weightedTime > pho2ClusterTime) : (thisPhoton.Pt() > pho2.Pt())  ) ) 
+        {
+            pho2 = thisPhoton;
+            pho2_scaleUp = thisPhoton_scaleUp;
+            pho2_scaleDown = thisPhoton_scaleDown;
+            pho2_smearUp = thisPhoton_smearUp;
+            pho2_smearDown = thisPhoton_smearDown;
 
-    }
-	
-    double weightedTime = tmpSumWeightedTime / tmpSumWeight;
-        
-	bool isPromptPhoton = false;
-	//photon gen matching
-	if(!isData)
-	{
-		bool foundMatch = false;
-		int phoMatchingGenPhotonIndex = -1;
-		double deltaEOverEBest = 999;
-		for(int g = 0; g < nGenParticle; g++)
-		{
-			if(gParticleStatus[g] != 1) continue;
-            		if(gParticleId[g] != 22) continue;
-            		if(gParticleE[g] < 1.) continue;
-			if(deltaR(thisPhoton.Eta(), thisPhoton.Phi(), gParticleEta[g], gParticlePhi[g]) > 0.2) continue;		
-			float deltaEOverE = fabs(phoSC.E() - gParticleE[g])/gParticleE[g];
-			if(deltaEOverE > 1.) continue;
-			
-			foundMatch = true;
-			if(deltaEOverE < deltaEOverEBest)
-			{
-              			deltaEOverEBest = deltaEOverE;
-              			phoMatchingGenPhotonIndex = g;
-           		}	
-		}
-		
-		if(foundMatch)
-		{	
-			int motherId = abs(gParticleMotherId[phoMatchingGenPhotonIndex]);
-			if(motherId == 25 || (motherId >= 1 && motherId <= 6) || (motherId >= 11 && motherId <= 16)) isPromptPhoton = true;
-		}
-	}	
-		
-	 
-      	if ( ( photonOrderByTime ? ( weightedTime > pho1ClusterTime) : (thisPhoton.Pt() > pho1.Pt())  ) ) 
-	{ // find two highest momentum photons, or two largest time photons
-		pho2 = pho1;
-		pho2_scaleUp = pho1_scaleUp;
-		pho2_scaleDown = pho1_scaleDown;
-		pho2_smearUp = pho1_smearUp;
-		pho2_smearDown = pho1_smearDown;
+            pho2E = thisPhoton.E();
+            pho2Pt = thisPhoton.Pt();
+            pho2Pt_scaleUp = thisPhoton_scaleUp.Pt();
+            pho2Pt_scaleDown = thisPhoton_scaleDown.Pt();
+            pho2Pt_smearUp = thisPhoton_smearUp.Pt();
+            pho2Pt_smearDown = thisPhoton_smearDown.Pt();
+            pho2Eta = thisPhoton.Eta();
+            pho2Phi = thisPhoton.Phi();
+            pho2SeedE = (*ecalRechit_E)[seedhitIndex];
+            pho2SeedEta = (*ecalRechit_Eta)[seedhitIndex];
+            pho2SeedPhi = (*ecalRechit_Phi)[seedhitIndex];
+            pho2SeedPt = pho2SeedE/cosh(pho2SeedEta);
+            pho2SC_E = phoSC.E();
+            pho2SC_Pt = phoSC.Pt();
+            pho2SC_Eta = phoSC.Eta();
+            pho2SC_Phi = phoSC.Phi();
+            pho2SigmaIetaIeta = phoFull5x5SigmaIetaIeta[ind_pho];
+            pho2R9 = phoR9[ind_pho];
+            pho2HoverE = pho_HoverE[ind_pho];
+            pho2Sminor = pho_sminor[ind_pho];
+            pho2Smajor = pho_smajor[ind_pho];
+            pho2sumChargedHadronPt = pho_sumChargedHadronPt[ind_pho];
+            pho2PFsumChargedHadronPt = pho_pfIsoChargedHadronIso[ind_pho];
+            pho2sumNeutralHadronEt = pho_sumNeutralHadronEt[ind_pho];
+            pho2PFsumNeutralHadronEt = pho_pfIsoNeutralHadronIso[ind_pho];
+            pho2sumPhotonEt = pho_sumPhotonEt[ind_pho];
+            pho2PFsumPhotonEt = pho_pfIsoPhotonIso[ind_pho];
+            pho2ecalPFClusterIso = pho_ecalPFClusterIso[ind_pho];
+            pho2hcalPFClusterIso = pho_hcalPFClusterIso[ind_pho];
+            pho2trkSumPtHollowConeDR03 = pho_trkSumPtHollowConeDR03[ind_pho];
+            pho2sigmaEOverE = pho_RegressionEUncertainty[ind_pho]/pho_RegressionE[ind_pho];
+            pho2SeedTimeRaw = rawSeedHitTime;
+            pho2SeedTimeCalib = calibratedSeedHitTime;
+            pho2SeedTimeCalibTOF = TOFCorrectedSeedHitTime;
+            pho2SeedTimeGenV = TOFCorrectedSeedHitTime_genV;
+            pho2ClusterTime = weightedTime;
+            pho2Setaeta = phoSetaeta;
+            pho2Sphiphi = phoSphiphi;
+            pho2Setaphi = phoSetaphi;
+            pho2passEleVeto = pho_passEleVeto[ind_pho];
+            pho2passIsoLoose = photonPassLooseIso(ind_pho);
+            pho2passIsoLoose_privatePF = photonPassLooseIso(ind_pho, true, true);
+            pho2passIsoLoose_OOT = photonPassLooseIso_OOT2016(ind_pho);
+            pho2passIsoMedium = photonPassMediumIso(ind_pho);
+            pho2passIsoMedium_privatePF = photonPassMediumIso(ind_pho, true, true);
+            pho2passIsoMedium_OOT = photonPassMediumIso_OOT2016(ind_pho);
+            pho2passIsoTight = photonPassTightIso(ind_pho);
+            pho2passIsoTight_privatePF = photonPassTightIso(ind_pho, true, true);
+            pho2passIsoTight_OOT = photonPassTightIso_OOT2016(ind_pho);
+            pho2isStandardPhoton = pho_isStandardPhoton[ind_pho];
+            pho2isPromptPhoton = isPromptPhoton;
 
-		pho2E = pho2.E();
-		pho2Pt = pho2.Pt();
-		pho2Pt_scaleUp = pho2_scaleUp.Pt();
-		pho2Pt_scaleDown = pho2_scaleDown.Pt();
-		pho2Pt_smearUp = pho2_smearUp.Pt();
-		pho2Pt_smearDown = pho2_smearDown.Pt();
-		pho2Eta = pho2.Eta();
-		pho2Phi = pho2.Phi();
-		pho2SeedE = pho1SeedE;
-		pho2SeedEta = pho2SeedEta;
-		pho2SeedPhi = pho1SeedPhi;
-		pho2SeedPt = pho1SeedPt; 
-		pho2SC_E = pho1SC_E;
-		pho2SC_Pt = pho1SC_Pt; 
-		pho2SC_Eta = pho1SC_Eta;
-		pho2SC_Phi = pho1SC_Phi;
-		pho2SigmaIetaIeta = pho1SigmaIetaIeta;
-		pho2R9 = pho1R9;
-		pho2HoverE = pho1HoverE;
-		pho2sumChargedHadronPt = pho1sumChargedHadronPt;
-		pho2PFsumChargedHadronPt = pho1PFsumChargedHadronPt;
-		pho2sumNeutralHadronEt = pho1sumNeutralHadronEt;
-		pho2PFsumNeutralHadronEt = pho1PFsumNeutralHadronEt;
-		pho2sumPhotonEt = pho1sumPhotonEt;
-		pho2PFsumPhotonEt = pho1PFsumPhotonEt;
-		pho2ecalPFClusterIso = pho1ecalPFClusterIso;
-		pho2hcalPFClusterIso = pho1hcalPFClusterIso;
-		pho2trkSumPtHollowConeDR03 = pho1trkSumPtHollowConeDR03;
-		pho2sigmaEOverE = pho1sigmaEOverE;
-        	pho2SeedTimeRaw = pho1SeedTimeRaw;
-        	pho2SeedTimeCalib = pho1SeedTimeCalib;
-        	pho2SeedTimeCalibTOF = pho1SeedTimeCalibTOF;
-        	pho2SeedTimeGenV = pho1SeedTimeGenV;
-        	pho2ClusterTime = pho1ClusterTime;
-		pho2Sminor = pho1Sminor;
-		pho2Smajor = pho1Smajor;
-		pho2Setaeta = pho1Setaeta;
-		pho2Sphiphi = pho1Sphiphi;
-		pho2Setaphi = pho1Setaphi;
-		pho2passEleVeto = pho1passEleVeto;
-		pho2passIsoLoose = pho1passIsoLoose;
-		pho2passIsoLoose_privatePF = pho1passIsoLoose_privatePF;
-		pho2passIsoLoose_OOT = pho1passIsoLoose_OOT;
-		pho2passIsoMedium = pho1passIsoMedium;
-		pho2passIsoMedium_privatePF = pho1passIsoMedium_privatePF;
-		pho2passIsoMedium_OOT = pho1passIsoMedium_OOT;
-		pho2passIsoTight = pho1passIsoTight;
-		pho2passIsoTight_privatePF = pho1passIsoTight_privatePF;
-		pho2passIsoTight_OOT = pho1passIsoTight_OOT;
-        	pho2isStandardPhoton = pho1isStandardPhoton;
-        	pho2isPromptPhoton = pho1isPromptPhoton;
-  		pho2SeedX = pho1SeedX;
-  		pho2SeedY = pho1SeedY;
-  		pho2SeedZ = pho1SeedZ;
-		
-		//	
-        	pho1 = thisPhoton;
-        	pho1_scaleUp = thisPhoton_scaleUp;
-        	pho1_scaleDown = thisPhoton_scaleDown;
-        	pho1_smearUp = thisPhoton_smearUp;
-        	pho1_smearDown = thisPhoton_smearDown;
-		
-		pho1E = thisPhoton.E();
-		pho1Pt = thisPhoton.Pt();
-		pho1Pt_scaleUp = thisPhoton_scaleUp.Pt();
-		pho1Pt_scaleDown = thisPhoton_scaleDown.Pt();
-		t1MET_phoScaleUp = metType1Pt - (pho1Pt_scaleUp*cos(metType1Phi - thisPhoton_scaleUp.Phi()) - pho1Pt*cos(metType1Phi - thisPhoton.Phi()));
-		t1MET_phoScaleDown = metType1Pt - (pho1Pt_scaleDown*cos(metType1Phi - thisPhoton_scaleDown.Phi()) - pho1Pt*cos(metType1Phi - thisPhoton.Phi()));
-		pho1Pt_smearUp = thisPhoton_smearUp.Pt();
-		pho1Pt_smearDown = thisPhoton_smearDown.Pt();
-		t1MET_phoSmearUp = metType1Pt - (pho1Pt_smearUp*cos(metType1Phi - thisPhoton_smearUp.Phi()) - pho1Pt*cos(metType1Phi - thisPhoton.Phi()));
-		t1MET_phoSmearDown = metType1Pt - (pho1Pt_smearDown*cos(metType1Phi - thisPhoton_smearDown.Phi()) - pho1Pt*cos(metType1Phi - thisPhoton.Phi()));
-		pho1Eta = thisPhoton.Eta();
-		pho1Phi = thisPhoton.Phi();
-		pho1SeedE = (*ecalRechit_E)[seedhitIndex];
-		pho1SeedEta = (*ecalRechit_Eta)[seedhitIndex];
-		pho1SeedPhi = (*ecalRechit_Phi)[seedhitIndex];
-		pho1SeedPt = pho1SeedE/cosh(pho1SeedEta);
-		pho1SC_E = phoSC.E();
-		pho1SC_Pt = phoSC.Pt();
-		pho1SC_Eta = phoSC.Eta();
-		pho1SC_Phi = phoSC.Phi();
-		pho1SigmaIetaIeta = phoFull5x5SigmaIetaIeta[ind_pho];
-		pho1R9 = phoR9[ind_pho];
-		pho1HoverE = pho_HoverE[ind_pho];
-		pho1Sminor = pho_sminor[ind_pho];
-		pho1Smajor = pho_smajor[ind_pho];
-		pho1sumChargedHadronPt = pho_sumChargedHadronPt[ind_pho];
-		pho1PFsumChargedHadronPt = pho_pfIsoChargedHadronIso[ind_pho];
-		pho1sumNeutralHadronEt = pho_sumNeutralHadronEt[ind_pho];
-		pho1PFsumNeutralHadronEt = pho_pfIsoNeutralHadronIso[ind_pho];
-		pho1sumPhotonEt = pho_sumPhotonEt[ind_pho];
-		pho1PFsumPhotonEt = pho_pfIsoPhotonIso[ind_pho];
-		pho1ecalPFClusterIso = pho_ecalPFClusterIso[ind_pho];
-		pho1hcalPFClusterIso = pho_hcalPFClusterIso[ind_pho];
-		pho1trkSumPtHollowConeDR03 = pho_trkSumPtHollowConeDR03[ind_pho];
-		pho1sigmaEOverE = pho_RegressionEUncertainty[ind_pho]/pho_RegressionE[ind_pho];
-        	pho1SeedTimeRaw = rawSeedHitTime;
-        	pho1SeedTimeCalib = calibratedSeedHitTime;
-        	pho1SeedTimeCalibTOF = TOFCorrectedSeedHitTime;
-        	pho1SeedTimeGenV = TOFCorrectedSeedHitTime_genV;
-        	pho1ClusterTime = weightedTime;
-		pho1Setaeta = phoSetaeta;
-		pho1Sphiphi = phoSphiphi;
-		pho1Setaphi = phoSetaphi;
-		pho1passEleVeto = pho_passEleVeto[ind_pho];
-		pho1passIsoLoose = photonPassLooseIso(ind_pho);
-		pho1passIsoLoose_privatePF = photonPassLooseIso(ind_pho, true, true);
-		pho1passIsoLoose_OOT = photonPassLooseIso_OOT2016(ind_pho);
-		pho1passIsoMedium = photonPassMediumIso(ind_pho);
-		pho1passIsoMedium_privatePF = photonPassMediumIso(ind_pho, true, true);
-		pho1passIsoMedium_OOT = photonPassMediumIso_OOT2016(ind_pho);
-		pho1passIsoTight = photonPassTightIso(ind_pho);
-		pho1passIsoTight_privatePF = photonPassTightIso(ind_pho, true, true);
-		pho1passIsoTight_OOT = photonPassTightIso_OOT2016(ind_pho);
-        	pho1isStandardPhoton = pho_isStandardPhoton[ind_pho];
-        	pho1isPromptPhoton = isPromptPhoton;
-
-  		pho1SeedX = (*ecalRechit_X)[seedhitIndex];
-  		pho1SeedY = (*ecalRechit_Y)[seedhitIndex];
-  		pho1SeedZ = (*ecalRechit_Z)[seedhitIndex];
-    	} 
-      	else if ( ( photonOrderByTime ? ( weightedTime > pho2ClusterTime) : (thisPhoton.Pt() > pho2.Pt())  ) ) 
-	{
-      		pho2 = thisPhoton;
-      		pho2_scaleUp = thisPhoton_scaleUp;
-      		pho2_scaleDown = thisPhoton_scaleDown;
-      		pho2_smearUp = thisPhoton_smearUp;
-      		pho2_smearDown = thisPhoton_smearDown;
-      	
-		pho2E = thisPhoton.E();
-		pho2Pt = thisPhoton.Pt();
-		pho2Pt_scaleUp = thisPhoton_scaleUp.Pt();
-		pho2Pt_scaleDown = thisPhoton_scaleDown.Pt();
-		pho2Pt_smearUp = thisPhoton_smearUp.Pt();
-		pho2Pt_smearDown = thisPhoton_smearDown.Pt();
-		pho2Eta = thisPhoton.Eta();
-		pho2Phi = thisPhoton.Phi();
-		pho2SeedE = (*ecalRechit_E)[seedhitIndex];
-		pho2SeedEta = (*ecalRechit_Eta)[seedhitIndex];
-		pho2SeedPhi = (*ecalRechit_Phi)[seedhitIndex];
-		pho2SeedPt = pho2SeedE/cosh(pho2SeedEta);
-		pho2SC_E = phoSC.E();
-		pho2SC_Pt = phoSC.Pt();
-		pho2SC_Eta = phoSC.Eta();
-		pho2SC_Phi = phoSC.Phi();
-		pho2SigmaIetaIeta = phoFull5x5SigmaIetaIeta[ind_pho];
-		pho2R9 = phoR9[ind_pho];
-		pho2HoverE = pho_HoverE[ind_pho];
-		pho2Sminor = pho_sminor[ind_pho];
-		pho2Smajor = pho_smajor[ind_pho];
-		pho2sumChargedHadronPt = pho_sumChargedHadronPt[ind_pho];
-		pho2PFsumChargedHadronPt = pho_pfIsoChargedHadronIso[ind_pho];
-		pho2sumNeutralHadronEt = pho_sumNeutralHadronEt[ind_pho];
-		pho2PFsumNeutralHadronEt = pho_pfIsoNeutralHadronIso[ind_pho];
-		pho2sumPhotonEt = pho_sumPhotonEt[ind_pho];
-		pho2PFsumPhotonEt = pho_pfIsoPhotonIso[ind_pho];
-		pho2ecalPFClusterIso = pho_ecalPFClusterIso[ind_pho];
-		pho2hcalPFClusterIso = pho_hcalPFClusterIso[ind_pho];
-		pho2trkSumPtHollowConeDR03 = pho_trkSumPtHollowConeDR03[ind_pho];
-		pho2sigmaEOverE = pho_RegressionEUncertainty[ind_pho]/pho_RegressionE[ind_pho];
-        	pho2SeedTimeRaw = rawSeedHitTime;
-        	pho2SeedTimeCalib = calibratedSeedHitTime;
-        	pho2SeedTimeCalibTOF = TOFCorrectedSeedHitTime;
-        	pho2SeedTimeGenV = TOFCorrectedSeedHitTime_genV;
-        	pho2ClusterTime = weightedTime;
-		pho2Setaeta = phoSetaeta;
-		pho2Sphiphi = phoSphiphi;
-		pho2Setaphi = phoSetaphi;
-		pho2passEleVeto = pho_passEleVeto[ind_pho];
-		pho2passIsoLoose = photonPassLooseIso(ind_pho);
-		pho2passIsoLoose_privatePF = photonPassLooseIso(ind_pho, true, true);
-		pho2passIsoLoose_OOT = photonPassLooseIso_OOT2016(ind_pho);
-		pho2passIsoMedium = photonPassMediumIso(ind_pho);
-		pho2passIsoMedium_privatePF = photonPassMediumIso(ind_pho, true, true);
-		pho2passIsoMedium_OOT = photonPassMediumIso_OOT2016(ind_pho);
-		pho2passIsoTight = photonPassTightIso(ind_pho);
-		pho2passIsoTight_privatePF = photonPassTightIso(ind_pho, true, true);
-		pho2passIsoTight_OOT = photonPassTightIso_OOT2016(ind_pho);
-        	pho2isStandardPhoton = pho_isStandardPhoton[ind_pho];
-        	pho2isPromptPhoton = isPromptPhoton;
-
-  		pho2SeedX = (*ecalRechit_X)[seedhitIndex];
-  		pho2SeedY = (*ecalRechit_Y)[seedhitIndex];
-  		pho2SeedZ = (*ecalRechit_Z)[seedhitIndex];
-	}    
- } //end photon loop
-//smear photon time in MC
+            pho2SeedX = (*ecalRechit_X)[seedhitIndex];
+            pho2SeedY = (*ecalRechit_Y)[seedhitIndex];
+            pho2SeedZ = (*ecalRechit_Z)[seedhitIndex];
+        }    
+    } //end photon loop
+    //smear photon time in MC
 if(!isData)
 {
 	double TR_SMEAR1 = 0.0;
