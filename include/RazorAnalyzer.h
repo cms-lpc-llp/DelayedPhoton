@@ -47,6 +47,7 @@ class RazorAnalyzer: public RazorEvents {
 
         void EnableAll();
         void EnableAllWithEcalRechits();
+        void EnableGenInfo();
 
         //------ LIST OF ANALYSES ------//
         virtual void Analyze(bool isData, int option, string outputFileName, string label);
