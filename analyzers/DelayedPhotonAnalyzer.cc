@@ -784,7 +784,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     std::cout << "[DEBUG] Starting photon loop\n";
     std::cout << "[DEBUG] nPhotons = " << nPhotons << "\n";
         
-    if (ecalRechit_X->empty()) continue;
+    if (ecalRechit_ID->empty()) continue;
 
     for(int ind_pho = 0; ind_pho < nPhotons; ind_pho++) 
     { //photon loop
