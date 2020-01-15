@@ -41,19 +41,21 @@ void RazorAnalyzer::EnableAll(){
 void RazorAnalyzer::EnableAllWithEcalRechits(){
     EnableEventInfo();
     EnablePVAll();
-    EnableMuons();
+    //EnableMuons();
     EnableElectrons();
-    EnableTaus();
+    //EnableTaus();
     EnablePhotons();
     EnableJets();
-    EnableFatJets();
+    //EnableFatJets();
     EnableMet();
     EnablePileup();
-    EnableMC();
-    EnableGenParticles();
     EnableEcalRechits();
 }
 
+void RazorAnalyzer::EnableGenInfo(){
+    EnableMC();
+    EnableGenParticles();
+}
 void RazorAnalyzer::EnableEventInfo(){
     fChain->SetBranchStatus("nPV", 1);
     fChain->SetBranchStatus("pvX", 1);
