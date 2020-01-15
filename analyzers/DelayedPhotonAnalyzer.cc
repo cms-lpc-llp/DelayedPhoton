@@ -109,8 +109,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   RazorHelper *helper = 0;
   RazorHelper *helper_GED = 0;
   helper = new RazorHelper(analysisTag, isData, false); 
-  helper_GED = new RazorHelper("loadTag_Razor2017_31Mar2018Rereco", isData, false); 
+  helper_GED = new RazorHelper("Razor2017_31Mar2018Rereco", isData, false); 
  
+  std::cout<< "[DEBUG] Getting CMSSW environ\n"<<endl; 
   //Get CMSSW Directory
   char* cmsswPath;
   cmsswPath = getenv("CMSSW_BASE");
@@ -118,58 +119,72 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   //--------------------------------
   //Photon Energy Scale and Resolution Corrections
   //--------------------------------
+  EnergyScaleCorrection_class_2017 *photonCorrector = 0;
+  
+  std::cout<< "[DEBUG] Getting photon corr path\n"<<endl; 
   std::string photonCorrectionPath = "./";
   if ( cmsswPath != NULL ) photonCorrectionPath = string(cmsswPath) + "/src/DelayedPhoton/data/PhotonCorrections/";
-  EnergyScaleCorrection_class_2017 *photonCorrector = 0;
-  if (analysisTag == "Razor2017_31Mar2018Rereco") photonCorrector = new EnergyScaleCorrection_class_2017(Form("%s/Run2017_17Nov2017_v1_ele_unc", photonCorrectionPath.c_str()));
-  if(!isData) {
-    photonCorrector->doScale = false;
-    photonCorrector->doSmearings = true;
-  } else {
-    photonCorrector->doScale = true;
-    photonCorrector->doSmearings = false;
+  std::cout<< "[DEBUG] photonCorrectionPath = "<< photonCorrectionPath.c_str() <<endl; 
+  std::string photonCorrectionFile = photonCorrectionPath + "/Run2017_17Nov2017_v1_ele_unc";
+  std::cout<< "[DEBUG] photonCorrectionFile = "<< photonCorrectionFile <<endl; 
+  if (analysisTag == "Razor2017_31Mar2018Rereco") 
+  {
+      *photonCorrector = EnergyScaleCorrection_class_2017(photonCorrectionFile);
   }
+  else
+  {
+  }
+  // WTF is this for??
+//  if(!isData) {
+//    std::cout << "not data \n";
+//    photonCorrector->doScale = false;
+//    photonCorrector->doSmearings = true;
+//  } else {
+//    std::cout << "data \n";
+//    photonCorrector->doScale = true;
+//    photonCorrector->doSmearings = false;
+//  }
 
 
-  //*****************************************************************************
-  //Load Pedestals
-  //*****************************************************************************
-  vector <uint> start_time;//start run of all IOV 
-  vector <uint> end_time;//end run of all IOV
-  start_time_tmp=0; 
-  end_time_tmp=0;
-  rms_G12_all=0;
-  detID_all=0 ;
-
-  std::cout<< "[DEBUG] opening f_pedestal"<<endl; 
-  //TFile *f_pedestal = TFile::Open("root://cms-xrd-global.cern.ch//store/group/phys_susy/razor/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1.root","READ"); // use this if you run on lxplus
-  TFile *f_pedestal = 0;//TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1.root","READ"); // use this if you run on Caltech T2
-  TTree *tree_pedestal = 0;//(TTree*)f_pedestal->Get("pedestal");
-  
-  //TFile *f_pedestal = new TFile("tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ");
-  //TTree *tree_pedestal = (TTree*)f_pedestal->Get("pedestal");
-
-  if(isData)
-  { 
-	  f_pedestal = TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ"); // use this if you run on Caltech T2
-	  //f_pedestal = new TFile("tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ"); // use this if you run on Caltech T2
-	  tree_pedestal = (TTree*)f_pedestal->Get("pedestal");
-	  tree_pedestal->SetBranchAddress("start_time_second", &start_time_tmp);
-	  tree_pedestal->SetBranchAddress("end_time_second", &end_time_tmp);
-	  tree_pedestal->SetBranchAddress("rms_G12", &rms_G12_all);
-	  tree_pedestal->SetBranchAddress("detID", &detID_all);
-	  int N_entries_pedestal = tree_pedestal->GetEntries();
- 
-
-	  cout << "Total Pedestal IOVs: " << N_entries_pedestal << "\n";
-	  for(int i=0;i<N_entries_pedestal;i++) {
-	    cout << "Loading Pedestal IOV " << i << "\n";
-	    tree_pedestal->GetEntry(i);
-	    start_time.push_back(start_time_tmp);
-	    end_time.push_back(end_time_tmp);
-	  }
-
-}
+//  //*****************************************************************************
+//  //Load Pedestals
+//  //*****************************************************************************
+//  vector <uint> start_time;//start run of all IOV 
+//  vector <uint> end_time;//end run of all IOV
+//  start_time_tmp=0; 
+//  end_time_tmp=0;
+//  rms_G12_all=0;
+//  detID_all=0 ;
+//
+//  //std::cout<< "[DEBUG] opening f_pedestal"<<endl; 
+//  //TFile *f_pedestal = TFile::Open("root://cms-xrd-global.cern.ch//store/group/phys_susy/razor/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1.root","READ"); // use this if you run on lxplus
+//  TFile *f_pedestal = 0;//TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1.root","READ"); // use this if you run on Caltech T2
+//  TTree *tree_pedestal = 0;//(TTree*)f_pedestal->Get("pedestal");
+//  
+//  //TFile *f_pedestal = new TFile("tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ");
+//  //TTree *tree_pedestal = (TTree*)f_pedestal->Get("pedestal");
+//
+//  if(isData)
+//  { 
+//	  f_pedestal = TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ"); // use this if you run on Caltech T2
+//	  //f_pedestal = new TFile("tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ"); // use this if you run on Caltech T2
+//	  tree_pedestal = (TTree*)f_pedestal->Get("pedestal");
+//	  tree_pedestal->SetBranchAddress("start_time_second", &start_time_tmp);
+//	  tree_pedestal->SetBranchAddress("end_time_second", &end_time_tmp);
+//	  tree_pedestal->SetBranchAddress("rms_G12", &rms_G12_all);
+//	  tree_pedestal->SetBranchAddress("detID", &detID_all);
+//	  int N_entries_pedestal = tree_pedestal->GetEntries();
+// 
+//
+//	  cout << "Total Pedestal IOVs: " << N_entries_pedestal << "\n";
+//	  for(int i=0;i<N_entries_pedestal;i++) {
+//	    cout << "Loading Pedestal IOV " << i << "\n";
+//	    tree_pedestal->GetEntry(i);
+//	    start_time.push_back(start_time_tmp);
+//	    end_time.push_back(end_time_tmp);
+//	  }
+//
+//}
 
   // //test 
   // uint test_time = 1464000000;
@@ -1767,12 +1782,12 @@ cout << "Writing SumPdfWeights histogram..." << endl;
 SumPdfWeights->Write();
 outFile->Close();
 
-if(isData)
-{
-f_pedestal->Close();
-start_time.clear();
-end_time.clear();
-}
+//if(isData)
+//{
+//f_pedestal->Close();
+//start_time.clear();
+//end_time.clear();
+//}
 
 delete helper;
 delete photonCorrector;
