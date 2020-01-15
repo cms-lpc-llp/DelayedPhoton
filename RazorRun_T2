@@ -29,7 +29,12 @@ else
     cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2016_23SepRereco/*.root ./
     cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/FastsimToFullsim/detailed_ele_full_fast_sf_17.root ./
     cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/ElectronScaleFactors_Run2017_31Mar2018.root ./
+    
+    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/ScaleFactors_07Aug2017Rereco_2016data.tgz ./    
+    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_IC_2016/IC_average_timing_2016.root ./    
+    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_IC_2016/IC_map_SingleElectron_2016_test_iter19.root ./    
 
+    tar vxzf ScaleFactors_07Aug2017Rereco_2016data.tgz
     tar vxzf JEC_Summer16_23Sep2016V3.tgz
     tar vxzf JEC_Summer16_23Sep2016V4.tgz
     tar vxzf Spring16_FastSimV1.tgz
