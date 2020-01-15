@@ -12,7 +12,6 @@
 EnergyScaleCorrection_class_2017::EnergyScaleCorrection_class_2017(const std::string& correctionFileName, unsigned int genSeed):
   smearingType_(ECALELF)
 {
-
   if(!correctionFileName.empty()) { 
     std::string filename = correctionFileName+"_scales.dat";
     readScalesFromFile(filename);
