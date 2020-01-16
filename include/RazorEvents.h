@@ -11,11 +11,9 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
+#include <iostream> 
 
 // Header file for the classes stored in the TTree if any.
-#include "vector"
-#include "vector"
-#include "vector"
 #include "vector"
 
 class RazorEvents {
@@ -974,6 +972,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("tau_leadChargedHadrCandPt", tau_leadChargedHadrCandPt, &b_tau_leadChargedHadrCandPt);
    fChain->SetBranchAddress("tau_leadChargedHadrCandID", tau_leadChargedHadrCandID, &b_tau_leadChargedHadrCandID);
    fChain->SetBranchAddress("nPhotons", &nPhotons, &b_nPhotons);
+   std::cout << "[DEBUG] Value of nPhotons in init: " << nPhotons << std::endl;
    fChain->SetBranchAddress("nPhotons_overlap", &nPhotons_overlap, &b_nPhotons_overlap);
    fChain->SetBranchAddress("phoE", phoE, &b_phoE);
    fChain->SetBranchAddress("phoPt", phoPt, &b_phoPt);
@@ -1024,6 +1023,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("pho_anyRecHitSwitchToGain6", pho_anyRecHitSwitchToGain6, &b_pho_anyRecHitSwitchToGain6);
    fChain->SetBranchAddress("pho_anyRecHitSwitchToGain1", pho_anyRecHitSwitchToGain1, &b_pho_anyRecHitSwitchToGain1);
    fChain->SetBranchAddress("pho_EcalRechitIndex", &pho_EcalRechitIndex, &b_pho_EcalRechitIndex);
+   std::cout << "[DEBUG] Address of pho_EcalRechitIndex in init: " << pho_EcalRechitIndex << std::endl;
    fChain->SetBranchAddress("pho_SeedRechitIndex", &pho_SeedRechitIndex, &b_pho_SeedRechitIndex);
    fChain->SetBranchAddress("nJets", &nJets, &b_nJets);
    fChain->SetBranchAddress("jetE", jetE, &b_jetE);
@@ -1162,6 +1162,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("ecalRechit_E", &ecalRechit_E, &b_ecalRechit_E);
    fChain->SetBranchAddress("ecalRechit_T", &ecalRechit_T, &b_ecalRechit_T);
    fChain->SetBranchAddress("ecalRechit_ID", &ecalRechit_ID, &b_ecalRechit_ID);
+   std::cout << "[DEBUG] Address of ecalRechit_ID in init: " << ecalRechit_ID << std::endl;
    fChain->SetBranchAddress("ecalRechit_FlagOOT", &ecalRechit_FlagOOT, &b_ecalRechit_FlagOOT);
    fChain->SetBranchAddress("ecalRechit_GainSwitch1", &ecalRechit_GainSwitch1, &b_ecalRechit_GainSwitch1);
    fChain->SetBranchAddress("ecalRechit_GainSwitch6", &ecalRechit_GainSwitch6, &b_ecalRechit_GainSwitch6);
