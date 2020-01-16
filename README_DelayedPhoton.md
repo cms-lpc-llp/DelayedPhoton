@@ -1,4 +1,4 @@
-DelayedPhoton analyzer for Delayed photon analysis (2016)
+DelayedPhoton analyzer for Delayed photon analysis (2017)
 =============
 
 Setup
