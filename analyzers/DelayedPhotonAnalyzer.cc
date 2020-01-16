@@ -620,6 +620,10 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     if (ientry < 0) break;
     nb = fChain->GetEntry(jentry);   nbytes += nb;
     std::cout << "[DEBUG] Finished getting the entry\n";
+    std::cout << "[DEBUG] Rechit Pointer: \n";
+    std::cout << ecalRechit_ID << "\n";
+    std::cout << "[DEBUG] nPhotons Pointer: \n";
+    std::cout << nPhotons << "\n";
 
     //initialize branches
     run = runNum;
@@ -783,6 +787,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     TVector3 vtx( pvX, pvY, pvZ );
     std::cout << "[DEBUG] Starting photon loop\n";
     std::cout << "[DEBUG] nPhotons = " << nPhotons << "\n";
+    std::cout << ecalRechit_ID << "\n";
         
     if (ecalRechit_ID->empty()) continue;
 

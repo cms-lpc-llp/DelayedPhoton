@@ -224,6 +224,7 @@ void RazorAnalyzer::EnableIsoPFCandidates(){
 }
 
 void RazorAnalyzer::EnablePhotons(){
+    std::cout << "[INFO] Enabling Photons \n";
     fChain->SetBranchStatus("nPhotons", 1);
     fChain->SetBranchStatus("nPhotons_overlap", 1);
     fChain->SetBranchStatus("phoE", 1);
@@ -460,6 +461,7 @@ void RazorAnalyzer::EnableGenParticles(){
 }
 
 void RazorAnalyzer::EnableEcalRechits(){
+    std::cout << "[INFO] Enabling ECAL rechits \n";
     fChain->SetBranchStatus("ecalRechit_Eta", 1);
     fChain->SetBranchStatus("ecalRechit_Phi", 1);
     fChain->SetBranchStatus("ecalRechit_X", 1);

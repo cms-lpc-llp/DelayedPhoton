@@ -168,9 +168,13 @@ int main(int argc, char* argv[]){
     DelayedPhotonAnalyzer analyzer(theChain);
     
     //------ EXECUTE ------//
-    cout << "Executing DelayedPhotonAnalyzer..." << endl;
+    cout << "[INFO] Executing DelayedPhotonAnalyzer..." << endl;
     analyzer.EnableAllWithEcalRechits();
-    if (!isData) analyzer.EnableGenInfo();
+    if (!isData) 
+    {
+        cout << "[INFO] Reading Gen information..." << endl;
+        analyzer.EnableGenInfo();
+    }
     analyzer.Analyze(isData, option, outputFileName, label);
     cout << "Process completed!" << endl;
     cerr << "------------------------------" << endl; //present so that an empty .err file corresponds to a failed job
