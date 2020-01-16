@@ -18,6 +18,8 @@ Run
 Example: to process the DY sample, do:
 	
      ./RazorRun_T2 lists/DelayedPhoton2017/example.txt DelayedPhotonAnalyzer -d=yes -f=example.root
+     
+     ./RazorRun_T2 lists/DelayedPhoton2017/exampleMC.txt DelayedPhotonAnalyzer -d=no -f=example.root
 
 (we use V4p1 razorNtupler for 2016 paper; they are all in: lists/Run2/razorNtuplerV4p1/)
 
