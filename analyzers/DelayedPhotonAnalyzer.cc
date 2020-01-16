@@ -663,7 +663,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     Long64_t ientry = LoadTree(jentry);
     if (ientry < 0) break;
     nb = fChain->GetEntry(jentry);   nbytes += nb;
-
+    std::cout << "[DEBUG] Beginning: ecalRechit_ID = " << ecalRechit_ID << std::endl;
     //initialize branches
     run = runNum;
     lumi = lumiNum;
