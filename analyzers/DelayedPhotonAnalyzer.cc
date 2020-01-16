@@ -610,7 +610,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   if (fChain == 0) return;
   Long64_t nentries = fChain->GetEntriesFast();
   Long64_t nbytes = 0, nb = 0;
-
+  std::cout << "Number of entries " << nentries << std::endl;
   for (Long64_t jentry=0; jentry<nentries;jentry++) {
   //for (Long64_t jentry=0; jentry<10000;jentry++) {
     //begin event
