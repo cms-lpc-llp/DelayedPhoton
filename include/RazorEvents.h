@@ -795,8 +795,12 @@ Long64_t RazorEvents::LoadTree(Long64_t entry)
 // Set the environment to read one entry
    if (!fChain) return -5;
    Long64_t centry = fChain->LoadTree(entry);
+   std::cout << "[RazorEvent.h] Inside LoadTree: centry = " << centry << std::endl;
    if (centry < 0) return centry;
    if (fChain->GetTreeNumber() != fCurrent) {
+       std::cout << "[RazorEvent.h] Setting fCurrent " << std::endl;
+       std::cout << "[RazorEvent.h] fChain->GetTreeNumber() = " << fChain->GetTreeNumber() << std::endl;
+       std::cout << "[RazorEvent.h] fCurrent = " << fCurrent << std::endl;
       fCurrent = fChain->GetTreeNumber();
       Notify();
    }
