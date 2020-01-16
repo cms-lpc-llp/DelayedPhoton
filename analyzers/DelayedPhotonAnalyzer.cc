@@ -656,14 +656,20 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   Long64_t nentries = fChain->GetEntriesFast();
   Long64_t nbytes = 0, nb = 0;
 
+
   for (Long64_t jentry=0; jentry<nentries;jentry++) {
   //for (Long64_t jentry=0; jentry<10000;jentry++) {
     //begin event
     if(jentry % 1000 == 0) cout << "Processing entry " << jentry << endl;
+    std::cout << "[DEBUG] Before LoadTree: ecalRechit_ID = " << ecalRechit_ID << std::endl;
+    std::cout << "[DEBUG] Before LoadTree: jentry = " << jentry << std::endl;
     Long64_t ientry = LoadTree(jentry);
+    std::cout << "[DEBUG] After LoadTree: ientry = " << ientry << std::endl;
+    std::cout << "[DEBUG] Before GetEntry: ecalRechit_ID = " << ecalRechit_ID << std::endl;
     if (ientry < 0) break;
     nb = fChain->GetEntry(jentry);   nbytes += nb;
     std::cout << "[DEBUG] Beginning: ecalRechit_ID = " << ecalRechit_ID << std::endl;
+    break;
     //initialize branches
     run = runNum;
     lumi = lumiNum;
