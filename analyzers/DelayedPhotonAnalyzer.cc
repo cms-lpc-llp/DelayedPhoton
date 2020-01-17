@@ -624,13 +624,40 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     //std::cout << "[DEBUG] ele rechit idx before getting entry: " << ele_EcalRechitIndex << std::endl;
     //std::cout << "[DEBUG] nPhotons before getting entry: " << nPhotons << std::endl;
     //std::cout << "[DEBUG] fChain->GetBranch(\"ecalRechit_ID\"): " << fChain->GetBranch("ecalRechit_ID") << std::endl;
-    TBranch *branch_ecalRechit_ID = fChain->GetBranch("ecalRechit_ID");
-    delete ecalRechit_ID;
+    //TBranch *branch_ecalRechit_ID = fChain->GetBranch("ecalRechit_ID");
+    //
+    // For some reason the ecalRechit pointers (ie, the vector) disappear after loading the entry. 
+    // Need to manually set the pointer value.
+    delete ecalRechit_ID, ecalRechit_Eta, ecalRechit_Phi, ecalRechit_X, 
+           ecalRechit_Y, ecalRechit_Z, ecalRechit_E, ecalRechit_T, 
+           ecalRechit_FlagOOT, ecalRechit_GainSwitch1,
+           ecalRechit_GainSwitch6, ecalRechit_transpCorr, 
+           ecalRechit_pedrms12, ecalRechit_pedrms6, ecalRechit_pedrms1;
     std::vector<unsigned int>  *ecalRechit_ID = 0;
-    branch_ecalRechit_ID->SetAddress(&ecalRechit_ID);
+    std::vector<float> *ecalRechit_Eta = 0, *ecalRechit_Phi = 0, *ecalRechit_X = 0, 
+        *ecalRechit_Y = 0, *ecalRechit_Z = 0, *ecalRechit_E = 0, *ecalRechit_T = 0, 
+        *ecalRechit_transpCorr = 0, *ecalRechit_pedrms12 = 0, 
+        *ecalRechit_pedrms6 = 0, *ecalRechit_pedrms1 = 0;
+    std::vector<bool> *ecalRechit_FlagOOT = 0, *ecalRechit_GainSwitch1 = 0,
+        *ecalRechit_GainSwitch6 = 0;
+    b_ecalRechit_ID->SetAddress(&ecalRechit_ID);
+    b_ecalRechit_Eta->SetAddress(&ecalRechit_Eta);
+    b_ecalRechit_Phi->SetAddress(&ecalRechit_Phi);
+    b_ecalRechit_X->SetAddress(&ecalRechit_X);
+    b_ecalRechit_Y->SetAddress(&ecalRechit_Y);
+    b_ecalRechit_Z->SetAddress(&ecalRechit_Z);
+    b_ecalRechit_E->SetAddress(&ecalRechit_E);
+    b_ecalRechit_T->SetAddress(&ecalRechit_T);
+    b_ecalRechit_FlagOOT->SetAddress(&ecalRechit_FlagOOT);
+    b_ecalRechit_GainSwitch1->SetAddress(&ecalRechit_GainSwitch1);
+    b_ecalRechit_GainSwitch6->SetAddress(&ecalRechit_GainSwitch6);
+    b_ecalRechit_transpCorr->SetAddress(&ecalRechit_transpCorr);
+    b_ecalRechit_pedrms12->SetAddress(&ecalRechit_pedrms12);
+    b_ecalRechit_pedrms6->SetAddress(&ecalRechit_pedrms6);
+    b_ecalRechit_pedrms1->SetAddress(&ecalRechit_pedrms1);
     //std::cout << "[DEBUG] dummy->GetAddress(): " << dummy->GetAddress() << std::endl;
     //std::cout << "[DEBUG] fChain->GetBranchStatus(\"ecalRechit_ID\"): " << fChain->GetBranchStatus("ecalRechit_ID") << std::endl;
-    if (ientry < 0) break;
+    if (ientry < 0 || ientry > 2) break;
     nb = fChain->GetEntry(jentry, 1);   nbytes += nb;
     //std::cout << "[DEBUG] nb = " << nb << std::endl;
     //std::cout << "[DEBUG] Finished getting the entry\n";
@@ -649,7 +676,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     //std::cout << "[DEBUG] ele rechit idx after getting entry: " << ele_EcalRechitIndex << std::endl;
     //std::cout << "[DEBUG] ecalRechit_GainSwitch1 after getting entry: " << ecalRechit_GainSwitch1 << std::endl;
     //std::cout << "[DEBUG] nPhotons: " << nPhotons << "\n";
-    
+    continue; 
     //initialize branches
     run = runNum;
     lumi = lumiNum;
