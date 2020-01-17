@@ -627,7 +627,6 @@ void RazorHelper::loadJECs_Razor2016_07Aug2017Rereco() {
     jecUnc = std::vector<JetCorrectionUncertainty*>();
     JetResolutionCalculator = std::vector<SimpleJetResolution*>();
     JetCorrectionsIOV = std::vector<std::pair<int,int> >();
-    std::cout << "here1\n";
     if (isData) {
       //IOV: 2016BCD
       std::vector<JetCorrectorParameters> correctionParametersBCD = std::vector<JetCorrectorParameters> ();
@@ -991,7 +990,6 @@ void RazorHelper::loadJECs_Razor2016_MoriondRereco() {
     jecUnc = std::vector<JetCorrectionUncertainty*>();
     JetResolutionCalculator = std::vector<SimpleJetResolution*>();
     JetCorrectionsIOV = std::vector<std::pair<int,int> >();
-    std::cout << "here1\n";
     if (isData) {
       //IOV: 2016BCD
       std::vector<JetCorrectorParameters> correctionParametersBCD = std::vector<JetCorrectorParameters> ();
@@ -1227,7 +1225,6 @@ void RazorHelper::loadJECs_Razor2016_03Feb2017Rereco() {
     jecUnc = std::vector<JetCorrectionUncertainty*>();
     JetResolutionCalculator = std::vector<SimpleJetResolution*>();
     JetCorrectionsIOV = std::vector<std::pair<int,int> >();
-    std::cout << "here1\n";
     if (isData) {
       //IOV: 2016BCD
       std::vector<JetCorrectorParameters> correctionParametersBCD = std::vector<JetCorrectorParameters> ();
@@ -2164,7 +2161,6 @@ void RazorHelper::loadJECs_Razor2017_17Nov2017Rereco() {
     jecUnc = std::vector<JetCorrectionUncertainty*>();
     JetResolutionCalculator = std::vector<SimpleJetResolution*>();
     JetCorrectionsIOV = std::vector<std::pair<int,int> >();
-    std::cout << "here1\n";
     if (isData) {
       //IOV: 2017B
       std::vector<JetCorrectorParameters> correctionParametersB = std::vector<JetCorrectorParameters> ();
@@ -2463,7 +2459,6 @@ void RazorHelper::loadJECs_Razor2017_31Mar2018Rereco() {
     jecUnc = std::vector<JetCorrectionUncertainty*>();
     JetResolutionCalculator = std::vector<SimpleJetResolution*>();
     JetCorrectionsIOV = std::vector<std::pair<int,int> >();
-    std::cout << "here1\n";
     if (isData) {
       //IOV: 2017B
       std::vector<JetCorrectorParameters> correctionParametersB = std::vector<JetCorrectorParameters> ();

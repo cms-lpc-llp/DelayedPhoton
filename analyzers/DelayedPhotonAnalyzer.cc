@@ -612,20 +612,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   Long64_t nbytes = 0, nb = 0;
   std::cout << "Number of entries " << nentries << std::endl;
   for (Long64_t jentry=0; jentry<nentries;jentry++) {
-  //for (Long64_t jentry=0; jentry<10000;jentry++) {
     //begin event
     if(jentry % 1000 == 0) cout << "Processing entry " << jentry << endl;
     Long64_t ientry = LoadTree(jentry);
-    //std::cout << "[DEBUG] Finished loading the tree\n";
-    //std::cout << "[DEBUG] ecalRechit_ID before getting entry: " << ecalRechit_ID << std::endl;
-    //std::cout << "[DEBUG] b_ecalRechit_ID before getting entry: " << b_ecalRechit_ID << std::endl;
-    //std::cout << "[DEBUG] (*ecalRechit_ID).size() before getting entry: " << (*ecalRechit_ID).size() << std::endl;
-    //std::cout << "[DEBUG] &ecalRechit_ID before getting entry: " << &ecalRechit_ID << std::endl;
-    //std::cout << "[DEBUG] ele rechit idx before getting entry: " << ele_EcalRechitIndex << std::endl;
-    //std::cout << "[DEBUG] nPhotons before getting entry: " << nPhotons << std::endl;
-    //std::cout << "[DEBUG] fChain->GetBranch(\"ecalRechit_ID\"): " << fChain->GetBranch("ecalRechit_ID") << std::endl;
-    //TBranch *branch_ecalRechit_ID = fChain->GetBranch("ecalRechit_ID");
-    //
     // For some reason the ecalRechit pointers (ie, the vector) disappear after loading the entry. 
     // Need to manually set the pointer value.
     delete ecalRechit_ID, ecalRechit_Eta, ecalRechit_Phi, ecalRechit_X, 
@@ -659,24 +648,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     //std::cout << "[DEBUG] fChain->GetBranchStatus(\"ecalRechit_ID\"): " << fChain->GetBranchStatus("ecalRechit_ID") << std::endl;
     if (ientry < 0 || ientry > 2) break;
     nb = fChain->GetEntry(jentry, 1);   nbytes += nb;
-    //std::cout << "[DEBUG] nb = " << nb << std::endl;
-    //std::cout << "[DEBUG] Finished getting the entry\n";
-    //std::cout << "[DEBUG] b_ecalRechit_ID: " << b_ecalRechit_ID << std::endl;
-    std::cout << "[DEBUG] ecalRechit_ID: " << ecalRechit_ID << std::endl;
-    std::cout << "[DEBUG] ecalRechit_ID->size(): " << ecalRechit_ID->size() << std::endl;
-    //std::cout << "[DEBUG] &ecalRechit_ID: " << &ecalRechit_ID << std::endl;
-    //std::cout << "[DEBUG] fChain->GetBranch(\"ecalRechit_ID\"): " << fChain->GetBranch("ecalRechit_ID") << std::endl;
-    //TBranch *dummy2 = fChain->GetBranch("ecalRechit_ID");
-    //std::vector<unsigned int> *id_dummy2 = 0;
-    //dummy2->SetAddress(&id_dummy2);
-    //std::cout << "[DEBUG] id_dummy->size(): " << id_dummy->size() << std::endl;
-    //std::cout << "[DEBUG] id_dummy2->size(): " << id_dummy2->size() << std::endl;
-
-    //std::cout << "[DEBUG] fChain->GetBranchStatus(\"ecalRechit_ID\"): " << fChain->GetBranchStatus("ecalRechit_ID") << std::endl;
-    //std::cout << "[DEBUG] ele rechit idx after getting entry: " << ele_EcalRechitIndex << std::endl;
-    //std::cout << "[DEBUG] ecalRechit_GainSwitch1 after getting entry: " << ecalRechit_GainSwitch1 << std::endl;
-    //std::cout << "[DEBUG] nPhotons: " << nPhotons << "\n";
-    continue; 
+    
     //initialize branches
     run = runNum;
     lumi = lumiNum;
@@ -790,12 +762,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         NPU = nPUmean[i];
       }
     }
-    std::cout << "BEFORE PU\n";
     pileupWeight = helper->getPileupWeight(NPU);
     pileupWeightUp = helper->getPileupWeightUp(NPU) / pileupWeight;
     pileupWeightDown = helper->getPileupWeightDown(NPU) / pileupWeight;
-    std::cout << "AFTER PU\n";
-
 	
     if ( (*scaleWeights).size() >= 9 )
         {
@@ -823,7 +792,6 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 	} 
   
     }
-    std::cout << "AFTER SumPDF\n";
  
     int nPho = 0;
     TLorentzVector pho1 = makeTLorentzVector(0,0,0,0);
@@ -840,8 +808,6 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
 
     TVector3 vtx( pvX, pvY, pvZ );
-    std::cout << "[DEBUG] Starting photon loop\n";
-    std::cout << "[DEBUG] nPhotons = " << nPhotons << "\n";
     std::cout << ecalRechit_ID << "\n";
         
     if (ecalRechit_ID->empty()) continue;
@@ -849,14 +815,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     for(int ind_pho = 0; ind_pho < nPhotons; ind_pho++) 
     { //photon loop
         // apply cuts
-        std::cout << "[DEBUG] Starting inside photon loop\n";
         if(phoPt[ind_pho] < 40) continue; // basic Pt cut
-        std::cout << "[DEBUG] After pt cut\n";
         if(fabs(phoEta[ind_pho]) > 2.5) continue; // tracker region
-        std::cout << "[DEBUG] After eta cut\n";
         if(fabs(phoEta[ind_pho]) > 1.4442 && fabs(phoEta[ind_pho]) < 1.566) continue; //the eta range for photon, this takes care of the gap between barrel and endcap
-        std::cout << "[DEBUG] After more eta cut\n";
-        std::cout << "[DEBUG] After ID cut\n";
         //if(!photonPassLooseIso(ind_pho)) continue;
         //if(!pho_passEleVeto[ind_pho]) continue;
         //if(!(isEGammaPOGTightElectron(i))) continue;
@@ -866,7 +827,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         //if(dR_pho1 < 0.3 && phoPt[ind_pho]<pho1Pt) continue; // overlap, remove
         //if(dR_pho2 < 0.3 && phoPt[ind_pho]<pho2Pt) continue; // overlap, remove
 
-        std::cout << "[DEBUG] Starting couting nPho\n";
+        //std::cout << "[DEBUG] Starting couting nPho\n";
         nPho++;
         float pho_pt_corr = phoPt[ind_pho];
         float pho_pt_corr_scaleUp = phoPt[ind_pho];
@@ -884,10 +845,10 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         double scaleUp = 1;
         double scaleDown = 1;
         double smear = 0;
-        std::cout << "[DEBUG] Starting getting photon correction\n";
+        //std::cout << "[DEBUG] Starting getting photon correction\n";
         const EnergyScaleCorrection_class_2017::ScaleCorrection_class_2017* scaleCorr = photonCorrector->EnergyScaleCorrection_class_2017::getScaleCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), pho_superClusterEta[ind_pho], phoR9[ind_pho], 12);
         const EnergyScaleCorrection_class_2017::SmearCorrection_class_2017* smearCorr = photonCorrector->EnergyScaleCorrection_class_2017::getSmearCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), pho_superClusterEta[ind_pho], phoR9[ind_pho], 12);
-        std::cout << "[DEBUG] Finished getting photon correction\n";
+        //std::cout << "[DEBUG] Finished getting photon correction\n";
         if (scaleCorr!=NULL) 
         {
             scale  = scaleCorr->scale();
