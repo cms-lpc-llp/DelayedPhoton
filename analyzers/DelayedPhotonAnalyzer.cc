@@ -616,15 +616,40 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     //begin event
     if(jentry % 1000 == 0) cout << "Processing entry " << jentry << endl;
     Long64_t ientry = LoadTree(jentry);
-    std::cout << "[DEBUG] Finished loading the tree\n";
+    //std::cout << "[DEBUG] Finished loading the tree\n";
+    //std::cout << "[DEBUG] ecalRechit_ID before getting entry: " << ecalRechit_ID << std::endl;
+    //std::cout << "[DEBUG] b_ecalRechit_ID before getting entry: " << b_ecalRechit_ID << std::endl;
+    //std::cout << "[DEBUG] (*ecalRechit_ID).size() before getting entry: " << (*ecalRechit_ID).size() << std::endl;
+    //std::cout << "[DEBUG] &ecalRechit_ID before getting entry: " << &ecalRechit_ID << std::endl;
+    //std::cout << "[DEBUG] ele rechit idx before getting entry: " << ele_EcalRechitIndex << std::endl;
+    //std::cout << "[DEBUG] nPhotons before getting entry: " << nPhotons << std::endl;
+    //std::cout << "[DEBUG] fChain->GetBranch(\"ecalRechit_ID\"): " << fChain->GetBranch("ecalRechit_ID") << std::endl;
+    TBranch *branch_ecalRechit_ID = fChain->GetBranch("ecalRechit_ID");
+    delete ecalRechit_ID;
+    std::vector<unsigned int>  *ecalRechit_ID = 0;
+    branch_ecalRechit_ID->SetAddress(&ecalRechit_ID);
+    //std::cout << "[DEBUG] dummy->GetAddress(): " << dummy->GetAddress() << std::endl;
+    //std::cout << "[DEBUG] fChain->GetBranchStatus(\"ecalRechit_ID\"): " << fChain->GetBranchStatus("ecalRechit_ID") << std::endl;
     if (ientry < 0) break;
-    nb = fChain->GetEntry(jentry);   nbytes += nb;
-    std::cout << "[DEBUG] Finished getting the entry\n";
-    std::cout << "[DEBUG] Rechit Pointer: \n";
-    std::cout << ecalRechit_ID << "\n";
-    std::cout << "[DEBUG] nPhotons Pointer: \n";
-    std::cout << nPhotons << "\n";
+    nb = fChain->GetEntry(jentry, 1);   nbytes += nb;
+    //std::cout << "[DEBUG] nb = " << nb << std::endl;
+    //std::cout << "[DEBUG] Finished getting the entry\n";
+    //std::cout << "[DEBUG] b_ecalRechit_ID: " << b_ecalRechit_ID << std::endl;
+    std::cout << "[DEBUG] ecalRechit_ID: " << ecalRechit_ID << std::endl;
+    std::cout << "[DEBUG] ecalRechit_ID->size(): " << ecalRechit_ID->size() << std::endl;
+    //std::cout << "[DEBUG] &ecalRechit_ID: " << &ecalRechit_ID << std::endl;
+    //std::cout << "[DEBUG] fChain->GetBranch(\"ecalRechit_ID\"): " << fChain->GetBranch("ecalRechit_ID") << std::endl;
+    //TBranch *dummy2 = fChain->GetBranch("ecalRechit_ID");
+    //std::vector<unsigned int> *id_dummy2 = 0;
+    //dummy2->SetAddress(&id_dummy2);
+    //std::cout << "[DEBUG] id_dummy->size(): " << id_dummy->size() << std::endl;
+    //std::cout << "[DEBUG] id_dummy2->size(): " << id_dummy2->size() << std::endl;
 
+    //std::cout << "[DEBUG] fChain->GetBranchStatus(\"ecalRechit_ID\"): " << fChain->GetBranchStatus("ecalRechit_ID") << std::endl;
+    //std::cout << "[DEBUG] ele rechit idx after getting entry: " << ele_EcalRechitIndex << std::endl;
+    //std::cout << "[DEBUG] ecalRechit_GainSwitch1 after getting entry: " << ecalRechit_GainSwitch1 << std::endl;
+    //std::cout << "[DEBUG] nPhotons: " << nPhotons << "\n";
+    
     //initialize branches
     run = runNum;
     lumi = lumiNum;
@@ -738,9 +763,11 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         NPU = nPUmean[i];
       }
     }
+    std::cout << "BEFORE PU\n";
     pileupWeight = helper->getPileupWeight(NPU);
     pileupWeightUp = helper->getPileupWeightUp(NPU) / pileupWeight;
     pileupWeightDown = helper->getPileupWeightDown(NPU) / pileupWeight;
+    std::cout << "AFTER PU\n";
 
 	
     if ( (*scaleWeights).size() >= 9 )
@@ -769,6 +796,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 	} 
   
     }
+    std::cout << "AFTER SumPDF\n";
  
     int nPho = 0;
     TLorentzVector pho1 = makeTLorentzVector(0,0,0,0);
