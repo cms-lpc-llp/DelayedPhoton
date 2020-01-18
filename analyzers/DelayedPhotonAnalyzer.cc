@@ -119,31 +119,23 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   //--------------------------------
   //Photon Energy Scale and Resolution Corrections
   //--------------------------------
-  EnergyScaleCorrection_class_2017 *photonCorrector = 0;
   
-  std::cout<< "[DEBUG] Getting photon corr path\n"<<endl; 
+  std::cout<< "[DEBUG] Getting photon corr path\n"<<std::endl; 
   std::string photonCorrectionPath = "./";
   if ( cmsswPath != NULL ) photonCorrectionPath = string(cmsswPath) + "/src/DelayedPhoton/data/PhotonCorrections/";
   std::cout<< "[DEBUG] photonCorrectionPath = "<< photonCorrectionPath.c_str() <<endl; 
   std::string photonCorrectionFile = photonCorrectionPath + "/Run2017_17Nov2017_v1_ele_unc";
   std::cout<< "[DEBUG] photonCorrectionFile = "<< photonCorrectionFile <<endl; 
-  if (analysisTag == "Razor2017_31Mar2018Rereco") 
-  {
-      *photonCorrector = EnergyScaleCorrection_class_2017(photonCorrectionFile);
+  EnergyScaleCorrection_class_2017 *photonCorrector = 0;
+  photonCorrector = new EnergyScaleCorrection_class_2017(photonCorrectionFile);
+  
+  if(!isData) {
+    photonCorrector->doScale = false;
+    photonCorrector->doSmearings = true;
+  } else {
+    photonCorrector->doScale = true;
+    photonCorrector->doSmearings = false;
   }
-  else
-  {
-  }
-  // WTF is this for??
-//  if(!isData) {
-//    std::cout << "not data \n";
-//    photonCorrector->doScale = false;
-//    photonCorrector->doSmearings = true;
-//  } else {
-//    std::cout << "data \n";
-//    photonCorrector->doScale = true;
-//    photonCorrector->doSmearings = false;
-//  }
 
 
 //  //*****************************************************************************
@@ -322,10 +314,16 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("run", &run, "run/i");
   outputTree->Branch("lumi", &lumi, "lumi/i");
   outputTree->Branch("event", &event, "event/i");
-  outputTree->Branch("weight", &weight, "weight/F");
-  outputTree->Branch("pileupWeight", &pileupWeight, "pileupWeight/F");
-  outputTree->Branch("pileupWeightUp", &pileupWeightUp, "pileupWeightUp/F");
-  outputTree->Branch("pileupWeightDown", &pileupWeightDown, "pileupWeightDown/F");
+  if (!isData)
+  {
+      outputTree->Branch("weight", &weight, "weight/F");
+      outputTree->Branch("pileupWeight", &pileupWeight, "pileupWeight/F");
+      outputTree->Branch("pileupWeightUp", &pileupWeightUp, "pileupWeightUp/F");
+      outputTree->Branch("pileupWeightDown", &pileupWeightDown, "pileupWeightDown/F");
+      outputTree->Branch("pdfWeights", "std::vector<float>",&pdfWeights);
+      outputTree->Branch("sf_pdf", "std::vector<float>",&sf_pdf);
+      outputTree->Branch("NPU", &NPU, "npu/i");
+  }
   outputTree->Branch("triggerEffWeight", &triggerEffWeight, "triggerEffWeight/F");
   outputTree->Branch("triggerEffSFWeight", &triggerEffSFWeight, "triggerEffSFWeight/F");
   outputTree->Branch("photonEffSF", &photonEffSF, "photonEffSF/F");
@@ -337,13 +335,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("sf_renScaleDown", &sf_renScaleDown, "sf_renScaleDown/F");
   outputTree->Branch("sf_facRenScaleUp", &sf_facRenScaleUp, "sf_facRenScaleUp/F");
   outputTree->Branch("sf_facRenScaleDown", &sf_facRenScaleDown, "sf_facRenScaleDown/F");
-  outputTree->Branch("pdfWeights", "std::vector<float>",&pdfWeights);
-  outputTree->Branch("sf_pdf", "std::vector<float>",&sf_pdf);
 
-  outputTree->Branch("NPU", &NPU, "npu/i");
   outputTree->Branch("nLooseMuons", &nLooseMuons, "npu/i");
   outputTree->Branch("nTightMuons", &nTightMuons, "npu/i");
-  outputTree->Branch("nPV", &nPV, "nPV/i");
   outputTree->Branch("fixedGridRhoFastjetAll", &fixedGridRhoFastjetAll, "fixedGridRhoFastjetAll/F");
   outputTree->Branch("fixedGridRhoFastjetAllCalo", &fixedGridRhoFastjetAllCalo, "fixedGridRhoFastjetAllCalo/F");
   outputTree->Branch("pvX", &pvX, "pvX/F");
@@ -646,7 +640,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     b_ecalRechit_pedrms1->SetAddress(&ecalRechit_pedrms1);
     //std::cout << "[DEBUG] dummy->GetAddress(): " << dummy->GetAddress() << std::endl;
     //std::cout << "[DEBUG] fChain->GetBranchStatus(\"ecalRechit_ID\"): " << fChain->GetBranchStatus("ecalRechit_ID") << std::endl;
-    if (ientry < 0 || ientry > 2) break;
+    if (ientry < 0 || ientry > 100) break;
     nb = fChain->GetEntry(jentry, 1);   nbytes += nb;
     
     //initialize branches
@@ -808,14 +802,23 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
 
     TVector3 vtx( pvX, pvY, pvZ );
-    std::cout << ecalRechit_ID << "\n";
+    std::cout << "[DEBUG] ecalRechit_ID = " << ecalRechit_ID << "\n";
         
     if (ecalRechit_ID->empty()) continue;
 
     for(int ind_pho = 0; ind_pho < nPhotons; ind_pho++) 
     { //photon loop
+        std::cout << "[DEBUG] Starting inside photon loop\n";
+        std::cout << "phoPt = " << phoPt << std::endl;
+        std::cout << "phoPt[ind_pho] = " << phoPt[ind_pho] << std::endl;
         // apply cuts
-        if(phoPt[ind_pho] < 40) continue; // basic Pt cut
+        if (phoPt[ind_pho] < 40) 
+        {
+            std::cout << "Skipping soft photon\n";
+            continue; // basic Pt cut
+        }
+        std::cout << "[DEBUG] After phoPt cut\n";
+        std::cout << "phoEta = " << phoEta << std::endl;
         if(fabs(phoEta[ind_pho]) > 2.5) continue; // tracker region
         if(fabs(phoEta[ind_pho]) > 1.4442 && fabs(phoEta[ind_pho]) < 1.566) continue; //the eta range for photon, this takes care of the gap between barrel and endcap
         //if(!photonPassLooseIso(ind_pho)) continue;
@@ -827,7 +830,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         //if(dR_pho1 < 0.3 && phoPt[ind_pho]<pho1Pt) continue; // overlap, remove
         //if(dR_pho2 < 0.3 && phoPt[ind_pho]<pho2Pt) continue; // overlap, remove
 
-        //std::cout << "[DEBUG] Starting couting nPho\n";
+        std::cout << "[DEBUG] Starting couting nPho\n";
         nPho++;
         float pho_pt_corr = phoPt[ind_pho];
         float pho_pt_corr_scaleUp = phoPt[ind_pho];
@@ -845,10 +848,10 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         double scaleUp = 1;
         double scaleDown = 1;
         double smear = 0;
-        //std::cout << "[DEBUG] Starting getting photon correction\n";
-        const EnergyScaleCorrection_class_2017::ScaleCorrection_class_2017* scaleCorr = photonCorrector->EnergyScaleCorrection_class_2017::getScaleCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), pho_superClusterEta[ind_pho], phoR9[ind_pho], 12);
-        const EnergyScaleCorrection_class_2017::SmearCorrection_class_2017* smearCorr = photonCorrector->EnergyScaleCorrection_class_2017::getSmearCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), pho_superClusterEta[ind_pho], phoR9[ind_pho], 12);
-        //std::cout << "[DEBUG] Finished getting photon correction\n";
+        std::cout << "[DEBUG] Starting getting photon correction\n";
+        const EnergyScaleCorrection_class_2017::ScaleCorrection_class_2017* scaleCorr = photonCorrector->EnergyScaleCorrection_class_2017::getScaleCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), fabs(pho_superClusterEta[ind_pho]), phoR9[ind_pho], 12);
+        const EnergyScaleCorrection_class_2017::SmearCorrection_class_2017* smearCorr = photonCorrector->EnergyScaleCorrection_class_2017::getSmearCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), fabs(pho_superClusterEta[ind_pho]), phoR9[ind_pho], 12);
+        std::cout << "[DEBUG] Finished getting photon correction\n";
         if (scaleCorr!=NULL) 
         {
             scale  = scaleCorr->scale();
@@ -856,8 +859,11 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
             scaleUp = scale + scaleUnc;
             scaleDown = scale - scaleUnc;
         }
+        std::cout << "[DEBUG] Start getting smear\n";
+        if (scaleCorr!=NULL) 
         if (smearCorr!=NULL) smear  = smearCorr->sigma(phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
 
+        std::cout << "[DEBUG] Start doing photon correction\n";
         if (doPhotonScaleCorrection) {
             if (isData) {
                 pho_pt_corr = phoPt[ind_pho]*scale;
@@ -873,6 +879,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
             }
         }
 
+        std::cout << "[DEBUG] Start photon cluster\n";
         //photon cluster
         TVector3 vec, vec_scaleUp, vec_scaleDown, vec_smearUp, vec_smearDown;
         vec.SetPtEtaPhi( pho_pt_corr, phoEta[ind_pho], phoPhi[ind_pho] );
@@ -888,6 +895,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         thisPhoton_smearDown.SetVectM( vec_smearDown, .0 );
 
         //photon super cluster
+        std::cout << "[DEBUG] Start photon supercluster\n";
         TVector3 phoPos;
         if ( fabs( pho_superClusterEta[ind_pho] ) < 1.479 )
         {
@@ -1265,7 +1273,7 @@ if(nPho>=2) HT += pho2Pt;
 //compute photon efficiency scale factor
 //******************************************************
 
-
+std::cout << "[DEBUG] Compute photon efficiency SFs\n";
 if(pho1isStandardPhoton) 
 {
 photonEffSF = helper_GED->getPhotonScaleFactor_Tight(pho1Pt, pho1Eta, true);
