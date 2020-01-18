@@ -640,8 +640,12 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     b_ecalRechit_pedrms1->SetAddress(&ecalRechit_pedrms1);
     //std::cout << "[DEBUG] dummy->GetAddress(): " << dummy->GetAddress() << std::endl;
     //std::cout << "[DEBUG] fChain->GetBranchStatus(\"ecalRechit_ID\"): " << fChain->GetBranchStatus("ecalRechit_ID") << std::endl;
-    if (ientry < 0 || ientry > 100) break;
-    nb = fChain->GetEntry(jentry, 1);   nbytes += nb;
+    if (ientry < 0 || ientry > 100) 
+    {
+        std::cout << "Exiting in test mode\n";
+        break;
+    }
+    nb = fChain->GetEntry(jentry);   nbytes += nb;
     
     //initialize branches
     run = runNum;
