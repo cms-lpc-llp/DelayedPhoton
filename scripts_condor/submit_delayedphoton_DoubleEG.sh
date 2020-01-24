@@ -5,7 +5,7 @@ mkdir -p submit
 
 if [ -z "${CMSSW_BASE}" ]
 then
-    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_9_4_9/
+    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_6/
     echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
 fi
 
@@ -17,18 +17,14 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 filesPerJob=15
 
 for sample in \
-DoubleEG_2016B_ver1_25Mar2019 \
-DoubleEG_2016B_ver2_25Mar2019 \
-DoubleEG_2016C_25Mar2019 \
-DoubleEG_2016D_25Mar2019 \
-DoubleEG_2016E_25Mar2019 \
-DoubleEG_2016F_25Mar2019 \
-DoubleEG_2016G_25Mar2019 \
-DoubleEG_2016H_25Mar2019
-
+DoubleEG_2017B_31Mar2018.txt \
+DoubleEG_2017D_31Mar2018.txt \
+DoubleEG_2017F_31Mar2018.txt \
+DoubleEG_2017C_31Mar2018.txt \
+DoubleEG_2017E_31Mar2018.txt
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/DelayedPhoton/lists/Run2/razorNtuplerV4p1/Data_2016_reMINIAOD/${sample}.caltech.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2017/Data2017/${sample}.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
 	analyzer=DelayedPhotonAnalyzer
@@ -42,7 +38,7 @@ do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		echo "Universe = vanilla" > ${jdl_file}
 		echo "Executable = ${job_script}" >> ${jdl_file}
-		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/jobs/ ${analyzer} ${inputfilelist} yes 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
+		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2017/jobs/ ${analyzer} ${inputfilelist} yes 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
 		echo "Log = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_PC.log" >> ${jdl_file}
 		echo "Output = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).out" >> ${jdl_file}
 		echo "Error = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).err" >> ${jdl_file}
@@ -52,7 +48,7 @@ do
 		echo "x509userproxy = \$ENV(X509_USER_PROXY)" >> ${jdl_file}
                 echo "+RunAsOwner = True" >> ${jdl_file}
                 echo "+InteractiveUser = true" >> ${jdl_file}
-                echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel6"' >> ${jdl_file}
+                echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel7"' >> ${jdl_file}
                 echo "+SingularityBindCVMFS = True" >> ${jdl_file}
                 echo "run_as_owner = True" >> ${jdl_file}
 		echo "when_to_transfer_output = ON_EXIT" >> ${jdl_file}
