@@ -2358,10 +2358,10 @@ void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco(){
     // photon efficiency scale factors
     // use avaerage results for run 2017BCDEF for now
     std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
-    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_GEDTightAbsSmajSminVLSieie94X.root");
+    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
     phoTightEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
-    std::cout << "[DEBUG loadPhoton_Razor2017_31Mar2018] phoTightEffSFHist = " << phoTightEffSFHist << std::endl;
-    phoTightEffSFHist->Print();
+    //std::cout << "[DEBUG loadPhoton_Razor2017_31Mar2018] phoTightEffSFHist = " << phoTightEffSFHist << std::endl;
+    //phoTightEffSFHist->Print();
 
     // results for 2017MC is not available yet, use 2016 version for now
     //phoEffFastsimSFFile = TFile::Open("PhotonEffFastsimToFullsimCorrectionFactors.2016.root");
@@ -2373,7 +2373,7 @@ void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco_DelayedPhoton(){
     // photon efficiency scale factors
     // use avaerage results for run 2017BCDEF for now
     std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
-    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_OOTTightAbsSmajSminVLSieie94X.root");
+    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
     phoLooseEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
 
     // results for 2017MC is not available yet, use 2016 version for now
@@ -2686,8 +2686,6 @@ double RazorHelper::lookupPtEtaScaleFactorError(TH2F *hist, double pt, double et
 double RazorHelper::lookupEtaPtScaleFactor(TH2F *hist, double pt, double eta, double ptmin, double ptmax, bool useAbsEta) {
     if (hist) {
         // constrain to histogram bounds
-        std::cout << "[DEBUG RazorHelper] hist " ;
-        hist->Print();
         if( ptmax > hist->GetYaxis()->GetXmax() * 0.999 ) {
             ptmax = hist->GetYaxis()->GetXmax() * 0.999;
         }
@@ -2948,7 +2946,7 @@ double RazorHelper::getPhotonScaleFactor_Tight(float pt, float eta, bool invert)
           sf = lookupPtEtaScaleFactor( phoTightEffSFHist, pt, eta, 20.01, 9999.0 );
         }
     }
-  else { std::cout << "[WARNING] Could not load phoTightEffSFHist.\n"; }
+  else { std::cout << "[WARNING] Could not load phoTightEffSFHist with pt = " << pt << " & eta = " << eta << ". Assuming SF = 1.0\n"; }
   return sf;
 }
 
