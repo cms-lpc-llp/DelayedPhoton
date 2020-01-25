@@ -6,7 +6,7 @@ mkdir -p submit
 
 if [ -z "${CMSSW_BASE}" ]
 then
-    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_9_4_9/
+    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_6/
     echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
 fi
 
@@ -18,18 +18,14 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 filesPerJob=15
 
 for sample in \
-DoubleEG_2016B_ver1_25Mar2019 \
-DoubleEG_2016B_ver2_25Mar2019 \
-DoubleEG_2016C_25Mar2019 \
-DoubleEG_2016D_25Mar2019 \
-DoubleEG_2016E_25Mar2019 \
-DoubleEG_2016F_25Mar2019 \
-DoubleEG_2016G_25Mar2019 \
-DoubleEG_2016H_25Mar2019
-
+DoubleEG_2017B_31Mar2018 \
+DoubleEG_2017D_31Mar2018 \
+DoubleEG_2017F_31Mar2018 \
+DoubleEG_2017C_31Mar2018 \
+DoubleEG_2017E_31Mar2018
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/DelayedPhoton/lists/Run2/razorNtuplerV4p1/Data_2016_reMINIAOD/${sample}.caltech.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2017/Data2017/${sample}.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
 	analyzer=DelayedPhotonAnalyzer
@@ -40,7 +36,7 @@ do
 	do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		#noFail=`grep YYYY log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}*.out`
-		outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
+        outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2017/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
 
 		minimumsize=50000
                 actualsize=0
@@ -56,6 +52,7 @@ do
 		#then
 		#	echo "job ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} being processed now, be patient"
 		else
+            echo "File ${outRoot} seems corrupted."
 			echo "job ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} failed, now being resubmitted"
 			rm log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}*
 			condor_submit submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
