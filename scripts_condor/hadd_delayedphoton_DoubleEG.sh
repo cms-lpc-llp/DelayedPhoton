@@ -2,7 +2,7 @@
 
 export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
 
-OUTDIR=/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/hadd/
+OUTDIR=/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2017/hadd/
 
 if [ ! -d ${OUTDIR} ]
 then
@@ -11,18 +11,14 @@ then
 fi
 
 for sample in \
-DoubleEG_2016B_ver1_25Mar2019 \
-DoubleEG_2016B_ver2_25Mar2019 \
-DoubleEG_2016C_25Mar2019 \
-DoubleEG_2016D_25Mar2019 \
-DoubleEG_2016E_25Mar2019 \
-DoubleEG_2016F_25Mar2019 \
-DoubleEG_2016G_25Mar2019 \
-DoubleEG_2016H_25Mar2019
-
+DoubleEG_2017B_31Mar2018 \
+DoubleEG_2017D_31Mar2018 \
+DoubleEG_2017F_31Mar2018 \
+DoubleEG_2017C_31Mar2018 \
+DoubleEG_2017E_31Mar2018
 do
 
-    hadd -k -f ${sample}.root /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/jobs/${sample}_Job*.root
+    hadd -k -f ${sample}.root /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2017/jobs/${sample}_Job*.root
     hadoop fs -put ${sample}.root ${OUTDIR}
     rm ${sample}.root
 done
