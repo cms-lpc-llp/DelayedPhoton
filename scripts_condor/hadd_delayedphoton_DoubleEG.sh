@@ -19,7 +19,7 @@ DoubleEG_2017E_31Mar2018
 do
 
     hadd -k -f ${sample}.root /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2017/jobs/${sample}_Job*.root
-    hadoop fs -put ${sample}.root ${OUTDIR}
+    gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${sample}.root gsiftp://transfer.ultralight.org/${OUTDIR}/${sample}.root
     rm ${sample}.root
 done
 
