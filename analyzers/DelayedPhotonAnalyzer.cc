@@ -559,7 +559,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("lep1Type", &lep1Type, "lep1Type/I");
   outputTree->Branch("lep2Type", &lep2Type, "lep2Type/I");
 
-  outputTree->Branch("HLTDecision", HLTDecision, "HLTDecision[300]/O");
+  outputTree->Branch("HLTDecision", HLTDecision, "HLTDecision[1000]/O");
 //  outputTree->Branch("HLTPrescale", HLTPrescale,"HLTPrescale[300]/I");
 
   outputTree->Branch("deltaPt_pho1", &deltaPt_pho1, "deltaPt_pho1/F");
