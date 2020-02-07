@@ -1011,7 +1011,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         }	
 
 
-        if ( ( photonOrderByTime ? ( weightedTime > pho1ClusterTime) : (thisPhoton.Pt() > pho1.Pt())  ) ) 
+        if ( photonOrderByTime ? ( weightedTime > pho1ClusterTime) : (thisPhoton.Pt() > pho1.Pt()))  
         { // find two highest momentum photons, or two largest time photons
             pho2 = pho1;
             pho2_scaleUp = pho1_scaleUp;
@@ -1206,45 +1206,46 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
             pho2SeedZ = (*ecalRechit_Z)[seedhitIndex];
         }    
     } //end photon loop
-    //smear photon time in MC
-if(!isData)
-{
-	double TR_SMEAR1 = 0.0;
-	double TR_SMEAR2 = 0.0;
-	double TR_SHIFT1 = 0.0;
-	double TR_SHIFT2 = 0.0;
-	int E_bin1 = 0;
-	int E_bin2 = 0;
-	for(int ipt = 0; ipt <N_E_divide; ipt++)
-	{
-		if(pho1Pt>E_divide[ipt]) E_bin1 ++;
-		if(pho2Pt>E_divide[ipt]) E_bin2 ++;
-	}
-	
-	if(E_bin1 >= N_E_divide) E_bin1 = N_E_divide-1;
-	if(E_bin2 >= N_E_divide) E_bin2 = N_E_divide-1;
-	
-	TR_SHIFT1 = 0.001*timecorr_shift[E_bin1]; 
-	TR_SHIFT2 = 0.001*timecorr_shift[E_bin2]; 
-	
-	if(pho1Pt>0.0) TR_SMEAR1 = 0.001*sqrt((timecorr_smear_aa/(pho1Pt*pho1Pt) + timecorr_smear_bb));
-	if(pho2Pt>0.0) TR_SMEAR2 = 0.001*sqrt((timecorr_smear_aa/(pho2Pt*pho2Pt) + timecorr_smear_bb));
 
-	std::random_device rd;
+    //smear photon time in MC
+    if(!isData)
+    {
+        double TR_SMEAR1 = 0.0;
+        double TR_SMEAR2 = 0.0;
+        double TR_SHIFT1 = 0.0;
+        double TR_SHIFT2 = 0.0;
+        int E_bin1 = 0;
+        int E_bin2 = 0;
+        for(int ipt = 0; ipt <N_E_divide; ipt++)
+        {
+            if(pho1Pt>E_divide[ipt]) E_bin1 ++;
+            if(pho2Pt>E_divide[ipt]) E_bin2 ++;
+        }
+
+        if(E_bin1 >= N_E_divide) E_bin1 = N_E_divide-1;
+        if(E_bin2 >= N_E_divide) E_bin2 = N_E_divide-1;
+
+        TR_SHIFT1 = 0.001*timecorr_shift[E_bin1]; 
+        TR_SHIFT2 = 0.001*timecorr_shift[E_bin2]; 
+
+        if(pho1Pt>0.0) TR_SMEAR1 = 0.001*sqrt((timecorr_smear_aa/(pho1Pt*pho1Pt) + timecorr_smear_bb));
+        if(pho2Pt>0.0) TR_SMEAR2 = 0.001*sqrt((timecorr_smear_aa/(pho2Pt*pho2Pt) + timecorr_smear_bb));
+
+        std::random_device rd;
         std::mt19937 e2(rd());
         std::normal_distribution<> dist1(pho1ClusterTime, TR_SMEAR1);
         std::normal_distribution<> dist2(pho2ClusterTime, TR_SMEAR2);
         pho1ClusterTime_SmearToData = dist1(e2) + TR_SHIFT1;		
         pho2ClusterTime_SmearToData = dist2(e2) + TR_SHIFT2;		
-        
-	double time_smear = 0.1;
-	double time_scale = 0.01;
-	pho1ClusterTime_smearUp = pho1ClusterTime_SmearToData*(1.0+time_smear*random.Gaus());
-	pho1ClusterTime_smearDown = pho1ClusterTime_SmearToData*(1.0-time_smear*random.Gaus());
-	pho1ClusterTime_scaleUp = pho1ClusterTime_SmearToData+time_scale;
-	pho1ClusterTime_scaleDown = pho1ClusterTime_SmearToData-time_scale;
-	
-}
+
+        double time_smear = 0.1;
+        double time_scale = 0.01;
+        pho1ClusterTime_smearUp = pho1ClusterTime_SmearToData*(1.0+time_smear*random.Gaus());
+        pho1ClusterTime_smearDown = pho1ClusterTime_SmearToData*(1.0-time_smear*random.Gaus());
+        pho1ClusterTime_scaleUp = pho1ClusterTime_SmearToData+time_scale;
+        pho1ClusterTime_scaleDown = pho1ClusterTime_SmearToData-time_scale;
+
+    }
 else
 {
 	pho1ClusterTime_SmearToData = pho1ClusterTime;
@@ -1262,7 +1263,7 @@ n_Photons_reco = nPho;
 deltaR_pho12 = deltaR(pho1Eta, pho1Phi, pho2Eta, pho2Phi);
 
 HT = 0.0;
-HT = pho1Pt;
+HT += pho1Pt;
 if(nPho>=2) HT += pho2Pt;
 
 
@@ -1409,7 +1410,7 @@ for(int i = 0; i < nJets; i++)
 }
 
  //apply nJets cut
- //if(n_Jets<2) continue;
+ if(n_Jets<=2) continue;
 
  for(int i=0;i<jetPt_all.size();i++)
  {
