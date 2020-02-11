@@ -183,6 +183,7 @@ public :
    Float_t         pho_pfIsoSumPUPt[700];   //[nPhotons]
    Bool_t          pho_isConversion[700];   //[nPhotons]
    Bool_t          pho_passEleVeto[700];   //[nPhotons]
+   Bool_t          pho_trackMatching[700];   //[nPhotons]
    Float_t         pho_RegressionE[700];   //[nPhotons]
    Float_t         pho_RegressionEUncertainty[700];   //[nPhotons]
    Float_t         pho_IDMVA[700];   //[nPhotons]
@@ -547,6 +548,7 @@ public :
    TBranch        *b_pho_pfIsoSumPUPt;   //!
    TBranch        *b_pho_isConversion;   //!
    TBranch        *b_pho_passEleVeto;   //!
+   TBranch        *b_pho_trackMatching;   //!
    TBranch        *b_pho_RegressionE;   //!
    TBranch        *b_pho_RegressionEUncertainty;   //!
    TBranch        *b_pho_IDMVA;   //!
@@ -1010,6 +1012,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("pho_pfIsoSumPUPt", pho_pfIsoSumPUPt, &b_pho_pfIsoSumPUPt);
    fChain->SetBranchAddress("pho_isConversion", pho_isConversion, &b_pho_isConversion);
    fChain->SetBranchAddress("pho_passEleVeto", pho_passEleVeto, &b_pho_passEleVeto);
+   fChain->SetBranchAddress("pho_trackMatching", pho_trackMatching, &b_pho_trackMatching);
    fChain->SetBranchAddress("pho_RegressionE", pho_RegressionE, &b_pho_RegressionE);
    fChain->SetBranchAddress("pho_RegressionEUncertainty", pho_RegressionEUncertainty, &b_pho_RegressionEUncertainty);
    fChain->SetBranchAddress("pho_IDMVA", pho_IDMVA, &b_pho_IDMVA);
