@@ -23,8 +23,8 @@ intree = infile.Get("DelayedPhoton")
 total_evt = intree.GetEntries()
 print("All: {} (100%)".format(total_evt))
 selection = ""
-if "GMSB" in infile: 
-    print("Adding weight ")
+if "GMSB" in argv[1]: 
+    print("Adding weight for MC ")
     selection = "weight * pileupWeight * triggerEffSFWeight * photonEffSF * "
 for i, cut in enumerate(cuts):
     selection += cuts[cut]
