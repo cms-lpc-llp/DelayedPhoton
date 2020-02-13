@@ -815,11 +815,11 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
     TVector3 vtx( pvX, pvY, pvZ );
         
-    if (ecalRechit_ID->empty()) continue;
 
     for(int ind_pho = 0; ind_pho < nPhotons; ind_pho++) 
     { //photon loop
         // apply cuts
+        if (ecalRechit_ID->empty()) continue;
         if (phoPt[ind_pho] < 40) 
         {
             continue; // basic Pt cut
@@ -1126,16 +1126,16 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
             pho1Sphiphi = phoSphiphi;
             pho1Setaphi = phoSetaphi;
             pho1passEleVeto = pho_passEleVeto[ind_pho];
-            pho1passTrackVeto = (1 - int(pho_trackMatching[ind_pho]));
+            pho1passTrackVeto = (!(pho_trackMatching[ind_pho]));
             pho1passIsoLoose = photonPassLooseIso(ind_pho);
             pho1passIsoLoose_privatePF = photonPassLooseIso(ind_pho, true, true);
             pho1passIsoLoose_OOT = photonPassLooseIso_OOT2016(ind_pho);
             pho1passIsoMedium = photonPassMediumIso(ind_pho);
             pho1passIsoMedium_privatePF = photonPassMediumIso(ind_pho, true, true);
-            pho1passIsoMedium_OOT = photonPassMediumIso_OOT2016(ind_pho);
+            pho1passIsoMedium_OOT = photonPassMediumIso_OOT2016(ind_pho); // We don't seem to use loose and medium, so I don't update these
             pho1passIsoTight = photonPassTightIso(ind_pho);
             pho1passIsoTight_privatePF = photonPassTightIso(ind_pho, true, true);
-            pho1passIsoTight_OOT = photonPassTightIso_OOT2016(ind_pho);
+            pho1passIsoTight_OOT = photonPassTightIso_OOT2017(ind_pho);
             pho1isStandardPhoton = pho_isStandardPhoton[ind_pho];
             pho1isPromptPhoton = isPromptPhoton;
 
@@ -1260,7 +1260,7 @@ else
 
 n_Photons_reco = nPho;
 
- if(nPho == 0) continue; 
+// if(nPho == 0) continue; 
 
 deltaR_pho12 = deltaR(pho1Eta, pho1Phi, pho2Eta, pho2Phi);
 
@@ -1412,7 +1412,7 @@ for(int i = 0; i < nJets; i++)
 }
 
  //apply nJets cut
- if(n_Jets<=2) continue;
+// if(n_Jets<=2) continue;
 
  for(int i=0;i<jetPt_all.size();i++)
  {

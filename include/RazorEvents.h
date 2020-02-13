@@ -333,7 +333,7 @@ public :
    Bool_t          Flag_trkPOG_logErrorTooManyClusters;
    Bool_t          Flag_METFilters;
    Bool_t          Flag_ecalBadCalibFilter;
-   Bool_t          HLTDecision[300];
+   Bool_t          HLTDecision[1000];
    Int_t           HLTPrescale[300];
    Float_t         HLTMR;
    Float_t         HLTRSQ;

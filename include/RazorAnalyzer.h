@@ -123,6 +123,7 @@ class RazorAnalyzer: public RazorEvents {
 	bool photonPassMediumIso(int i, bool use25nsCuts = true, bool usePrivatePF = false, bool usePFClusterIso = false);
 	bool photonPassTightIso(int i, bool use25nsCuts = true, bool usePrivatePF = false, bool usePFClusterIso = false);
 	bool photonPassTightIso_OOT2016(int i);
+	bool photonPassTightIso_OOT2017(int i);
 	bool photonPassMediumIso_OOT2016(int i);
 	bool photonPassLooseIso_OOT2016(int i);
         bool isLoosePhoton(int i, bool use25nsCuts = true);
