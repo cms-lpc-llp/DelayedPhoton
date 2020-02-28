@@ -18,26 +18,26 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 maximumjob=20
 
 for sample in \
-    GMSB_L100TeV_Ctau100cm_13TeV-pythia8 \\
-    GMSB_L100TeV_Ctau1cm_13TeV-pythia8 \\
-    GMSB_L100TeV_Ctau50cm_13TeV-pythia8 \\
-    GMSB_L150TeV_Ctau100cm_13TeV-pythia8 \\
-    GMSB_L150TeV_Ctau1cm_13TeV-pythia8 \\
-    GMSB_L150TeV_Ctau50cm_13TeV-pythia8 \\
-    GMSB_L200TeV_Ctau100cm_13TeV-pythia8 \\
-    GMSB_L200TeV_Ctau1cm_13TeV-pythia8 \\
-    GMSB_L200TeV_Ctau50cm_13TeV-pythia8 \\
-    GMSB_L250TeV_Ctau100cm_13TeV-pythia8 \\
-    GMSB_L250TeV_Ctau1cm_13TeV-pythia8 \\
-    GMSB_L250TeV_Ctau50cm_13TeV-pythia8 \\
-    GMSB_L300TeV_Ctau100cm_13TeV-pythia8 \\
-    GMSB_L300TeV_Ctau1cm_13TeV-pythia8 \\
-    GMSB_L300TeV_Ctau50cm_13TeV-pythia8 \\
-    GMSB_L350TeV_Ctau100cm_13TeV-pythia8 \\
-    GMSB_L350TeV_Ctau1cm_13TeV-pythia8 \\
-    GMSB_L350TeV_Ctau50cm_13TeV-pythia8 \\
-    GMSB_L400TeV_Ctau100cm_13TeV-pythia8 \\
-    GMSB_L400TeV_Ctau1cm_13TeV-pythia8 \\
+    GMSB_L100TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L100TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L100TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L150TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L150TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L150TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L200TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L200TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L200TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L250TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L250TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L250TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L300TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L300TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L300TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L350TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L350TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L350TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L400TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L400TeV_Ctau1cm_13TeV-pythia8 \
     GMSB_L400TeV_Ctau50cm_13TeV-pythia8
 do
 	echo "Sample " ${sample}
