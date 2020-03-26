@@ -102,17 +102,17 @@ then
 		env -i X509_USER_PROXY=${x509loc} gfal-copy --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}
 		if [ -f /mnt/hadoop/${outputDirectory}/${outputfile} ]
 		then
-			echo "ZZZZAAAA ============ good news, job finished successfully "
+			echo "SUCCESS ============ good news, job finished successfully "
 		else
-			echo "YYYYZZZZ ============ somehow job failed, please consider resubmitting"
+			echo "FAILED ============ somehow job failed, please consider resubmitting"
 		fi
 	else
-		echo echo "WWWWYYYY ============= failed to access file RazorRun_T2, job anandoned"
+		echo echo "FAILED [NO ACCESS] ============= failed to access file RazorRun_T2, job anandoned"
 		sleep 600000
 	fi
 
 else
-	echo "VVVVYYYY ============= failed to access file /cvmfs/cms.cern.ch/cmsset_default.sh, job anandoned"
+	echo "FAILED [CMSSET] ============= failed to access file /cvmfs/cms.cern.ch/cmsset_default.sh, job anandoned"
 fi
 
 cd ${currentDir}
