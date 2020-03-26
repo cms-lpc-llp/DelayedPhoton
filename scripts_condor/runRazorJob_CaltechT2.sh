@@ -31,7 +31,7 @@ if [ -f /cvmfs/cms.cern.ch/cmsset_default.sh ]
 then
 
 	#setup cmssw
-	cd ${homeDir}/DelayedPhoton/CMSSW_9_4_9/src/DelayedPhoton/
+	cd ${homeDir}/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/
 	workDir=`pwd`
 	echo "entering directory: ${workDir}"
 	source /cvmfs/cms.cern.ch/cmsset_default.sh
@@ -108,7 +108,7 @@ then
 		fi
 	else
 		echo echo "FAILED [NO ACCESS] ============= failed to access file RazorRun_T2, job anandoned"
-		sleep 600000
+		sleep 60
 	fi
 
 else
