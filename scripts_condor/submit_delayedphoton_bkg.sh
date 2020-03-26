@@ -67,7 +67,7 @@ do
 		echo "when_to_transfer_output = ON_EXIT" >> ${jdl_file}
 		echo "Queue 1" >> ${jdl_file}
 		echo "condor_submit submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl"
-		#condor_submit submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
+		condor_submit submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 	done
 done
 

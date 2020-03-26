@@ -1,14 +1,21 @@
 #!/bin/sh
 
+export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
 mkdir -p log
 mkdir -p submit
+
+if [ -z "${CMSSW_BASE}" ]
+then
+    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_6/
+    echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
+fi
 
 cd ../
 RazorAnalyzerDir=`pwd`
 cd -
 
 job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
-filesPerJob=1
+filesPerJob=2
 
 for sample in \
 DiPhotonJetsBox_M40_80-Sherpa \
@@ -33,7 +40,7 @@ WJetsToLNu_HT-70To100_TuneCUETP8M1_13TeV-madgraphMLM-pythia8
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/RazorAnalyzer/lists/Run2/razorNtuplerV4p1/MC_Summer16_MINIAODv2/${sample}.caltech.txt
+	inputfilelist=/src/DelayedPhoton/lists/Run2/razorNtuplerV4p1/MC_Summer16_MINIAODv2/${sample}.caltech.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
 	analyzer=DelayedPhotonAnalyzer
@@ -46,11 +53,11 @@ do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		echo "Universe = vanilla" > ${jdl_file}
 		echo "Executable = ${job_script}" >> ${jdl_file}
-		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/orderByPt/jobs/ ${analyzer} ${inputfilelist} no 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
+		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/jobs/ ${analyzer} ${inputfilelist} no 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
 		echo "Log = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_PC.log" >> ${jdl_file}
 		echo "Output = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).out" >> ${jdl_file}
 		echo "Error = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).err" >> ${jdl_file}
-		echo 'Requirements=TARGET.OpSysAndVer=="CentOS7"' >> ${jdl_file}
+		#echo 'Requirements=TARGET.OpSysAndVer=="CentOS7"' >> ${jdl_file}
 		echo "should_transfer_files = YES" >> ${jdl_file}
 		echo "RequestMemory = 2000" >> ${jdl_file}
 		echo "RequestCpus = 1" >> ${jdl_file}
@@ -59,6 +66,7 @@ do
                 echo "+InteractiveUser = true" >> ${jdl_file}
                 echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel7"' >> ${jdl_file}
                 echo "+SingularityBindCVMFS = True" >> ${jdl_file}
+                echo "+JobBatchName = \"${sample}\"" >> ${jdl_file}
                 echo "run_as_owner = True" >> ${jdl_file}
 		echo "when_to_transfer_output = ON_EXIT" >> ${jdl_file}
 		echo "Queue 1" >> ${jdl_file}
