@@ -97,9 +97,10 @@ then
 
 		##job finished, copy file to T2
 		echo "copying output file to /mnt/hadoop/${outputDirectory}"
+        eval `scram unsetenv -sh`
 		#cp ${outputfile} /mnt/hadoop/${outputDirectory}
 		echo "gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}"
-		env -i X509_USER_PROXY=${x509loc} gfal-copy --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}
+		env -i X509_USER_PROXY=${x509loc} gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}
 		if [ -f /mnt/hadoop/${outputDirectory}/${outputfile} ]
 		then
 			echo "SUCCESS ============ good news, job finished successfully "
