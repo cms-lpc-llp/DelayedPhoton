@@ -160,7 +160,7 @@ float DelayedPhotonAnalyzer::getADCToGeV( uint run, int isFromEB) {
 
 void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName, string label) {
 
-  //isData = false;//////remember to delete this when we are dealing with data.....
+  isData = false;//////remember to delete this when we are dealing with data.....
 
   //*****************************************************************************
   //Settings
@@ -661,15 +661,37 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   //for (Long64_t jentry=0; jentry<10000;jentry++) {
     //begin event
     if(jentry % 1000 == 0) cout << "Processing entry " << jentry << endl;
-    //std::cout << "[DEBUG] Before LoadTree: ecalRechit_ID = " << ecalRechit_ID << std::endl;
-    //std::cout << "[DEBUG] Before LoadTree: jentry = " << jentry << std::endl;
     Long64_t ientry = LoadTree(jentry);
-    //std::cout << "[DEBUG] After LoadTree: ientry = " << ientry << std::endl;
-    //std::cout << "[DEBUG] Before GetEntry: ecalRechit_ID = " << ecalRechit_ID << std::endl;
+    delete ecalRechit_ID, ecalRechit_Eta, ecalRechit_Phi, ecalRechit_X, 
+           ecalRechit_Y, ecalRechit_Z, ecalRechit_E, ecalRechit_T, 
+           ecalRechit_FlagOOT, ecalRechit_GainSwitch1,
+           ecalRechit_GainSwitch6, ecalRechit_transpCorr, 
+           scaleWeights, pdfWeights, alphasWeights;
+    std::vector<unsigned int>  *ecalRechit_ID = 0;
+    std::vector<float> *ecalRechit_Eta = 0, *ecalRechit_Phi = 0, *ecalRechit_X = 0, 
+        *ecalRechit_Y = 0, *ecalRechit_Z = 0, *ecalRechit_E = 0, *ecalRechit_T = 0, 
+        *ecalRechit_transpCorr = 0, *ecalRechit_pedrms12 = 0, 
+        *scaleWeights = 0, *pdfWeights = 0, *alphasWeights = 0;
+    std::vector<bool> *ecalRechit_FlagOOT = 0, *ecalRechit_GainSwitch1 = 0,
+        *ecalRechit_GainSwitch6 = 0;
+    b_ecalRechit_ID->SetAddress(&ecalRechit_ID);
+    b_ecalRechit_Eta->SetAddress(&ecalRechit_Eta);
+    b_ecalRechit_Phi->SetAddress(&ecalRechit_Phi);
+    b_ecalRechit_X->SetAddress(&ecalRechit_X);
+    b_ecalRechit_Y->SetAddress(&ecalRechit_Y);
+    b_ecalRechit_Z->SetAddress(&ecalRechit_Z);
+    b_ecalRechit_E->SetAddress(&ecalRechit_E);
+    b_ecalRechit_T->SetAddress(&ecalRechit_T);
+    b_ecalRechit_FlagOOT->SetAddress(&ecalRechit_FlagOOT);
+    b_ecalRechit_GainSwitch1->SetAddress(&ecalRechit_GainSwitch1);
+    b_ecalRechit_GainSwitch6->SetAddress(&ecalRechit_GainSwitch6);
+    b_ecalRechit_transpCorr->SetAddress(&ecalRechit_transpCorr);
+    b_scaleWeights->SetAddress(&scaleWeights);
+    b_pdfWeights->SetAddress(&pdfWeights);
+    b_alphasWeights->SetAddress(&alphasWeights);
+
     if (ientry < 0) break;
     nb = fChain->GetEntry(jentry);   nbytes += nb;
-    //std::cout << "[DEBUG] Beginning: ecalRechit_ID = " << ecalRechit_ID << std::endl;
-    //break;
     //initialize branches
     run = runNum;
     lumi = lumiNum;
