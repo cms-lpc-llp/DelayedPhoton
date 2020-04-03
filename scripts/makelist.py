@@ -1,6 +1,6 @@
 import os, sys, glob
 from subprocess import Popen, PIPE
-for signal in glob.glob("/mnt/hadoop/store/group/phys_susy/razor/run2/Run2DelayedPhotonNtuple/MC2016/QCD/*"):
+for signal in glob.glob("/mnt/hadoop/store/group/phys_susy/razor/run2/Run2DelayedPhotonNtuple/MC2016/GJet_DoubleEMEnriched/*"):
     bare_signal = os.path.basename(signal)#.replace("crab_prod_Run2DelayedPhotonNtupler_Data2017_","")+"_31Mar2018"
     cmd = "find {} -name \"*.root\"".format(signal)
     #print(cmd)
