@@ -796,8 +796,8 @@ Long64_t RazorEvents::LoadTree(Long64_t entry)
    Long64_t centry = fChain->LoadTree(entry);
    if (centry < 0) return centry;
    if (fChain->GetTreeNumber() != fCurrent) {
-       std::cout << "fCurrent = " << fCurrent << std::endl;
-       std::cout << "fChain->GetTreeNumber() = " << fChain->GetTreeNumber() << std::endl;
+       //std::cout << "fCurrent = " << fCurrent << std::endl;
+       //std::cout << "fChain->GetTreeNumber() = " << fChain->GetTreeNumber() << std::endl;
       fCurrent = fChain->GetTreeNumber();
       Notify();
    }
