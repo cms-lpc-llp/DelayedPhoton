@@ -566,6 +566,10 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho2passSmajorLoose", &pho2passSmajorLoose, "pho2passSmajorLoose/O");
   outputTree->Branch("pho2passSmajorMedium", &pho2passSmajorMedium, "pho2passSmajorMedium/O");
   outputTree->Branch("pho2passSmajorTight", &pho2passSmajorTight, "pho2passSmajorTight/O");
+  outputTree->Branch("pho2_rechitE", pho2_rechitE, "pho2_rechitE[100]/F");
+  outputTree->Branch("pho2_rechitX", pho2_rechitX, "pho2_rechitX[100]/F");
+  outputTree->Branch("pho2_rechitY", pho2_rechitY, "pho2_rechitY[100]/F");
+  outputTree->Branch("pho2_rechitZ", pho2_rechitZ, "pho2_rechitZ[100]/F");
 
   outputTree->Branch("pho2SeedTimeRaw", &pho2SeedTimeRaw, "pho2SeedTimeRaw/F");
   outputTree->Branch("pho2SeedTimeCalib", &pho2SeedTimeCalib, "pho2SeedTimeCalib/F");
