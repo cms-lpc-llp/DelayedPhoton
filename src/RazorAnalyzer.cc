@@ -244,6 +244,7 @@ void RazorAnalyzer::EnablePhotons(){
     fChain->SetBranchStatus("pho_pfIsoSumPUPt", 1);    
     fChain->SetBranchStatus("pho_isConversion", 1);
     fChain->SetBranchStatus("pho_passEleVeto", 1);
+    fChain->SetBranchStatus("pho_passHLTFilter", 1);
     fChain->SetBranchStatus("pho_RegressionE", 1);
     fChain->SetBranchStatus("pho_RegressionEUncertainty", 1);
     fChain->SetBranchStatus("pho_IDMVA", 1);
