@@ -292,6 +292,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   float pho1E, pho1Pt, pho1Pt_scaleUp, pho1Pt_scaleDown, pho1Pt_smearUp, pho1Pt_smearDown, pho1Eta, pho1Phi, pho1SeedE, pho1SeedPt, pho1SeedEta, pho1SeedPhi, pho1SC_E, pho1SC_Pt, pho1SC_Eta, pho1SC_Phi, pho1angle_xtal, pho1SigmaIetaIeta, pho1R9, pho1HoverE, pho1sumChargedHadronPt, pho1sumNeutralHadronEt, pho1sumPhotonEt, pho1PFsumChargedHadronPt, pho1PFsumNeutralHadronEt, pho1PFsumPhotonEt, pho1ecalPFClusterIso, pho1hcalPFClusterIso, pho1trkSumPtHollowConeDR03, pho1sigmaEOverE, pho1SeedTimeRaw, pho1SeedTimeCalib, pho1SeedTimeCalibTOF, pho1SeedTimeGenV, pho1ClusterTime, pho1ClusterTime_SmearToData, pho1Sminor_private, pho1Smajor_private, pho1Sminor, pho1Smajor, pho1Setaeta, pho1Sphiphi, pho1Setaphi, pho1GenE, pho1GenPt, pho1GenEta, pho1GenPhi, pho1ClusterTime_scaleUp, pho1ClusterTime_scaleDown, pho1ClusterTime_smearUp, pho1ClusterTime_smearDown;
   float pho2E, pho2Pt, pho2Pt_scaleUp, pho2Pt_scaleDown, pho2Pt_smearUp, pho2Pt_smearDown, pho2Eta, pho2Phi, pho2SeedE, pho2SeedPt, pho2SeedEta, pho2SeedPhi, pho2SC_E, pho2SC_Pt, pho2SC_Eta, pho2SC_Phi, pho2angle_xtal, pho2SigmaIetaIeta, pho2R9, pho2HoverE, pho2sumChargedHadronPt, pho2sumNeutralHadronEt, pho2sumPhotonEt, pho2PFsumChargedHadronPt, pho2PFsumNeutralHadronEt, pho2PFsumPhotonEt, pho2ecalPFClusterIso, pho2hcalPFClusterIso, pho2trkSumPtHollowConeDR03, pho2sigmaEOverE, pho2SeedTimeRaw, pho2SeedTimeCalib, pho2SeedTimeCalibTOF, pho2SeedTimeGenV, pho2ClusterTime, pho2ClusterTime_SmearToData, pho2Sminor_private, pho2Smajor_private, pho2Smajor, pho2Sminor, pho2Setaeta, pho2Sphiphi, pho2Setaphi, pho2GenE, pho2GenPt, pho2GenEta, pho2GenPhi;
   bool pho1passEleVeto, pho1passIsoLoose, pho1passIsoMedium, pho1passIsoTight, pho1isStandardPhoton, pho1isPromptPhoton, pho1isDelayedPhoton;
+  bool pho1passHLTFilter[100], pho2passHLTFilter[100];
   bool pho1passIsoLoose_privatePF, pho1passIsoMedium_privatePF, pho1passIsoTight_privatePF;
   bool pho1passIsoLoose_OOT, pho1passIsoMedium_OOT, pho1passIsoTight_OOT;
   bool pho1passIsoLoose_comboIso, pho1passIsoMedium_comboIso, pho1passIsoTight_comboIso;
@@ -462,6 +463,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho1passIsoTight", &pho1passIsoTight, "pho1passIsoTight/O");
   outputTree->Branch("pho1passIsoTight_privatePF", &pho1passIsoTight_privatePF, "pho1passIsoTight_privatePF/O");
   outputTree->Branch("pho1passIsoTight_OOT", &pho1passIsoTight_OOT, "pho1passIsoTight_OOT/O");
+  outputTree->Branch("pho1passHLTFilter", pho1passHLTFilter, "pho1passHLTFilter[100]/O");
   
   outputTree->Branch("pho1passIsoLoose_comboIso", &pho1passIsoLoose_comboIso, "pho1passIsoLoose_comboIso/O");
   outputTree->Branch("pho1passIsoMedium_comboIso", &pho1passIsoMedium_comboIso, "pho1passIsoMedium_comboIso/O");
@@ -543,6 +545,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho2passIsoTight", &pho2passIsoTight, "pho2passIsoTight/O");
   outputTree->Branch("pho2passIsoTight_privatePF", &pho2passIsoTight_privatePF, "pho2passIsoTight_privatePF/O");
   outputTree->Branch("pho2passIsoTight_OOT", &pho2passIsoTight_OOT, "pho2passIsoTight_OOT/O");
+  outputTree->Branch("pho2passHLTFilter", pho2passHLTFilter, "pho2passHLTFilter[100]/O");
  
   outputTree->Branch("pho2passIsoLoose_comboIso", &pho2passIsoLoose_comboIso, "pho2passIsoLoose_comboIso/O");
   outputTree->Branch("pho2passIsoMedium_comboIso", &pho2passIsoMedium_comboIso, "pho2passIsoMedium_comboIso/O");
@@ -614,8 +617,8 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("lep1Type", &lep1Type, "lep1Type/I");
   outputTree->Branch("lep2Type", &lep2Type, "lep2Type/I");
 
-  outputTree->Branch("HLTDecision", HLTDecision, "HLTDecision[300]/O");
-//  outputTree->Branch("HLTPrescale", HLTPrescale,"HLTPrescale[300]/I");
+  outputTree->Branch("HLTDecision", HLTDecision, "HLTDecision[1000]/O");
+  outputTree->Branch("HLTPrescale", HLTPrescale,"HLTPrescale[1000]/I");
 
   outputTree->Branch("deltaPt_pho1", &deltaPt_pho1, "deltaPt_pho1/F");
   outputTree->Branch("deltaPt_pho2", &deltaPt_pho2, "deltaPt_pho2/F");
@@ -1133,6 +1136,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 		pho2Sphiphi = pho1Sphiphi;
 		pho2Setaphi = pho1Setaphi;
 		pho2passEleVeto = pho1passEleVeto;
+        std::copy(pho1passHLTFilter, pho1passHLTFilter + 100, pho2passHLTFilter);
 		pho2passIsoLoose = pho1passIsoLoose;
 		pho2passIsoLoose_privatePF = pho1passIsoLoose_privatePF;
 		pho2passIsoLoose_OOT = pho1passIsoLoose_OOT;
@@ -1201,6 +1205,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 		pho1Sphiphi = phoSphiphi;
 		pho1Setaphi = phoSetaphi;
 		pho1passEleVeto = pho_passEleVeto[ind_pho];
+        std::copy(pho_passHLTFilter[ind_pho], pho_passHLTFilter[ind_pho] + 100, pho1passHLTFilter);
 		pho1passIsoLoose = photonPassLooseIso(ind_pho);
 		pho1passIsoLoose_privatePF = photonPassLooseIso(ind_pho, true, true);
 		pho1passIsoLoose_OOT = photonPassLooseIso_OOT2016(ind_pho);
@@ -1212,7 +1217,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 		pho1passIsoTight_OOT = photonPassTightIso_OOT2016(ind_pho);
         	pho1isStandardPhoton = pho_isStandardPhoton[ind_pho];
         	pho1isPromptPhoton = isPromptPhoton;
-
+        
   		pho1SeedX = (*ecalRechit_X)[seedhitIndex];
   		pho1SeedY = (*ecalRechit_Y)[seedhitIndex];
   		pho1SeedZ = (*ecalRechit_Z)[seedhitIndex];
@@ -1267,6 +1272,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 		pho2Sphiphi = phoSphiphi;
 		pho2Setaphi = phoSetaphi;
 		pho2passEleVeto = pho_passEleVeto[ind_pho];
+        std::copy(pho_passHLTFilter[ind_pho], pho_passHLTFilter[ind_pho] + 100, pho2passHLTFilter);
 		pho2passIsoLoose = photonPassLooseIso(ind_pho);
 		pho2passIsoLoose_privatePF = photonPassLooseIso(ind_pho, true, true);
 		pho2passIsoLoose_OOT = photonPassLooseIso_OOT2016(ind_pho);
@@ -1339,9 +1345,9 @@ n_Photons_reco = nPho;
 
 deltaR_pho12 = deltaR(pho1Eta, pho1Phi, pho2Eta, pho2Phi);
 
-HT = 0.0;
-HT = pho1Pt;
-if(nPho>=2) HT += pho2Pt;
+HT = 0.0; // Use only jet for HT
+//HT = pho1Pt;
+//if(nPho>=2) HT += pho2Pt;
 
 
 //******************************************************
