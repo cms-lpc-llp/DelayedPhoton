@@ -160,7 +160,7 @@ float DelayedPhotonAnalyzer::getADCToGeV( uint run, int isFromEB) {
 
 void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName, string label) {
 
-  isData = false;//////remember to delete this when we are dealing with data.....
+  //isData = isData;//////remember to delete this when we are dealing with data.....
 
   //*****************************************************************************
   //Settings
@@ -195,45 +195,45 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   }
 
 
-  //*****************************************************************************
-  //Load Pedestals
-  //*****************************************************************************
-  vector <uint> start_time;//start run of all IOV 
-  vector <uint> end_time;//end run of all IOV
-  start_time_tmp=0; 
-  end_time_tmp=0;
-  rms_G12_all=0;
-  detID_all=0 ;
-
-  std::cout<< "[DEBUG] opening f_pedestal"<<endl; 
-  //TFile *f_pedestal = TFile::Open("root://cms-xrd-global.cern.ch//store/group/phys_susy/razor/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1.root","READ"); // use this if you run on lxplus
-  TFile *f_pedestal = 0;//TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1.root","READ"); // use this if you run on Caltech T2
-  TTree *tree_pedestal = 0;//(TTree*)f_pedestal->Get("pedestal");
-  
-  //TFile *f_pedestal = new TFile("tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ");
-  //TTree *tree_pedestal = (TTree*)f_pedestal->Get("pedestal");
-
-  if(isData)
-  { 
-	  f_pedestal = TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ"); // use this if you run on Caltech T2
-	  //f_pedestal = new TFile("tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ"); // use this if you run on Caltech T2
-	  tree_pedestal = (TTree*)f_pedestal->Get("pedestal");
-	  tree_pedestal->SetBranchAddress("start_time_second", &start_time_tmp);
-	  tree_pedestal->SetBranchAddress("end_time_second", &end_time_tmp);
-	  tree_pedestal->SetBranchAddress("rms_G12", &rms_G12_all);
-	  tree_pedestal->SetBranchAddress("detID", &detID_all);
-	  int N_entries_pedestal = tree_pedestal->GetEntries();
- 
-
-	  cout << "Total Pedestal IOVs: " << N_entries_pedestal << "\n";
-	  for(int i=0;i<N_entries_pedestal;i++) {
-	    cout << "Loading Pedestal IOV " << i << "\n";
-	    tree_pedestal->GetEntry(i);
-	    start_time.push_back(start_time_tmp);
-	    end_time.push_back(end_time_tmp);
-	  }
-
-}
+//  //*****************************************************************************
+//  //Load Pedestals
+//  //*****************************************************************************
+//  vector <uint> start_time;//start run of all IOV 
+//  vector <uint> end_time;//end run of all IOV
+//  start_time_tmp=0; 
+//  end_time_tmp=0;
+//  rms_G12_all=0;
+//  detID_all=0 ;
+//
+//  //std::cout<< "[DEBUG] opening f_pedestal"<<endl; 
+//  //TFile *f_pedestal = TFile::Open("root://cms-xrd-global.cern.ch//store/group/phys_susy/razor/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1.root","READ"); // use this if you run on lxplus
+//  TFile *f_pedestal = 0;//TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1.root","READ"); // use this if you run on Caltech T2
+//  TTree *tree_pedestal = 0;//(TTree*)f_pedestal->Get("pedestal");
+//  
+//  //TFile *f_pedestal = new TFile("tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ");
+//  //TTree *tree_pedestal = (TTree*)f_pedestal->Get("pedestal");
+//
+//  if(isData)
+//  { 
+//	  f_pedestal = TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ"); // use this if you run on Caltech T2
+//	  //f_pedestal = new TFile("tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ"); // use this if you run on Caltech T2
+//	  tree_pedestal = (TTree*)f_pedestal->Get("pedestal");
+//	  tree_pedestal->SetBranchAddress("start_time_second", &start_time_tmp);
+//	  tree_pedestal->SetBranchAddress("end_time_second", &end_time_tmp);
+//	  tree_pedestal->SetBranchAddress("rms_G12", &rms_G12_all);
+//	  tree_pedestal->SetBranchAddress("detID", &detID_all);
+//	  int N_entries_pedestal = tree_pedestal->GetEntries();
+// 
+//
+//	  cout << "Total Pedestal IOVs: " << N_entries_pedestal << "\n";
+//	  for(int i=0;i<N_entries_pedestal;i++) {
+//	    cout << "Loading Pedestal IOV " << i << "\n";
+//	    tree_pedestal->GetEntry(i);
+//	    start_time.push_back(start_time_tmp);
+//	    end_time.push_back(end_time_tmp);
+//	  }
+//
+//}
 
   // //test 
   // uint test_time = 1464000000;
@@ -669,11 +669,15 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
            ecalRechit_Y, ecalRechit_Z, ecalRechit_E, ecalRechit_T, 
            ecalRechit_FlagOOT, ecalRechit_GainSwitch1,
            ecalRechit_GainSwitch6, ecalRechit_transpCorr, 
+           ecalRechit_pedrms12,
+           ecalRechit_pedrms6,
+           ecalRechit_pedrms1,
            scaleWeights, pdfWeights, alphasWeights;
     std::vector<unsigned int>  *ecalRechit_ID = 0;
     std::vector<float> *ecalRechit_Eta = 0, *ecalRechit_Phi = 0, *ecalRechit_X = 0, 
         *ecalRechit_Y = 0, *ecalRechit_Z = 0, *ecalRechit_E = 0, *ecalRechit_T = 0, 
         *ecalRechit_transpCorr = 0, *ecalRechit_pedrms12 = 0, 
+        *ecalRechit_pedrms6 = 0, *ecalRechit_pedrms1 = 0, 
         *scaleWeights = 0, *pdfWeights = 0, *alphasWeights = 0;
     std::vector<bool> *ecalRechit_FlagOOT = 0, *ecalRechit_GainSwitch1 = 0,
         *ecalRechit_GainSwitch6 = 0;
@@ -689,9 +693,19 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     b_ecalRechit_GainSwitch1->SetAddress(&ecalRechit_GainSwitch1);
     b_ecalRechit_GainSwitch6->SetAddress(&ecalRechit_GainSwitch6);
     b_ecalRechit_transpCorr->SetAddress(&ecalRechit_transpCorr);
-    b_scaleWeights->SetAddress(&scaleWeights);
-    b_pdfWeights->SetAddress(&pdfWeights);
-    b_alphasWeights->SetAddress(&alphasWeights);
+    
+    if (isData)
+    {
+        b_ecalRechit_pedrms12->SetAddress(&ecalRechit_pedrms12);
+        b_ecalRechit_pedrms6->SetAddress(&ecalRechit_pedrms6);
+        b_ecalRechit_pedrms1->SetAddress(&ecalRechit_pedrms1);
+    }
+    else
+    {
+        b_scaleWeights->SetAddress(&scaleWeights);
+        b_pdfWeights->SetAddress(&pdfWeights);
+        b_alphasWeights->SetAddress(&alphasWeights);
+    }
 
     if (ientry < 0) break;
     nb = fChain->GetEntry(jentry);   nbytes += nb;
@@ -968,16 +982,17 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 	double phoSetaphi = 0.0;
 	double phoSminor_private = 0.0;
 	double phoSmajor_private = 0.0;
-	
+            
       	for (uint k=0; k<(*pho_EcalRechitIndex)[ind_pho].size(); ++k) 
-	{
+	    {
         	uint rechitIndex = (*pho_EcalRechitIndex)[ind_pho][k];
+
 
 		if((*ecalRechit_E)[rechitIndex] < 1.0) continue;	
       
         	double rawT = (*ecalRechit_T)[rechitIndex];
         	//apply intercalibration
-		double IC_time_SeptRereco_this = 0.0;//isData ? (getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[rechitIndex]) ) : 0.0;
+		    double IC_time_SeptRereco_this = 0.0;//isData ? (getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[rechitIndex]) ) : 0.0;
         	double IC_time_LagacyRereco_this = 0.0;//isData ? (getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[rechitIndex])) : 0.0;
         	double calibratedSeedHitTime_this = rawT + IC_time_LagacyRereco_this - IC_time_SeptRereco_this;
 
@@ -985,7 +1000,8 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         	double corrT = calibratedSeedHitTime_this + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
 
         	//double pedNoise = 1.0;//isData ? (getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex])) : 1.0;
-        	double pedNoise = isData ? (getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex])) : 1.0;
+        	//double pedNoise = isData ? (getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex])) : 1.0;
+            double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.0;  
         	//double pedNoise = 1;
         	double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1;
         	double sigmaE = pedNoise * ADCToGeV;
@@ -1897,12 +1913,12 @@ cout << "Writing SumPdfWeights histogram..." << endl;
 SumPdfWeights->Write();
 outFile->Close();
 
-if(isData)
-{
-f_pedestal->Close();
-start_time.clear();
-end_time.clear();
-}
+//if(isData)
+//{
+//f_pedestal->Close();
+//start_time.clear();
+//end_time.clear();
+//}
 
 delete helper;
 delete photonCorrector;
