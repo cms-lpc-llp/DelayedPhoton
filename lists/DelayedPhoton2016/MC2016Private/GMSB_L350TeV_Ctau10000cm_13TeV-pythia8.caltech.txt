@@ -1,0 +1,1 @@
+/mnt/hadoop/store/group/phys_susy/razor/run2/Run2DelayedPhotonNtuple/MC2016/MC2016PrivateGMSB/GMSB_L350TeV_Ctau10000cm_13TeV-pythia8/crab_prod_Run2DelayedPhotonNtupler_MC2016_GMSB_L350TeV_Ctau-10000cm_22Apr2019_private/200428_134313/0000/razorNtuple_1.root
