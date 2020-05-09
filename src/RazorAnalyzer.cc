@@ -244,6 +244,7 @@ void RazorAnalyzer::EnablePhotons(){
     fChain->SetBranchStatus("pho_pfIsoSumPUPt", 1);    
     fChain->SetBranchStatus("pho_isConversion", 1);
     fChain->SetBranchStatus("pho_passEleVeto", 1);
+    fChain->SetBranchStatus("pho_passHLTFilter", 1);
     fChain->SetBranchStatus("pho_RegressionE", 1);
     fChain->SetBranchStatus("pho_RegressionEUncertainty", 1);
     fChain->SetBranchStatus("pho_IDMVA", 1);
@@ -465,7 +466,10 @@ void RazorAnalyzer::EnableEcalRechits(){
     fChain->SetBranchStatus("ecalRechit_GainSwitch1", 1);
     fChain->SetBranchStatus("ecalRechit_GainSwitch6", 1);
     fChain->SetBranchStatus("ecalRechit_transpCorr", 1);
-    std::cout << "[RazorAnalyzer.cc] ecalRechit_ID = " << ecalRechit_ID << std::endl;
+    fChain->SetBranchStatus("ecalRechit_pedrms12", 1);
+    fChain->SetBranchStatus("ecalRechit_pedrms6", 1);
+    fChain->SetBranchStatus("ecalRechit_pedrms1", 1);
+    //std::cout << "[RazorAnalyzer.cc] ecalRechit_ID = " << ecalRechit_ID << std::endl;
 }
 
 
