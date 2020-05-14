@@ -108,7 +108,7 @@ then
 		fi
 	else
 		echo echo "FAILED NO ACCESS ============= failed to access file RazorRun_T2, job anandoned"
-		sleep 600000
+		sleep 1
 	fi
 
 else
