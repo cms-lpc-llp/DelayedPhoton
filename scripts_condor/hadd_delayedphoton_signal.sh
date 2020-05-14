@@ -3,7 +3,7 @@ export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
 
 OUTDIR=/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2017/hadd/
 
-if [ ! -d ${OUTDIR} ]
+if [ ! -d /mnt/hadoop/${OUTDIR} ]
 then
     echo "${OUTDIR} does not exist. Creating one..."
     hadoop fs -mkdir ${OUTDIR}
