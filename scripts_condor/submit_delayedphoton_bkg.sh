@@ -18,24 +18,24 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 filesPerJob=1
 
 for sample in \
-GJets_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8 \
-GJets_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8 \
-GJets_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8 \
-GJets_HT-40To100_TuneCP5_13TeV-madgraphMLM-pythia8 \
-GJets_HT-600ToInf_TuneCP5_13TeV-madgraphMLM-pythia8 \
-DiPhotonJetsBox_M40_80-Sherpa \
-DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa
-#QCD_HT50to100_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#QCD_HT100to200_TuneCP5_13TeV-madgraphMLM-pythia8
-#QCD_HT1000to1500_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#QCD_HT1500to2000_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#QCD_HT2000toInf_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#QCD_HT200to300_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#QCD_HT300to500_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#QCD_HT500to700_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#QCD_HT700to1000_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8
-#DYJetsToLL_M-50_TuneCP5_13TeV-madgraphMLM-pythia8
+QCD_Pt-120to170_EMEnriched_TuneCP5_13TeV_pythia8 \
+QCD_Pt-15to20_EMEnriched_TuneCP5_13TeV_pythia8 \
+QCD_Pt-170to300_EMEnriched_TuneCP5_13TeV_pythia8 \
+QCD_Pt-20to30_EMEnriched_TuneCP5_13TeV_pythia8 \
+QCD_Pt-300toInf_EMEnriched_TuneCP5_13TeV_pythia8 \
+QCD_Pt-30to50_EMEnriched_TuneCP5_13TeV_pythia8 \
+QCD_Pt-50to80_EMEnriched_TuneCP5_13TeV_pythia8 \
+QCD_Pt-80to120_EMEnriched_TuneCP5_13TeV_pythia8 \
+QCD_Pt-30to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
+QCD_Pt-30toInf_DoubleEMEnriched_MGG-40to80_TuneCP5_13TeV_Pythia8 \
+QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8
+#GJets_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8 \
+#GJets_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8 \
+#GJets_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8 \
+#GJets_HT-40To100_TuneCP5_13TeV-madgraphMLM-pythia8 \
+#GJets_HT-600ToInf_TuneCP5_13TeV-madgraphMLM-pythia8 \
+#DiPhotonJetsBox_M40_80-Sherpa \
+#DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa
 
 do
 	echo "Sample " ${sample}
