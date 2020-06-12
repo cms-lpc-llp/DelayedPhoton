@@ -51,7 +51,8 @@ do
 		echo "x509userproxy = \$ENV(X509_USER_PROXY)" >> ${jdl_file}
                 echo "+RunAsOwner = True" >> ${jdl_file}
                 echo "+InteractiveUser = true" >> ${jdl_file}
-                echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel7"' >> ${jdl_file}
+                echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel7-m202006"' >> ${jdl_file}
+                #echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel7"' >> ${jdl_file}
                 echo "+SingularityBindCVMFS = True" >> ${jdl_file}
                 echo "run_as_owner = True" >> ${jdl_file}
                 echo "+JobBatchName = \"DoubleEG2016\"" >> ${jdl_file}

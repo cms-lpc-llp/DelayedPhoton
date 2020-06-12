@@ -18,8 +18,8 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 filesPerJob=2
 
 for sample in \
-DiPhotonJetsBox_M40_80-Sherpa \
 DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa \
+#DiPhotonJetsBox_M40_80-Sherpa \
 #TGJets_TuneCUETP8M1_13TeV_amcatnlo_madspin_pythia8 \
 #TGGJets_leptonDecays_13TeV_MadGraph_madspin_pythia8 \
 #TTGJets_TuneCUETP8M1_13TeV-amcatnloFXFX-madspin-pythia8 \
@@ -64,7 +64,8 @@ do
 		echo "x509userproxy = \$ENV(X509_USER_PROXY)" >> ${jdl_file}
                 echo "+RunAsOwner = True" >> ${jdl_file}
                 echo "+InteractiveUser = true" >> ${jdl_file}
-                echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel7"' >> ${jdl_file}
+                #echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel7"' >> ${jdl_file}
+                echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel7-m202006"' >> ${jdl_file}
                 echo "+SingularityBindCVMFS = True" >> ${jdl_file}
                 echo "+JobBatchName = \"${sample}\"" >> ${jdl_file}
                 echo "run_as_owner = True" >> ${jdl_file}
