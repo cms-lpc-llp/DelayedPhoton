@@ -36,6 +36,34 @@ double timecorr_smear_bb = 2.0*289.1*289.1 - 2.0*168.8*168.8;
 
 #define _phodebug 0
 
+float DelayedPhotonAnalyzer::getTimeCalibConstant(TTree *tree, vector <uint> & start_run, vector <uint> & end_run, uint run, uint detID) {
+  float timeCalib = 0.0;
+
+  // accessing variables for the seed hit information
+  
+  int N_entries = tree->GetEntries(); 
+  int i_entry=0;
+  for(uint i=0;i<start_run.size();i++) {
+    if(run>= start_run[i] && run<= end_run[i]) {
+      i_entry = i;
+      break;
+    }
+  }
+
+  
+  if(i_entry> N_entries) return timeCalib;
+  tree->GetEntry(i_entry);
+  std::vector<int>::iterator p_id;
+  p_id = std::find(detID_all->begin(), detID_all->end(), detID);
+  if (p_id == detID_all->end()) return timeCalib;
+  uint idx = std::distance(detID_all->begin(), p_id);
+  
+  if(idx<=IC_time_all->size()) timeCalib = IC_time_all->at(idx);  
+  
+  return timeCalib;
+};
+
+
 TVector3 DelayedPhotonAnalyzer::intersectPoint(float x0,float y0,float z0,float px,float py,float pz,float R)
 {
   TVector3 sol;
@@ -124,6 +152,56 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   std::string photonCorrectionFile = photonCorrectionPath + "/Run2017_17Nov2017_v1_ele_unc";
   EnergyScaleCorrection_class_2017 *photonCorrector = 0;
   photonCorrector = new EnergyScaleCorrection_class_2017(photonCorrectionFile);
+  //*****************************************************************************
+  //Load Intercalibration constants
+  //*****************************************************************************
+  vector <uint> start_run;//start run of all IOV 
+  vector <uint> end_run;//end run of all IOV
+  vector <uint> start_run_rereco;// for Rereco tags
+  vector <uint> end_run_rereco;// for Rereco tags
+  start_run_tmp=0; 
+  end_run_tmp=0;
+  IC_time_all=0;
+  detID_all=0;
+  
+  std::string ecalTimeUL = "/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_UltraLegacy_v1/EcalTimeCalibConstants_UltraLegacy.root";
+  std::string ecalTimeRereco = "/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_UltraLegacy_v1/EcalTimeCalibConstants_2018Prompt_v1.root"; // For 2018D
+  //std::string ecalTimeRereco = "/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_UltraLegacy_v1/EcalTimeCalibConstants_2018Rereco_v2.root"; // For 2018ABC
+
+  TFile f_timeCalib(ecalTimeUL.c_str(),"READ");
+  std::cout << "Reading " << ecalTimeUL << " for UL timing correction\n";
+  TTree *tree_timeCalib = (TTree*)f_timeCalib.Get("timeCalib");
+  
+  tree_timeCalib->SetBranchAddress("start_run", &start_run_tmp);
+  tree_timeCalib->SetBranchAddress("end_run", &end_run_tmp);
+  tree_timeCalib->SetBranchAddress("IC_time", &IC_time_all);
+  tree_timeCalib->SetBranchAddress("detID", &detID_all);
+  
+  int N_entries_timeCalib = tree_timeCalib->GetEntries();
+  
+  for(int i=0;i<N_entries_timeCalib;i++) {
+    tree_timeCalib->GetEntry(i);
+    start_run.push_back(start_run_tmp);
+    end_run.push_back(end_run_tmp);
+  }
+
+  TFile f_timeCalib_rereco(ecalTimeRereco.c_str(),"READ"); // For 2018D
+  std::cout << "Reading " << ecalTimeRereco << " for Rereco timing correction\n";
+
+  TTree *tree_timeCalib_rereco = (TTree*)f_timeCalib_rereco.Get("timeCalib");
+  
+  tree_timeCalib_rereco->SetBranchAddress("start_run", &start_run_tmp);
+  tree_timeCalib_rereco->SetBranchAddress("end_run", &end_run_tmp);
+  tree_timeCalib_rereco->SetBranchAddress("IC_time", &IC_time_all);
+  tree_timeCalib_rereco->SetBranchAddress("detID", &detID_all);
+  
+  int N_entries_timeCalib_rereco = tree_timeCalib_rereco->GetEntries();
+  
+  for(int i=0;i<N_entries_timeCalib_rereco;i++) {
+    tree_timeCalib_rereco->GetEntry(i);
+    start_run_rereco.push_back(start_run_tmp);
+    end_run_rereco.push_back(end_run_tmp);
+  }
   
   if(!isData) {
     photonCorrector->doScale = false;
@@ -957,9 +1035,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         double rawSeedHitTime =  (*ecalRechit_T)[seedhitIndex];
 
         //apply intercalibration2      
-        double IC_time_SeptRereco = 0.0;//isData ? getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
-        double IC_time_LagacyRereco = 0.0;//isData ? getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
-        double calibratedSeedHitTime = rawSeedHitTime + IC_time_LagacyRereco - IC_time_SeptRereco;
+        double IC_time_Rereco = isData ? getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
+        double IC_time_UL = isData ? getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
+        double calibratedSeedHitTime = rawSeedHitTime + IC_time_UL - IC_time_Rereco;
 
         //apply TOF correction
         double TOFCorrectedSeedHitTime = calibratedSeedHitTime + (std::sqrt(pow((*ecalRechit_X)[seedhitIndex],2)+pow((*ecalRechit_Y)[seedhitIndex],2)+pow((*ecalRechit_Z)[seedhitIndex],2))-std::sqrt(pow((*ecalRechit_X)[seedhitIndex]-pvX,2)+pow((*ecalRechit_Y)[seedhitIndex]-pvY,2)+pow((*ecalRechit_Z)[seedhitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
@@ -1008,9 +1086,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
             double rawT = (*ecalRechit_T)[rechitIndex];
             //apply intercalibration
-            double IC_time_SeptRereco_this = 0.0;
-            double IC_time_LagacyRereco_this = 0.0;
-            double calibratedSeedHitTime_this = rawT + IC_time_LagacyRereco_this - IC_time_SeptRereco_this;
+            double IC_time_Rereco_this = isData ? (getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[rechitIndex]) ) : 0.0;
+            double IC_time_UL_this = isData ? (getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[rechitIndex])) : 0.0;
+            double calibratedSeedHitTime_this = rawT + IC_time_UL_this - IC_time_Rereco_this;
 
             double corrT = calibratedSeedHitTime_this + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
 
