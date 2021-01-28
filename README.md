@@ -24,7 +24,7 @@ Example: to process the DY sample, do:
 
 (we use V4p1 razorNtupler for 2016 paper; they are all in: lists/Run2/razorNtuplerV4p1/)
 
-submit condor jobs to test a few samples 
+submit local jobs to test a few samples 
 -------------
 
      cd scripts_condor
