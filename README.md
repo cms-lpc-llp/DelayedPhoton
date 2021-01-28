@@ -6,6 +6,7 @@ Setup
 
     cmsrel CMSSW_10_6_12
     cd CMSSW_10_6_12/src
+    cmsenv
     git clone -b Analyzer2018 git@github.com:cms-lpc-llp/DelayedPhoton.git
     cd DelayedPhoton
     make
