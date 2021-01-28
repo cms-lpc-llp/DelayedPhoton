@@ -113,58 +113,6 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
   RazorHelper *helper = 0;
   helper = new RazorHelper(analysisTag, isData, false);
 
-  //*****************************************************************************
-  //Load Intercalibration constants
-  //*****************************************************************************
-  vector <uint> start_run;//start run of all IOV 
-  vector <uint> end_run;//end run of all IOV
-  vector <uint> start_run_rereco;// for Rereco tags
-  vector <uint> end_run_rereco;// for Rereco tags
-  start_run_tmp=0; 
-  end_run_tmp=0;
-  IC_time_all=0;
-  detID_all=0;
-  
-  
-  std::string ecalTimeUL = "/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_UltraLegacy_v1/EcalTimeCalibConstants_UltraLegacy.root";
-  std::string ecalTimeRereco = "/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_UltraLegacy_v1/EcalTimeCalibConstants_2018Prompt_v1.root"; // For 2018D
-  //std::string ecalTimeRereco = "/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_UltraLegacy_v1/EcalTimeCalibConstants_2018Rereco_v2.root"; // For 2018ABC
-
-  TFile f_timeCalib(ecalTimeUL.c_str(),"READ");
-  std::cout << "Reading " << ecalTimeUL << " for UL timing correction\n";
-  TTree *tree_timeCalib = (TTree*)f_timeCalib.Get("timeCalib");
-  
-  tree_timeCalib->SetBranchAddress("start_run", &start_run_tmp);
-  tree_timeCalib->SetBranchAddress("end_run", &end_run_tmp);
-  tree_timeCalib->SetBranchAddress("IC_time", &IC_time_all);
-  tree_timeCalib->SetBranchAddress("detID", &detID_all);
-  
-  int N_entries_timeCalib = tree_timeCalib->GetEntries();
-  
-  for(int i=0;i<N_entries_timeCalib;i++) {
-    tree_timeCalib->GetEntry(i);
-    start_run.push_back(start_run_tmp);
-    end_run.push_back(end_run_tmp);
-  }
-
-  TFile f_timeCalib_rereco(ecalTimeRereco.c_str(),"READ"); // For 2018D
-  std::cout << "Reading " << ecalTimeRereco << " for Rereco timing correction\n";
-
-  TTree *tree_timeCalib_rereco = (TTree*)f_timeCalib_rereco.Get("timeCalib");
-  
-  tree_timeCalib_rereco->SetBranchAddress("start_run", &start_run_tmp);
-  tree_timeCalib_rereco->SetBranchAddress("end_run", &end_run_tmp);
-  tree_timeCalib_rereco->SetBranchAddress("IC_time", &IC_time_all);
-  tree_timeCalib_rereco->SetBranchAddress("detID", &detID_all);
-  
-  int N_entries_timeCalib_rereco = tree_timeCalib_rereco->GetEntries();
-  
-  for(int i=0;i<N_entries_timeCalib_rereco;i++) {
-    tree_timeCalib_rereco->GetEntry(i);
-    start_run_rereco.push_back(start_run_tmp);
-    end_run_rereco.push_back(end_run_tmp);
-  }
-  
 
   //*****************************************************************************
   //Load Pedestals
@@ -179,26 +127,26 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
   TFile *f_pedestal = 0;
   TTree *tree_pedestal = 0;
 
-  /*if(isData)
-  { 
-	f_pedestal = TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ");
+  //if(isData)
+  //{ 
+  //	f_pedestal = TFile::Open("/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalPedestals_Legacy2016_time_v1/tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ");
 	//f_pedestal = TFile::Open("tree_EcalPedestals_Legacy2016_time_v1_G12rmsonly.root","READ");
-	tree_pedestal = (TTree*)f_pedestal->Get("pedestal");
-	tree_pedestal->SetBranchAddress("start_time_second", &start_time_tmp);
-	tree_pedestal->SetBranchAddress("end_time_second", &end_time_tmp);
-	tree_pedestal->SetBranchAddress("rms_G12", &rms_G12_all);
-	tree_pedestal->SetBranchAddress("detID", &detID_all);
-	int N_entries_pedestal = tree_pedestal->GetEntries();
+	//tree_pedestal = (TTree*)f_pedestal->Get("pedestal");
+	//tree_pedestal->SetBranchAddress("start_time_second", &start_time_tmp);
+	//tree_pedestal->SetBranchAddress("end_time_second", &end_time_tmp);
+	//tree_pedestal->SetBranchAddress("rms_G12", &rms_G12_all);
+	//tree_pedestal->SetBranchAddress("detID", &detID_all);
+	//int N_entries_pedestal = tree_pedestal->GetEntries();
 
-	cout << "Total Pedestal IOVs: " << N_entries_pedestal << "\n";
-	for(int i=0;i<N_entries_pedestal;i++) {
-		cout << "Loading Pedestal IOV " << i << "\n";
-		tree_pedestal->GetEntry(i);
-		start_time.push_back(start_time_tmp);
-		end_time.push_back(end_time_tmp);
-	}
-  }*/
-	
+	//cout << "Total Pedestal IOVs: " << N_entries_pedestal << "\n";
+	//for(int i=0;i<N_entries_pedestal;i++) {
+	//	cout << "Loading Pedestal IOV " << i << "\n";
+	//	tree_pedestal->GetEntry(i);
+	//	start_time.push_back(start_time_tmp);
+	//	end_time.push_back(end_time_tmp);
+	//}
+  //}	
+
   //load timing intercalibration
   //TFile * file_IC_timing_map = new TFile("IC_map_SingleElectron_2016.root","READ");
   ////TFile * file_IC_timing_map = new TFile("IC_average_timing_2016.root","READ");
@@ -651,16 +599,9 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
       }
 	
       double rawsubseedHitTime =  (*ecalRechit_T)[subseedhitIndex];
-      double rawSeedHitTime = rawsubseedHitTime;
 	
       double calibseedHitTime =  rawseedHitTime + IC_timing_seed_zhicai;
       double calibsubseedHitTime =  rawsubseedHitTime + IC_timing_subseed_zhicai;
-
-      //apply intercalibration2      
-      double IC_time_Rereco =  0;
-      double IC_time_UL =  0;
-      double calibratedSeedHitTime = rawSeedHitTime + IC_time_UL - IC_time_Rereco;
-
       //apply TOF correction
       double TOFCorrectedseedHitTime = rawseedHitTime + IC_timing_seed_zhicai + (std::sqrt(pow((*ecalRechit_X)[seedhitIndex],2)+pow((*ecalRechit_Y)[seedhitIndex],2)+pow((*ecalRechit_Z)[seedhitIndex],2))-std::sqrt(pow((*ecalRechit_X)[seedhitIndex]-pvX,2)+pow((*ecalRechit_Y)[seedhitIndex]-pvY,2)+pow((*ecalRechit_Z)[seedhitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
       double TOFCorrectedsubseedHitTime = rawsubseedHitTime + IC_timing_subseed_zhicai + (std::sqrt(pow((*ecalRechit_X)[subseedhitIndex],2)+pow((*ecalRechit_Y)[subseedhitIndex],2)+pow((*ecalRechit_Z)[subseedhitIndex],2))-std::sqrt(pow((*ecalRechit_X)[subseedhitIndex]-pvX,2)+pow((*ecalRechit_Y)[subseedhitIndex]-pvY,2)+pow((*ecalRechit_Z)[subseedhitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
@@ -674,7 +615,9 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
 
 
       double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.0;
-      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[subseedhitIndex]: 1.0;
+      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.0;
+      //double seedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[seedhitIndex]) : 1.0;
+      //double subseedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[subseedhitIndex]) : 1.0;
    
       double tmpSumWeightedTime = 0;
       double tmpSumWeightedTime_TOF2 = 0;
@@ -719,12 +662,7 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
 		//IC_timing_this_zhicai = -1.0* h2_IC_timing_map->GetBinContent(rec_iEtaiX+85+1,rec_iPhiiY);
 	}
 
-    double IC_time_Rereco_this = isData ? (getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[rechitIndex]) ) : 0.0;
-    double IC_time_UL_this = isData ? (getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[rechitIndex])) : 0.0;
-    //double IC_time_Rereco_this =  0.0;
-    //double IC_time_UL_this =  0.0;
-    double calibT_this = rawT_this + IC_time_UL_this - IC_time_Rereco_this;
-	//double calibT_this = rawT_this + IC_timing_seed_zhicai;	
+	double calibT_this = rawT_this + IC_timing_seed_zhicai;	
 	//apply TOF correction
 	double corrT = rawT_this + IC_timing_seed_zhicai + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
 
@@ -747,8 +685,7 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
         }	
 
 	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 0.042; // 42 MeV for MC
-	// Replaced getPedestalNoise function to ecalRechit_pedrms12 branch
-    //double pedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex]) : 0.042; // 42 MeV for MC
+	//double pedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex]) : 0.042; // 42 MeV for MC
 	//double pedNoise = 1;
 	double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1.0;
 	double sigmaE = pedNoise * ADCToGeV;
