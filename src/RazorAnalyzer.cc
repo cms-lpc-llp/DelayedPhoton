@@ -31,7 +31,7 @@ void RazorAnalyzer::EnableAll(){
     EnableTaus();
     EnablePhotons();
     EnableJets();
-    EnableFatJets();
+    //EnableFatJets();
     EnableMet();
     EnablePileup();
     EnableMC();
@@ -44,14 +44,14 @@ void RazorAnalyzer::EnableAllWithEcalRechits(){
     EnableEventInfo();
     EnablePVAll();
     //EnableMuons();
-    EnableElectrons();
+    //EnableElectrons();
     //EnableTaus();
-    EnablePhotons();
-    EnableJets();
+    //EnablePhotons();
+    //EnableJets();
     //EnableFatJets();
-    EnableMet();
-    EnablePileup();
-    EnableEcalRechits();
+    //EnableMet();
+    //EnablePileup();
+    //EnableEcalRechits();
 }
 
 void RazorAnalyzer::EnableGenInfo(){
@@ -255,7 +255,7 @@ void RazorAnalyzer::EnablePhotons(){
     fChain->SetBranchStatus("pho_trackMatching", 1);
     fChain->SetBranchStatus("pho_RegressionE", 1);
     fChain->SetBranchStatus("pho_RegressionEUncertainty", 1);
-    fChain->SetBranchStatus("pho_IDMVA", 1);
+    //fChain->SetBranchStatus("pho_IDMVA", 1);
     fChain->SetBranchStatus("pho_superClusterEnergy", 1);
     fChain->SetBranchStatus("pho_superClusterRawEnergy", 1);
     fChain->SetBranchStatus("pho_superClusterEta", 1);
@@ -346,6 +346,7 @@ void RazorAnalyzer::EnableMet(){
     fChain->SetBranchStatus("metType1Pt_raw", 1);
     fChain->SetBranchStatus("metType1Phi", 1);
     fChain->SetBranchStatus("metType1Phi_raw", 1);
+    /*
     fChain->SetBranchStatus("metEGCleanPt", 1);
     fChain->SetBranchStatus("metEGCleanPhi", 1);
     fChain->SetBranchStatus("metMuEGCleanPt", 1);
@@ -354,6 +355,7 @@ void RazorAnalyzer::EnableMet(){
     fChain->SetBranchStatus("metMuEGCleanCorrPhi", 1);
     fChain->SetBranchStatus("metUncorrectedPt", 1);
     fChain->SetBranchStatus("metUncorrectedPhi", 1);
+    */
     fChain->SetBranchStatus("metType0Plus1Pt", 1);
     fChain->SetBranchStatus("metType0Plus1Phi", 1);
     fChain->SetBranchStatus("metPuppiPt", 1);
@@ -437,7 +439,7 @@ void RazorAnalyzer::EnableMC(){
     fChain->SetBranchStatus("genQScale", 1);
     fChain->SetBranchStatus("genAlphaQCD", 1);
     fChain->SetBranchStatus("genAlphaQED", 1);
-    fChain->SetBranchStatus("lheComments", 1);
+    //fChain->SetBranchStatus("lheComments", 1);
     fChain->SetBranchStatus("scaleWeights", 1);
     fChain->SetBranchStatus("pdfWeights", 1);
     fChain->SetBranchStatus("alphasWeights", 1);
@@ -475,9 +477,11 @@ void RazorAnalyzer::EnableEcalRechits(){
     fChain->SetBranchStatus("ecalRechit_GainSwitch1", 1);
     fChain->SetBranchStatus("ecalRechit_GainSwitch6", 1);
     fChain->SetBranchStatus("ecalRechit_transpCorr", 1);
+    /*
     fChain->SetBranchStatus("ecalRechit_pedrms12", 1);
     fChain->SetBranchStatus("ecalRechit_pedrms6", 1);
     fChain->SetBranchStatus("ecalRechit_pedrms1", 1);
+    */
 }
 
 

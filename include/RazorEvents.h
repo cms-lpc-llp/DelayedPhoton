@@ -186,7 +186,7 @@ public :
    Bool_t          pho_trackMatching[700];   //[nPhotons]
    Float_t         pho_RegressionE[700];   //[nPhotons]
    Float_t         pho_RegressionEUncertainty[700];   //[nPhotons]
-   Float_t         pho_IDMVA[700];   //[nPhotons]
+   //Float_t         pho_IDMVA[700];   //[nPhotons]
    Float_t         pho_superClusterEnergy[700];   //[nPhotons]
    Float_t         pho_superClusterRawEnergy[700];   //[nPhotons]
    Float_t         pho_superClusterEta[700];   //[nPhotons]
@@ -239,6 +239,7 @@ public :
    Float_t         jetAllMuonPhi[900];   //[nJets]
    Float_t         jetAllMuonM[900];   //[nJets]
    Float_t         jetPtWeightedDZ[900];   //[nJets]
+   /*
    UInt_t          nFatJets;
    Float_t         fatJetE[900];
    Float_t         fatJetPt[900];
@@ -257,6 +258,7 @@ public :
    Float_t         fatJetMaxSubjetCSV[900];
    Bool_t          fatJetPassIDLoose[900];
    Bool_t          fatJetPassIDTight[900];
+   */
    Float_t         metPt;
    Float_t         metPhi;
    Float_t         sumMET;
@@ -268,6 +270,7 @@ public :
    Float_t         metType1Phi_raw;
    Float_t         metType0Plus1Pt;
    Float_t         metType0Plus1Phi;
+   /*
    Float_t         metEGCleanPt;
    Float_t         metEGCleanPhi;
    Float_t         metMuEGCleanPt;
@@ -276,13 +279,15 @@ public :
    Float_t         metMuEGCleanCorrPhi;
    Float_t         metUncorrectedPt;
    Float_t         metUncorrectedPhi;
+   */
    Float_t         metNoHFPt;
    Float_t         metNoHFPhi;
    Float_t         metPuppiPt;
    Float_t         metPuppiPhi;
    Float_t         metCaloPt;
    Float_t         metCaloPhi;
-   Float_t         metType1PtJetResUp;
+   /*
+   //Float_t         metType1PtJetResUp;
    Float_t         metType1PtJetResDown;
    Float_t         metType1PtJetEnUp;
    Float_t         metType1PtJetEnDown;
@@ -310,6 +315,7 @@ public :
    Float_t         metType1PhiUnclusteredEnDown;
    Float_t         metType1PhiPhotonEnUp;
    Float_t         metType1PhiPhotonEnDown;
+   */
    Bool_t          Flag_HBHENoiseFilter;
    Bool_t          Flag_HBHETightNoiseFilter;
    Bool_t          Flag_HBHEIsoNoiseFilter;
@@ -349,9 +355,11 @@ public :
    std::vector<bool>    *ecalRechit_GainSwitch1;
    std::vector<bool>    *ecalRechit_GainSwitch6;
    std::vector<float>   *ecalRechit_transpCorr;
+   /*
    std::vector<float>   *ecalRechit_pedrms12;
    std::vector<float>   *ecalRechit_pedrms6;
    std::vector<float>   *ecalRechit_pedrms1;
+   */
    Int_t           nGenJets;
    Float_t         genJetE[50];   //[nGenJets]
    Float_t         genJetPt[50];   //[nGenJets]
@@ -368,7 +376,7 @@ public :
    Float_t         genQScale;
    Float_t         genAlphaQCD;
    Float_t         genAlphaQED;
-   std::string     *lheComments;
+   //std::string     *lheComments;
    std::vector<float>   *scaleWeights;
    std::vector<float>   *pdfWeights;
    std::vector<float>   *alphasWeights;
@@ -551,7 +559,7 @@ public :
    TBranch        *b_pho_trackMatching;   //!
    TBranch        *b_pho_RegressionE;   //!
    TBranch        *b_pho_RegressionEUncertainty;   //!
-   TBranch        *b_pho_IDMVA;   //!
+   //TBranch        *b_pho_IDMVA;   //!
    TBranch        *b_pho_superClusterEnergy;   //!
    TBranch        *b_pho_superClusterRawEnergy;   //!
    TBranch        *b_pho_superClusterEta;   //!
@@ -604,6 +612,7 @@ public :
    TBranch        *b_jetAllMuonPhi;   //!
    TBranch        *b_jetAllMuonM;   //!
    TBranch        *b_jetPtWeightedDZ;   //!
+   /*
    TBranch        *b_nFatJets;
    TBranch        *b_fatJetE;
    TBranch        *b_fatJetPt;
@@ -622,6 +631,7 @@ public :
    TBranch        *b_fatJetMaxSubjetCSV;
    TBranch        *b_fatJetPassIDLoose;
    TBranch        *b_fatJetPassIDTight;
+   */
    TBranch        *b_metPt;   //!
    TBranch        *b_metPhi;   //!
    TBranch        *b_sumMET;   //!
@@ -633,12 +643,14 @@ public :
    TBranch        *b_metType1Phi_raw;   //!
    TBranch        *b_metType0Plus1Pt;   //!
    TBranch        *b_metType0Plus1Phi;   //!
+   /*
    TBranch        *b_metEGCleanPt;   //!
    TBranch        *b_metEGCleanPhi;   //!
    TBranch        *b_metMuEGCleanPt;   //!
    TBranch        *b_metMuEGCleanPhi;   //!
    TBranch        *b_metMuEGCleanCorrPt;   //!
    TBranch        *b_metMuEGCleanCorrPhi;   //!
+   */
    TBranch        *b_metUncorrectedPt;   //!
    TBranch        *b_metUncorrectedPhi;   //!
    TBranch        *b_metNoHFPt;   //!
@@ -647,7 +659,7 @@ public :
    TBranch        *b_metPuppiPhi;   //!
    TBranch        *b_metCaloPt;   //!
    TBranch        *b_metCaloPhi;   //!
-   TBranch        *b_metType1PtJetResUp;   //!
+   //TBranch        *b_metType1PtJetResUp;   //!
    TBranch        *b_metType1PtJetResDown;   //!
    TBranch        *b_metType1PtJetEnUp;   //!
    TBranch        *b_metType1PtJetEnDown;   //!
@@ -714,9 +726,11 @@ public :
    TBranch        *b_ecalRechit_GainSwitch1;   //!
    TBranch        *b_ecalRechit_GainSwitch6;   //!
    TBranch        *b_ecalRechit_transpCorr;   //!
+   /*
    TBranch        *b_ecalRechit_pedrms12;   //!
    TBranch        *b_ecalRechit_pedrms6;   //!
    TBranch        *b_ecalRechit_pedrms1;   //!
+   */
    TBranch        *b_nGenJets;   //!
    TBranch        *b_genJetE;   //!
    TBranch        *b_genJetPt;   //!
@@ -733,7 +747,7 @@ public :
    TBranch        *b_genQScale;   //!
    TBranch        *b_genAlphaQCD;   //!
    TBranch        *b_genAlphaQED;   //!
-   TBranch        *b_lheComments;   //!
+   //TBranch        *b_lheComments;   //!
    TBranch        *b_scaleWeights;   //!
    TBranch        *b_pdfWeights;   //!
    TBranch        *b_alphasWeights;   //!
@@ -823,7 +837,7 @@ void RazorEvents::Init(TTree *tree)
    // (once per file to be processed).
 
    // Set object pointer
-   lheComments = 0;
+   //lheComments = 0;
    ele_EcalRechitIndex = 0;
    ele_SeedRechitIndex = 0;
    pho_EcalRechitIndex = 0;
@@ -835,14 +849,16 @@ void RazorEvents::Init(TTree *tree)
    ecalRechit_Z = 0;
    ecalRechit_E = 0;
    ecalRechit_T = 0;
-   ecalRechit_ID = 0;
+   //ecalRechit_ID = 0;
    ecalRechit_FlagOOT = 0;
    ecalRechit_GainSwitch1 = 0;
    ecalRechit_GainSwitch6 = 0;
    ecalRechit_transpCorr = 0;
+   /*
    ecalRechit_pedrms12 = 0;
    ecalRechit_pedrms6 = 0;
    ecalRechit_pedrms1 = 0;
+   */
    scaleWeights = 0;
    pdfWeights = 0;
    alphasWeights = 0;
@@ -1015,7 +1031,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("pho_trackMatching", pho_trackMatching, &b_pho_trackMatching);
    fChain->SetBranchAddress("pho_RegressionE", pho_RegressionE, &b_pho_RegressionE);
    fChain->SetBranchAddress("pho_RegressionEUncertainty", pho_RegressionEUncertainty, &b_pho_RegressionEUncertainty);
-   fChain->SetBranchAddress("pho_IDMVA", pho_IDMVA, &b_pho_IDMVA);
+   //fChain->SetBranchAddress("pho_IDMVA", pho_IDMVA, &b_pho_IDMVA);
    fChain->SetBranchAddress("pho_superClusterEnergy", pho_superClusterEnergy, &b_pho_superClusterEnergy);
    fChain->SetBranchAddress("pho_superClusterRawEnergy", pho_superClusterRawEnergy, &b_pho_superClusterRawEnergy);
    fChain->SetBranchAddress("pho_superClusterEta", pho_superClusterEta, &b_pho_superClusterEta);
@@ -1069,6 +1085,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("jetAllMuonPhi", jetAllMuonPhi, &b_jetAllMuonPhi);
    fChain->SetBranchAddress("jetAllMuonM", jetAllMuonM, &b_jetAllMuonM);
    fChain->SetBranchAddress("jetPtWeightedDZ", jetPtWeightedDZ, &b_jetPtWeightedDZ);
+   /*
    fChain->SetBranchAddress("nFatJets", &nFatJets, &b_nFatJets);
    fChain->SetBranchAddress("fatJetE", fatJetE, &b_fatJetE);
    fChain->SetBranchAddress("fatJetPt", fatJetPt, &b_fatJetPt);
@@ -1087,6 +1104,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("fatJetMaxSubjetCSV", fatJetMaxSubjetCSV, &b_fatJetMaxSubjetCSV);
    fChain->SetBranchAddress("fatJetPassIDLoose", fatJetPassIDLoose, &b_fatJetPassIDLoose);
    fChain->SetBranchAddress("fatJetPassIDTight", fatJetPassIDTight, &b_fatJetPassIDTight);
+   */
    fChain->SetBranchAddress("metPt", &metPt, &b_metPt);
    fChain->SetBranchAddress("metPhi", &metPhi, &b_metPhi);
    fChain->SetBranchAddress("sumMET", &sumMET, &b_sumMET);
@@ -1098,6 +1116,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("metType1Phi_raw", &metType1Phi_raw, &b_metType1Phi_raw);
    fChain->SetBranchAddress("metType0Plus1Pt", &metType0Plus1Pt, &b_metType0Plus1Pt);
    fChain->SetBranchAddress("metType0Plus1Phi", &metType0Plus1Phi, &b_metType0Plus1Phi);
+   /*
    fChain->SetBranchAddress("metEGCleanPt", &metEGCleanPt, &b_metEGCleanPt);
    fChain->SetBranchAddress("metEGCleanPhi", &metEGCleanPhi, &b_metEGCleanPhi);
    fChain->SetBranchAddress("metMuEGCleanPt", &metMuEGCleanPt, &b_metMuEGCleanPt);
@@ -1106,13 +1125,15 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("metMuEGCleanCorrPhi", &metMuEGCleanCorrPhi, &b_metMuEGCleanCorrPhi);
    fChain->SetBranchAddress("metUncorrectedPt", &metUncorrectedPt, &b_metUncorrectedPt);
    fChain->SetBranchAddress("metUncorrectedPhi", &metUncorrectedPhi, &b_metUncorrectedPhi);
+   */
    fChain->SetBranchAddress("metNoHFPt", &metNoHFPt, &b_metNoHFPt);
    fChain->SetBranchAddress("metNoHFPhi", &metNoHFPhi, &b_metNoHFPhi);
    fChain->SetBranchAddress("metPuppiPt", &metPuppiPt, &b_metPuppiPt);
    fChain->SetBranchAddress("metPuppiPhi", &metPuppiPhi, &b_metPuppiPhi);
    fChain->SetBranchAddress("metCaloPt", &metCaloPt, &b_metCaloPt);
    fChain->SetBranchAddress("metCaloPhi", &metCaloPhi, &b_metCaloPhi);
-   fChain->SetBranchAddress("metType1PtJetResUp", &metType1PtJetResUp, &b_metType1PtJetResUp);
+   /*
+   //fChain->SetBranchAddress("metType1PtJetResUp", &metType1PtJetResUp, &b_metType1PtJetResUp);
    fChain->SetBranchAddress("metType1PtJetResDown", &metType1PtJetResDown, &b_metType1PtJetResDown);
    fChain->SetBranchAddress("metType1PtJetEnUp", &metType1PtJetEnUp, &b_metType1PtJetEnUp);
    fChain->SetBranchAddress("metType1PtJetEnDown", &metType1PtJetEnDown, &b_metType1PtJetEnDown);
@@ -1140,6 +1161,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("metType1PhiUnclusteredEnDown", &metType1PhiUnclusteredEnDown, &b_metType1PhiUnclusteredEnDown);
    fChain->SetBranchAddress("metType1PhiPhotonEnUp", &metType1PhiPhotonEnUp, &b_metType1PhiPhotonEnUp);
    fChain->SetBranchAddress("metType1PhiPhotonEnDown", &metType1PhiPhotonEnDown, &b_metType1PhiPhotonEnDown);
+   */
    fChain->SetBranchAddress("Flag_HBHENoiseFilter", &Flag_HBHENoiseFilter, &b_Flag_HBHENoiseFilter);
    fChain->SetBranchAddress("Flag_HBHETightNoiseFilter", &Flag_HBHETightNoiseFilter, &b_Flag_HBHETightNoiseFilter);
    fChain->SetBranchAddress("Flag_HBHEIsoNoiseFilter", &Flag_HBHEIsoNoiseFilter, &b_Flag_HBHEIsoNoiseFilter);
@@ -1175,15 +1197,19 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("ecalRechit_E", &ecalRechit_E, &b_ecalRechit_E);
    fChain->SetBranchAddress("ecalRechit_T", &ecalRechit_T, &b_ecalRechit_T);
    int SBA = fChain->SetBranchAddress("ecalRechit_ID", &ecalRechit_ID, &b_ecalRechit_ID);
+   /////////////////////////////////////////////////////
+   fChain->SetBranchAddress("ecalRechit_ID", &ecalRechit_ID, &b_ecalRechit_ID);
    std::cout << "[DEBUG] Return of SetBranchAddress for ecalRechit_ID in init: " << SBA << std::endl;
    std::cout << "[DEBUG] Address of ecalRechit_ID in init: " << ecalRechit_ID << std::endl;
    fChain->SetBranchAddress("ecalRechit_FlagOOT", &ecalRechit_FlagOOT, &b_ecalRechit_FlagOOT);
    fChain->SetBranchAddress("ecalRechit_GainSwitch1", &ecalRechit_GainSwitch1, &b_ecalRechit_GainSwitch1);
    fChain->SetBranchAddress("ecalRechit_GainSwitch6", &ecalRechit_GainSwitch6, &b_ecalRechit_GainSwitch6);
    fChain->SetBranchAddress("ecalRechit_transpCorr", &ecalRechit_transpCorr, &b_ecalRechit_transpCorr);
+   /*
    fChain->SetBranchAddress("ecalRechit_pedrms12", &ecalRechit_pedrms12, &b_ecalRechit_pedrms12);
    fChain->SetBranchAddress("ecalRechit_pedrms6", &ecalRechit_pedrms6, &b_ecalRechit_pedrms6);
    fChain->SetBranchAddress("ecalRechit_pedrms1", &ecalRechit_pedrms1, &b_ecalRechit_pedrms1);
+   */
    fChain->SetBranchAddress("nGenJets", &nGenJets, &b_nGenJets);
    fChain->SetBranchAddress("genJetE", genJetE, &b_genJetE);
    fChain->SetBranchAddress("genJetPt", genJetPt, &b_genJetPt);
@@ -1200,7 +1226,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("genQScale", &genQScale, &b_genQScale);
    fChain->SetBranchAddress("genAlphaQCD", &genAlphaQCD, &b_genAlphaQCD);
    fChain->SetBranchAddress("genAlphaQED", &genAlphaQED, &b_genAlphaQED);
-   fChain->SetBranchAddress("lheComments", &lheComments, &b_lheComments);   
+   //fChain->SetBranchAddress("lheComments", &lheComments, &b_lheComments);   
    fChain->SetBranchAddress("scaleWeights", &scaleWeights, &b_scaleWeights);
    fChain->SetBranchAddress("pdfWeights", &pdfWeights, &b_pdfWeights);
    fChain->SetBranchAddress("alphasWeights", &alphasWeights, &b_alphasWeights);
