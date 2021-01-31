@@ -51,7 +51,7 @@ then
 		export X509_USER_PROXY=/storage/user/yeseo/my_proxy
 		
 		#run the job
-		cat ${CMSSW_BASE}${inputfilelist} | awk "NR > (${jobnumber}*${filePerJob}) && NR <= ((${jobnumber}+1)*${filePerJob})" > inputfilelistForThisJob_${jobnumber}.txt
+		cat ${inputfilelist} | awk "NR > (${jobnumber}*${filePerJob}) && NR <= ((${jobnumber}+1)*${filePerJob})" > inputfilelistForThisJob_${jobnumber}.txt
 		echo ""
 		echo "************************************"
 		echo "Running on these input files:"
@@ -62,7 +62,8 @@ then
 		#remove empty input files
 		for ifile in `cat inputfilelistForThisJob_${jobnumber}.txt`
 		do
-			minimumsize=60000
+			minimumsize=100
+			#minimumsize=60000
                 	actualsize=0
                 	if [ -f ${ifile} ]
                 	then
