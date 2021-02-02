@@ -239,7 +239,7 @@ public :
    Float_t         jetAllMuonPhi[900];   //[nJets]
    Float_t         jetAllMuonM[900];   //[nJets]
    Float_t         jetPtWeightedDZ[900];   //[nJets]
-   /*
+   
    UInt_t          nFatJets;
    Float_t         fatJetE[900];
    Float_t         fatJetPt[900];
@@ -258,7 +258,7 @@ public :
    Float_t         fatJetMaxSubjetCSV[900];
    Bool_t          fatJetPassIDLoose[900];
    Bool_t          fatJetPassIDTight[900];
-   */
+   
    Float_t         metPt;
    Float_t         metPhi;
    Float_t         sumMET;
@@ -612,7 +612,7 @@ public :
    TBranch        *b_jetAllMuonPhi;   //!
    TBranch        *b_jetAllMuonM;   //!
    TBranch        *b_jetPtWeightedDZ;   //!
-   /*
+   
    TBranch        *b_nFatJets;
    TBranch        *b_fatJetE;
    TBranch        *b_fatJetPt;
@@ -631,7 +631,7 @@ public :
    TBranch        *b_fatJetMaxSubjetCSV;
    TBranch        *b_fatJetPassIDLoose;
    TBranch        *b_fatJetPassIDTight;
-   */
+   
    TBranch        *b_metPt;   //!
    TBranch        *b_metPhi;   //!
    TBranch        *b_sumMET;   //!
@@ -1085,7 +1085,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("jetAllMuonPhi", jetAllMuonPhi, &b_jetAllMuonPhi);
    fChain->SetBranchAddress("jetAllMuonM", jetAllMuonM, &b_jetAllMuonM);
    fChain->SetBranchAddress("jetPtWeightedDZ", jetPtWeightedDZ, &b_jetPtWeightedDZ);
-   /*
+   
    fChain->SetBranchAddress("nFatJets", &nFatJets, &b_nFatJets);
    fChain->SetBranchAddress("fatJetE", fatJetE, &b_fatJetE);
    fChain->SetBranchAddress("fatJetPt", fatJetPt, &b_fatJetPt);
@@ -1104,7 +1104,7 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("fatJetMaxSubjetCSV", fatJetMaxSubjetCSV, &b_fatJetMaxSubjetCSV);
    fChain->SetBranchAddress("fatJetPassIDLoose", fatJetPassIDLoose, &b_fatJetPassIDLoose);
    fChain->SetBranchAddress("fatJetPassIDTight", fatJetPassIDTight, &b_fatJetPassIDTight);
-   */
+   
    fChain->SetBranchAddress("metPt", &metPt, &b_metPt);
    fChain->SetBranchAddress("metPhi", &metPhi, &b_metPhi);
    fChain->SetBranchAddress("sumMET", &sumMET, &b_sumMET);
