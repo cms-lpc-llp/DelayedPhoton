@@ -370,13 +370,13 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
   if (fChain == 0) return;
   Long64_t nentries = fChain->GetEntriesFast();
   Long64_t nbytes = 0, nb = 0;
-  cout<<" "<<endl;
-  cout<<" "<<endl;
-  cout<<"######################"<<endl;
-  cout<<"nentries : "<<nentries<<endl;
 
   for (Long64_t jentry=0; jentry<nentries;jentry++) {
     //begin event
+     cout<<" "<<endl;
+     cout<<" "<<endl;
+     cout<<"######################"<<endl;
+     cout<<"nentries : "<<nentries<<endl;
     cout<<"jentry : "<<jentry<<endl;
     cout << "Processing entry " << jentry << endl;
     //if(jentry % 10000 == 0) cout << "Processing entry " << jentry << endl;
@@ -387,13 +387,13 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
            ecalRechit_Y, ecalRechit_Z, ecalRechit_E, ecalRechit_T, 
            ecalRechit_FlagOOT, ecalRechit_GainSwitch1,
            ecalRechit_GainSwitch6, ecalRechit_transpCorr, 
-           //ecalRechit_pedrms12, ecalRechit_pedrms6, ecalRechit_pedrms1,
+           ecalRechit_pedrms12, ecalRechit_pedrms6, ecalRechit_pedrms1,
            scaleWeights, pdfWeights, alphasWeights;
     std::vector<unsigned int>  *ecalRechit_ID = 0;
     std::vector<float> *ecalRechit_Eta = 0, *ecalRechit_Phi = 0, *ecalRechit_X = 0, 
         *ecalRechit_Y = 0, *ecalRechit_Z = 0, *ecalRechit_E = 0, *ecalRechit_T = 0, 
-        *ecalRechit_transpCorr = 0, //*ecalRechit_pedrms12 = 0, 
-        //*ecalRechit_pedrms6 = 0, *ecalRechit_pedrms1 = 0, 
+        *ecalRechit_transpCorr = 0, *ecalRechit_pedrms12 = 0, 
+        *ecalRechit_pedrms6 = 0, *ecalRechit_pedrms1 = 0, 
         *scaleWeights = 0, *pdfWeights = 0, *alphasWeights = 0;
     std::vector<bool> *ecalRechit_FlagOOT = 0, *ecalRechit_GainSwitch1 = 0,
         *ecalRechit_GainSwitch6 = 0;
@@ -409,13 +409,12 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
     b_ecalRechit_GainSwitch1->SetAddress(&ecalRechit_GainSwitch1);
     b_ecalRechit_GainSwitch6->SetAddress(&ecalRechit_GainSwitch6);
     b_ecalRechit_transpCorr->SetAddress(&ecalRechit_transpCorr);
-    /*
+    
     if (isData)
     {
-       1;
-        //b_ecalRechit_pedrms12->SetAddress(&ecalRechit_pedrms12);
-        //b_ecalRechit_pedrms6->SetAddress(&ecalRechit_pedrms6);
-        //b_ecalRechit_pedrms1->SetAddress(&ecalRechit_pedrms1);
+        b_ecalRechit_pedrms12->SetAddress(&ecalRechit_pedrms12);
+        b_ecalRechit_pedrms6->SetAddress(&ecalRechit_pedrms6);
+        b_ecalRechit_pedrms1->SetAddress(&ecalRechit_pedrms1);
     }
     else
     {
@@ -423,10 +422,7 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
         b_pdfWeights->SetAddress(&pdfWeights);
         b_alphasWeights->SetAddress(&alphasWeights);
     }
-    */
-    b_scaleWeights->SetAddress(&scaleWeights);
-    b_pdfWeights->SetAddress(&pdfWeights);
-    b_alphasWeights->SetAddress(&alphasWeights);
+    
     cout<<"total ientry : "<<ientry<<endl;
     if (ientry < 0){ 
     break;
@@ -680,12 +676,10 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
  
 
 
-      //double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.0;
-      //double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.0;
+      double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.0;
+      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.0;
       //double seedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[seedhitIndex]) : 1.0;
       //double subseedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[subseedhitIndex]) : 1.0;
-      double seedPedNoise =  1.0;
-      double subseedPedNoise =  1.0;
    
       double tmpSumWeightedTime = 0;
       double tmpSumWeightedTime_TOF2 = 0;
@@ -753,9 +747,8 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
           eleRechit_IPhiIY->push_back(iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , false));
         }	
 
-	//double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 0.042; // 42 MeV for MC
+	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 0.042; // 42 MeV for MC
 	//double pedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex]) : 0.042; // 42 MeV for MC
-	double pedNoise = 1;
 	double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1.0;
 	double sigmaE = pedNoise * ADCToGeV;
         eleRechit_pedestal->push_back(sigmaE); 

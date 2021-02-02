@@ -355,11 +355,9 @@ public :
    std::vector<bool>    *ecalRechit_GainSwitch1;
    std::vector<bool>    *ecalRechit_GainSwitch6;
    std::vector<float>   *ecalRechit_transpCorr;
-   /*
    std::vector<float>   *ecalRechit_pedrms12;
    std::vector<float>   *ecalRechit_pedrms6;
    std::vector<float>   *ecalRechit_pedrms1;
-   */
    Int_t           nGenJets;
    Float_t         genJetE[50];   //[nGenJets]
    Float_t         genJetPt[50];   //[nGenJets]
@@ -726,11 +724,9 @@ public :
    TBranch        *b_ecalRechit_GainSwitch1;   //!
    TBranch        *b_ecalRechit_GainSwitch6;   //!
    TBranch        *b_ecalRechit_transpCorr;   //!
-   /*
    TBranch        *b_ecalRechit_pedrms12;   //!
    TBranch        *b_ecalRechit_pedrms6;   //!
    TBranch        *b_ecalRechit_pedrms1;   //!
-   */
    TBranch        *b_nGenJets;   //!
    TBranch        *b_genJetE;   //!
    TBranch        *b_genJetPt;   //!
@@ -849,16 +845,14 @@ void RazorEvents::Init(TTree *tree)
    ecalRechit_Z = 0;
    ecalRechit_E = 0;
    ecalRechit_T = 0;
-   //ecalRechit_ID = 0;
+   ecalRechit_ID = 0;
    ecalRechit_FlagOOT = 0;
    ecalRechit_GainSwitch1 = 0;
    ecalRechit_GainSwitch6 = 0;
    ecalRechit_transpCorr = 0;
-   /*
    ecalRechit_pedrms12 = 0;
    ecalRechit_pedrms6 = 0;
    ecalRechit_pedrms1 = 0;
-   */
    scaleWeights = 0;
    pdfWeights = 0;
    alphasWeights = 0;
@@ -1205,11 +1199,9 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("ecalRechit_GainSwitch1", &ecalRechit_GainSwitch1, &b_ecalRechit_GainSwitch1);
    fChain->SetBranchAddress("ecalRechit_GainSwitch6", &ecalRechit_GainSwitch6, &b_ecalRechit_GainSwitch6);
    fChain->SetBranchAddress("ecalRechit_transpCorr", &ecalRechit_transpCorr, &b_ecalRechit_transpCorr);
-   /*
    fChain->SetBranchAddress("ecalRechit_pedrms12", &ecalRechit_pedrms12, &b_ecalRechit_pedrms12);
    fChain->SetBranchAddress("ecalRechit_pedrms6", &ecalRechit_pedrms6, &b_ecalRechit_pedrms6);
    fChain->SetBranchAddress("ecalRechit_pedrms1", &ecalRechit_pedrms1, &b_ecalRechit_pedrms1);
-   */
    fChain->SetBranchAddress("nGenJets", &nGenJets, &b_nGenJets);
    fChain->SetBranchAddress("genJetE", genJetE, &b_genJetE);
    fChain->SetBranchAddress("genJetPt", genJetPt, &b_genJetPt);

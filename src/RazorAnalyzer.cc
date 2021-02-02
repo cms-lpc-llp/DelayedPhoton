@@ -43,15 +43,15 @@ void RazorAnalyzer::EnableAllWithEcalRechits(){
     std::cout << "Enabling everything with ecal rechits\n";
     EnableEventInfo();
     EnablePVAll();
-    //EnableMuons();
-    //EnableElectrons();
-    //EnableTaus();
-    //EnablePhotons();
-    //EnableJets();
-    //EnableFatJets();
-    //EnableMet();
-    //EnablePileup();
-    //EnableEcalRechits();
+    EnableMuons();
+    EnableElectrons();
+    EnableTaus();
+    EnablePhotons();
+    EnableJets();
+    EnableFatJets();
+    EnableMet();
+    EnablePileup();
+    EnableEcalRechits();
 }
 
 void RazorAnalyzer::EnableGenInfo(){
@@ -477,11 +477,9 @@ void RazorAnalyzer::EnableEcalRechits(){
     fChain->SetBranchStatus("ecalRechit_GainSwitch1", 1);
     fChain->SetBranchStatus("ecalRechit_GainSwitch6", 1);
     fChain->SetBranchStatus("ecalRechit_transpCorr", 1);
-    /*
     fChain->SetBranchStatus("ecalRechit_pedrms12", 1);
     fChain->SetBranchStatus("ecalRechit_pedrms6", 1);
     fChain->SetBranchStatus("ecalRechit_pedrms1", 1);
-    */
 }
 
 
