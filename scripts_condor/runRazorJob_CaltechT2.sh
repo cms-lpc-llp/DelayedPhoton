@@ -20,6 +20,9 @@ jobnumber=$8
 outputfile=$9
 
 currentDir=`pwd`
+cd ../../../
+CMSSW_BASE=`pwd`
+cd -
 homeDir=/storage/user/$(whoami)/
 runDir=${currentDir}/$(whoami)_${code_dir_suffix}/
 rm -rf ${runDir}
@@ -35,7 +38,7 @@ then
 	workDir=`pwd`
 	echo "entering directory: ${workDir}"
 	source /cvmfs/cms.cern.ch/cmsset_default.sh
-	#export SCRAM_ARCH=slc6_amd64_gcc700
+	export SCRAM_ARCH=slc6_amd64_gcc700
 	ulimit -c 0
 	eval `scram runtime -sh`
 	echo `which root`
@@ -48,10 +51,10 @@ then
 		cp $CMSSW_BASE/src/DelayedPhoton/RazorRun_T2 ./
 
 		#get grid proxy
-		export X509_USER_PROXY=/storage/user/qnguyen/my_proxy
+		export X509_USER_PROXY=/storage/user/${whoami}/my_proxy
 		
 		#run the job
-		cat ${CMSSW_BASE}${inputfilelist} | awk "NR > (${jobnumber}*${filePerJob}) && NR <= ((${jobnumber}+1)*${filePerJob})" > inputfilelistForThisJob_${jobnumber}.txt
+		cat $CMSSW_BASE${inputfilelist} | awk "NR > (${jobnumber}*${filePerJob}) && NR <= ((${jobnumber}+1)*${filePerJob})" > inputfilelistForThisJob_${jobnumber}.txt
 		echo ""
 		echo "************************************"
 		echo "Running on these input files:"
@@ -86,7 +89,7 @@ then
 
 		echo ${outputfile}
 		echo ${outputDirectory}
-		mkdir -p /mnt/hadoop/${outputDirectory}
+		#mkdir -p /mnt/hadoop/${outputDirectory}
 
 		##^_^##
 		echo "RazorRun_T2 finished"
@@ -94,13 +97,15 @@ then
 
 		sleep 2
 		echo "I slept for 2 second" 
+        ls -lt
 
 		##job finished, copy file to T2
 		echo "copying output file to /mnt/hadoop/${outputDirectory}"
 		#cp ${outputfile} /mnt/hadoop/${outputDirectory}
 		echo "gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}"
-		env -i X509_USER_PROXY=${x509loc} gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}
-		if [ -f /mnt/hadoop/${outputDirectory}/${outputfile} ]
+		#gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org:2811${outputDirectory}/${outputfile}
+		env -i X509_USER_PROXY=${x509loc} gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org:2811${outputDirectory}/${outputfile}
+		if [ -f /mnt/hadoop${outputDirectory}/${outputfile} ]
 		then
 			echo "SUCCESS ============ good news, job finished successfully "
 		else
