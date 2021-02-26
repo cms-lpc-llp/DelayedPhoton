@@ -15,11 +15,11 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 filesPerJob=1
 
 for sample in \
-crab_Run2DelayedPhotonNtupler_MCUL2018_DYJetsToEE
+DYJetsToEE_M-50_TuneCP5_13TeV-madgraphMLM-pythia8
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2018/MCUL/${sample}.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2018/MC/${sample}.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
 	analyzer=ZeeTiming
@@ -34,7 +34,7 @@ do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		echo "Universe = vanilla" > ${jdl_file}
 		echo "Executable = ${job_script}" >> ${jdl_file}
-		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/2021Feb17/2018UL_MC/ ${analyzer} ${inputfilelist} no 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
+		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/2021Feb17/2018_MC/ ${analyzer} ${inputfilelist} no 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
 		echo "Log = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_PC.log" >> ${jdl_file}
 		echo "Output = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).out" >> ${jdl_file}
 		echo "Error = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).err" >> ${jdl_file}

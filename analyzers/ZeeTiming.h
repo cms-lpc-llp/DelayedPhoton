@@ -2,6 +2,7 @@
 #define DEF_ZeeTiming
 
 #include "RazorAnalyzer.h"
+#include "RazorEvents.h"
 
 class ZeeTiming: public RazorAnalyzer {
     public: 

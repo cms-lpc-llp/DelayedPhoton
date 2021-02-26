@@ -416,12 +416,14 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
         b_ecalRechit_pedrms6->SetAddress(&ecalRechit_pedrms6);
         b_ecalRechit_pedrms1->SetAddress(&ecalRechit_pedrms1);
     }
+    
     else
     {
         b_scaleWeights->SetAddress(&scaleWeights);
         b_pdfWeights->SetAddress(&pdfWeights);
         b_alphasWeights->SetAddress(&alphasWeights);
     }
+    
     
     cout<<"total ientry : "<<ientry<<endl;
     if (ientry < 0){ 
