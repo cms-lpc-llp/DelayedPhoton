@@ -1,0 +1,1 @@
+/mnt/hadoop/store/group/phys_susy/razor/run2/Run2DelayedPhotonNtuple/MC2018/DYTo2E/MC18_DYTo2E_M2000toInf_CP5_Pythia8_v1/crab_Autumn18_Run2DelayedPhotonNtupler_DYTo2E_M2000toInf_CP5_13TeV_pythia8/200917_235713/0000/razorNtuple_1.root
