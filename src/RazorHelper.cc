@@ -81,6 +81,16 @@ RazorHelper::RazorHelper(std::string tag_, bool isData_, bool isFastsim_):
     else if (tag == "Razor2017_31Mar2018Rereco_DelayedPhoton") {
         loadTag_Razor2017_31Mar2018Rereco_DelayedPhoton();
     }
+    
+    // tag for 2018 Rereco 
+    else if (tag == "Razor2018_Rereco") {
+        loadTag_Razor2018_Rereco();
+    }
+    
+    // tag for 2018 Rereco delayed photon
+    else if (tag == "Razor2018_Rereco_DelayedPhoton") {
+        loadTag_Razor2018_Rereco_DelayedPhoton();
+    }
 
    // tag not found
     else {
@@ -2053,8 +2063,26 @@ void RazorHelper::loadPileup_Razor2017_17Nov2017Rereco() {
       pileupWeightSysDownHist = (TH1F*)pileupWeightFile->Get("PileupReweightSysDown");
       std::cout << "PileupReweight_2017Rereco_41p2ifb.root\n";
     }
+}
 
+void RazorHelper::loadPileup_Razor2018_Rereco() {
+    // pileup weights
+    std::cout << "RazorHelper: loading pileup weight histograms" << std::endl;
 
+    if (!isFastsim) {
+      pileupWeightFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/data/PileupReweight2018.root");
+      pileupWeightHist = (TH1D*)pileupWeightFile->Get("PileupReweight");
+      pileupWeightSysUpHist = (TH1D*)pileupWeightFile->Get("PileupReweightSysUp");
+      pileupWeightSysDownHist = (TH1D*)pileupWeightFile->Get("PileupReweightSysDown");
+      std::cout << "PileupReweight2018.root\n";
+    } else {
+      // Will do something for Fastsim in the future
+      pileupWeightFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/data/PileupReweight2018.root");
+      pileupWeightHist = (TH1D*)pileupWeightFile->Get("PileupReweight");
+      pileupWeightSysUpHist = (TH1D*)pileupWeightFile->Get("PileupReweightSysUp");
+      pileupWeightSysDownHist = (TH1D*)pileupWeightFile->Get("PileupReweightSysDown");
+      std::cout << "PileupReweight2018.root\n";
+    }
 }
 
 void RazorHelper::loadLepton_Razor2017_17Nov2017Rereco(){
@@ -2352,6 +2380,30 @@ void RazorHelper::loadTag_Razor2017_31Mar2018Rereco_DelayedPhoton() {
   loadJECs_Razor2017_31Mar2018Rereco();
 }
 
+
+////////////////////////////////////////////////
+//  2018 Rereco
+////////////////////////////////////////////////
+void RazorHelper::loadTag_Razor2018_Rereco() {
+  loadPileup_Razor2017_17Nov2017Rereco();
+  loadLepton_Razor2017_31Mar2018Rereco();
+  loadPhoton_Razor2017_31Mar2018Rereco();
+  loadBTag_Razor2017_17Nov2017Rereco();
+  loadTrigger_Razor2017_92X_DelayedPhoton(); // To be updated
+  loadJECs_Razor2017_31Mar2018Rereco();
+}
+
+////////////////////////////////////////////////
+//  2018 Rereco Delayed Photon
+////////////////////////////////////////////////
+void RazorHelper::loadTag_Razor2018_Rereco_DelayedPhoton() {
+  loadPileup_Razor2017_17Nov2017Rereco();
+  loadLepton_Razor2017_31Mar2018Rereco();
+  loadPhoton_Razor2017_31Mar2018Rereco_DelayedPhoton();
+  loadBTag_Razor2017_17Nov2017Rereco();
+  loadTrigger_Razor2017_92X_DelayedPhoton();
+  loadJECs_Razor2017_31Mar2018Rereco();
+}
 
 void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco(){
 //identical to loadPhoton_Razor2017_92X, would check if there's new version released
