@@ -2360,6 +2360,10 @@ void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco(){
     std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
     phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
     phoTightEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
+
+    phoTrkVetoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
+    phoTrkVetoEffSFHist = (TH2F*)phoTrkVetoEffSFFile->Get("EGamma_SF2D");
+
     //std::cout << "[DEBUG loadPhoton_Razor2017_31Mar2018] phoTightEffSFHist = " << phoTightEffSFHist << std::endl;
     //phoTightEffSFHist->Print();
 
@@ -2374,8 +2378,10 @@ void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco_DelayedPhoton(){
     // use avaerage results for run 2017BCDEF for now
     std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
     phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
-    phoLooseEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
+    phoTightEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
 
+    phoTrkVetoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
+    phoTrkVetoEffSFHist = (TH2F*)phoTrkVetoEffSFFile->Get("EGamma_SF2D");
     // results for 2017MC is not available yet, use 2016 version for now
     //phoEffFastsimSFFile = TFile::Open("PhotonEffFastsimToFullsimCorrectionFactors.2016.root");
     //phoLooseEffFastsimSFHist = (TH2F*)phoEffFastsimSFFile->Get("ElectronLoose_FastsimScaleFactor");
@@ -2936,35 +2942,49 @@ double RazorHelper::getPhotonScaleFactor(float pt, float eta, bool invert) {
 double RazorHelper::getPhotonScaleFactor_Tight(float pt, float eta, bool invert) {
   double sf = 1.0;
   if (phoTightEffSFHist)
-    {
+  {
       if( invert )
-        {
+      {
           sf = lookupEtaPtScaleFactor( phoTightEffSFHist, pt, eta, 20.01, 9999.0, false );
-        }
+      }
       else
-        {
+      {
           sf = lookupPtEtaScaleFactor( phoTightEffSFHist, pt, eta, 20.01, 9999.0 );
-        }
-    }
+      }
+  }
+  
   else { std::cout << "[WARNING] Could not load phoTightEffSFHist with pt = " << pt << " & eta = " << eta << ". Assuming SF = 1.0\n"; }
+
+  if (phoTrkVetoEffSFHist)
+  {
+      if (invert)
+      {
+          sf *= lookupPtEtaScaleFactor(phoTrkVetoEffSFHist, pt, eta, 20.01, 9999.0, false); 
+      }
+      else
+      {
+          sf *= lookupPtEtaScaleFactor(phoTrkVetoEffSFHist, pt, eta, 20.01, 9999.0); 
+      }
+  }
+
   return sf;
 }
 
 double RazorHelper::getPhotonScaleFactorError(float pt, float eta, bool invert) {
-  double unc = 1.0;
-  if (phoLooseEffSFHist)
+    double unc = 1.0;
+    if (phoLooseEffSFHist)
     {
-      if( invert )
-	{
-	  unc = lookupEtaPtScaleFactorError( phoLooseEffSFHist, pt, eta, 20.01, 99.9, false );
-	}
-      else
-	{
-	  unc = lookupPtEtaScaleFactorError( phoLooseEffSFHist, pt, eta, 20.01, 99.9 );
-	}
+        if ( invert )
+        {
+            unc = lookupEtaPtScaleFactorError( phoLooseEffSFHist, pt, eta, 20.01, 99.9, false );
+        }
+        else
+        {
+            unc = lookupPtEtaScaleFactorError( phoLooseEffSFHist, pt, eta, 20.01, 99.9 );
+        }
     }
-  else { std::cout << "[WARNING] Could not load phoLooseEffSFHist.\n"; }
-  return unc;
+    else { std::cout << "[WARNING] Could not load phoLooseEffSFHist.\n"; }
+    return unc;
 }
 
 double RazorHelper::getPhotonFastsimToFullsimScaleFactor(float pt, float eta) {
