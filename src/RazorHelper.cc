@@ -3149,26 +3149,27 @@ double RazorHelper::getPhotonScaleFactor(float pt, float eta, bool invert) {
 }
 
 double RazorHelper::getPhotonScaleFactor_Tight(float pt, float eta, bool invert) {
-  double sf = 1.0;
-  if (phoTightEffSFHist)
+    double sf = 1.0;
+    if (phoTightEffSFHist)
     {
-      if( invert )
+        if( invert )
         {
-          sf = lookupEtaPtScaleFactor( phoTightEffSFHist, pt, eta, 20.01, 9999.0, false );
+            sf = lookupEtaPtScaleFactor( phoTightEffSFHist, pt, eta, 20.01, 9999.0, false );
         }
-      else
+        else
         {
-          sf = lookupPtEtaScaleFactor( phoTightEffSFHist, pt, eta, 20.01, 9999.0 );
+            sf = lookupPtEtaScaleFactor( phoTightEffSFHist, pt, eta, 20.01, 9999.0 );
         }
     }
+
+    else { std::cout << "[WARNING] Could not load phoTightEffSFHist with pt = " << pt << " & eta = " << eta << ". Assuming SF = 1.0\n"; }
 
     if (phoTrkVetoEffSFHist)
     {
         sf *= lookupPtEtaScaleFactor(phoTrkVetoEffSFHist, pt, eta, 20.01, 9999.0); 
     }
 
-  else { std::cout << "[WARNING] Could not load phoTightEffSFHist with pt = " << pt << " & eta = " << eta << ". Assuming SF = 1.0\n"; }
-  return sf;
+    return sf;
 }
 
 double RazorHelper::getPhotonScaleFactorError(float pt, float eta, bool invert) {
