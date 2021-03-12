@@ -19,6 +19,8 @@ else
     cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Fall17_FastsimV1_AK4PFchs.tgz ./
     cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Spring16_FastSimV1.tgz ./
     cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/JetResolutionInputAK5PF.txt ./
+    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Autumn18_RunsABCD_V19_DATA.tar.gz ./
+    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Autumn18_V19_MC.tar.gz ./
     cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonCorrections/Winter_2016_reReco_v1_ele_smearings.dat ./
     cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonCorrections/Winter_2016_reReco_v1_ele_scales.dat ./
     cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/efficiency_results_LooseElectronSelectionEffDenominatorGen_2017_17Nov2017Rereco_Golden.root ./
@@ -41,7 +43,8 @@ else
     tar vxzf Fall17_17Nov2017_V6_DATA_V8_MC.tgz 
     tar vxzf Fall17_17Nov2017_V32_DATA_MC.tgz 
     tar vxzf Fall17_FastsimV1_AK4PFchs.tgz
-
+    tar vxzf Autumn18_V19_MC.tar.gz
+    tar vxzf Autumn18_RunsABCD_V19_DATA.tar.gz 
 
     ./Run$2 $1 ${@:3}
     rm Run$2

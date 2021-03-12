@@ -274,6 +274,7 @@ class RazorHelper {
         
         // for Razor2018 Rereco
         void loadPileup_Razor2018_Rereco();
+        void loadJECs_Razor2018_Rereco();
 
 
         // member data
