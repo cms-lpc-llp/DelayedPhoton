@@ -129,7 +129,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   TRandom3 random(3003);
   bool doPhotonScaleCorrection = true;
 
-  string analysisTag = "Razor2017_31Mar2018Rereco_DelayedPhoton";
+  string analysisTag = "Razor2018_Rereco_DelayedPhoton";
   if ( label != "") analysisTag = label;
 
   if ( label != "") analysisTag = label;
@@ -137,7 +137,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   RazorHelper *helper = 0;
   RazorHelper *helper_GED = 0;
   helper = new RazorHelper(analysisTag, isData, false); 
-  helper_GED = new RazorHelper("Razor2017_31Mar2018Rereco", isData, false); 
+  helper_GED = new RazorHelper("Razor2018_Rereco", isData, false); 
  
   //Get CMSSW Directory
   char* cmsswPath;
