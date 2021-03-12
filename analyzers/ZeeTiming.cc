@@ -100,7 +100,7 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
   TRandom3 random(3003);
   //bool doPhotonScaleCorrection = true;
 
-  string analysisTag = "Razor2017_31Mar2018Rereco_DelayedPhoton";
+  string analysisTag = "Razor2018_Rereco_DelayedPhoton";
   if ( label != "") analysisTag = label;
 
   RazorHelper *helper = 0;
