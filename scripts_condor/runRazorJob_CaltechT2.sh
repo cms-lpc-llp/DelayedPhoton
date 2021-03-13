@@ -34,11 +34,11 @@ if [ -f /cvmfs/cms.cern.ch/cmsset_default.sh ]
 then
 
 	#setup cmssw
-	cd ${homeDir}/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/
+	cd ${homeDir}/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/
 	workDir=`pwd`
 	echo "entering directory: ${workDir}"
 	source /cvmfs/cms.cern.ch/cmsset_default.sh
-	export SCRAM_ARCH=slc6_amd64_gcc700
+	export SCRAM_ARCH=slc7_amd64_gcc700
 	ulimit -c 0
 	eval `scram runtime -sh`
 	echo `which root`
