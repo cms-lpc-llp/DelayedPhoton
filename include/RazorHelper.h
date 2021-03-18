@@ -340,11 +340,13 @@ class RazorHelper {
 
 	// for photons
         TFile *phoEffSFFile;
+        TFile *phoTrkVetoEffSFFile;
         TFile *phoTightEffSFFile;
         TFile *phoEffFastsimSFFile;
         TH2F *phoLooseEffSFHist;
         TH2F *phoTightEffSFHist;
         TH2F *phoLooseEffFastsimSFHist;
+        TH2F *phoTrkVetoEffSFHist;
 
         // for single lepton triggers
         TFile *eleTrigEffFile;
