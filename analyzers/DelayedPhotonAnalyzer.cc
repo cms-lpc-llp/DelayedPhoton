@@ -152,6 +152,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   std::string photonCorrectionFile = photonCorrectionPath + "/Run2017_17Nov2017_v1_ele_unc";
   EnergyScaleCorrection_class_2017 *photonCorrector = 0;
   photonCorrector = new EnergyScaleCorrection_class_2017(photonCorrectionFile);
+  /*
   //*****************************************************************************
   //Load Intercalibration constants
   //*****************************************************************************
@@ -202,7 +203,8 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
     start_run_rereco.push_back(start_run_tmp);
     end_run_rereco.push_back(end_run_tmp);
   }
-  
+  */
+
   if(!isData) {
     photonCorrector->doScale = false;
     photonCorrector->doSmearings = true;
@@ -1035,8 +1037,8 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         double rawSeedHitTime =  (*ecalRechit_T)[seedhitIndex];
 
         //apply intercalibration2      
-        double IC_time_Rereco = isData ? getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
-        double IC_time_UL = isData ? getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
+        double IC_time_Rereco = 0; //isData ? getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
+        double IC_time_UL = 0; //isData ? getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[seedhitIndex]) : 0;
         double calibratedSeedHitTime = rawSeedHitTime + IC_time_UL - IC_time_Rereco;
 
         //apply TOF correction
@@ -1086,8 +1088,8 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
             double rawT = (*ecalRechit_T)[rechitIndex];
             //apply intercalibration
-            double IC_time_Rereco_this = isData ? (getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[rechitIndex]) ) : 0.0;
-            double IC_time_UL_this = isData ? (getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[rechitIndex])) : 0.0;
+            double IC_time_Rereco_this = 0; //isData ? (getTimeCalibConstant(tree_timeCalib_rereco, start_run_rereco,end_run_rereco,runNum, (*ecalRechit_ID)[rechitIndex]) ) : 0.0;
+            double IC_time_UL_this = 0;//isData ? (getTimeCalibConstant(tree_timeCalib, start_run,end_run,runNum, (*ecalRechit_ID)[rechitIndex])) : 0.0;
             double calibratedSeedHitTime_this = rawT + IC_time_UL_this - IC_time_Rereco_this;
 
             double corrT = calibratedSeedHitTime_this + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
