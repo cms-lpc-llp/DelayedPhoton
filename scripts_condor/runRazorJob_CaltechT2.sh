@@ -31,7 +31,7 @@ if [ -f /cvmfs/cms.cern.ch/cmsset_default.sh ]
 then
 
 	#setup cmssw
-	cd ${homeDir}/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/
+	cd ${homeDir}/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/
 	workDir=`pwd`
 	echo "entering directory: ${workDir}"
 	source /cvmfs/cms.cern.ch/cmsset_default.sh

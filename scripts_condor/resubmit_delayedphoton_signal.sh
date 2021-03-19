@@ -7,7 +7,7 @@ mkdir -p submit
 
 if [ -z "${CMSSW_BASE}" ]
 then
-    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_6/
+    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_12/
     echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
 fi
 

@@ -6,7 +6,7 @@ mkdir -p submit
 
 if [ -z "${CMSSW_BASE}" ]
 then
-    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_6/
+    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_12/
     echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
 fi
 
@@ -28,14 +28,14 @@ QCD_Pt-50to80_EMEnriched_TuneCP5_13TeV_pythia8 \
 QCD_Pt-80to120_EMEnriched_TuneCP5_13TeV_pythia8 \
 QCD_Pt-30to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
 QCD_Pt-30toInf_DoubleEMEnriched_MGG-40to80_TuneCP5_13TeV_Pythia8 \
-QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8
-#GJets_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#GJets_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#GJets_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#GJets_HT-40To100_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#GJets_HT-600ToInf_TuneCP5_13TeV-madgraphMLM-pythia8 \
-#DiPhotonJetsBox_M40_80-Sherpa \
-#DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa
+QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
+GJets_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8 \
+GJets_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8 \
+GJets_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8 \
+GJets_HT-40To100_TuneCP5_13TeV-madgraphMLM-pythia8 \
+GJets_HT-600ToInf_TuneCP5_13TeV-madgraphMLM-pythia8 \
+DiPhotonJetsBox_M40_80-Sherpa \
+DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa \
 
 do
 	echo "Sample " ${sample}

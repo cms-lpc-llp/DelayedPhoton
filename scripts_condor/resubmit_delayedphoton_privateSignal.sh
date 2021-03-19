@@ -8,66 +8,38 @@ RazorAnalyzerDir=`pwd`
 cd -
 
 job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
-filesPerJob=40
+maximumjob=20
+#filesPerJob=40
 
 for sample in \
-GMSB_L100TeV_Ctau1000cm_13TeV-pythia8 \
-GMSB_L100TeV_Ctau10cm_13TeV-pythia8 \
-GMSB_L100TeV_Ctau1200cm_13TeV-pythia8 \
-GMSB_L100TeV_Ctau20000cm_13TeV-pythia8 \
-GMSB_L100TeV_Ctau4000cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau1000cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau100cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau10cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau1200cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau20000cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau200cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau4000cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau400cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau50cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau5cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau600cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau800cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau0p01cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau0p1cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau1000cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau100cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau10cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau1200cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau20000cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau200cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau400cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau50cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau5cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau600cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau800cm_13TeV-pythia8 \
-GMSB_L250TeV_Ctau0p01cm_13TeV-pythia8 \
-GMSB_L250TeV_Ctau0p1cm_13TeV-pythia8 \
-GMSB_L250TeV_Ctau100cm_13TeV-pythia8 \
-GMSB_L250TeV_Ctau10cm_13TeV-pythia8 \
-GMSB_L250TeV_Ctau200cm_13TeV-pythia8 \
-GMSB_L250TeV_Ctau400cm_13TeV-pythia8 \
-GMSB_L250TeV_Ctau50cm_13TeV-pythia8 \
-GMSB_L250TeV_Ctau5cm_13TeV-pythia8 \
-GMSB_L250TeV_Ctau600cm_13TeV-pythia8 \
-GMSB_L300TeV_Ctau0p01cm_13TeV-pythia8 \
-GMSB_L300TeV_Ctau0p1cm_13TeV-pythia8 \
-GMSB_L300TeV_Ctau100cm_13TeV-pythia8 \
-GMSB_L300TeV_Ctau10cm_13TeV-pythia8 \
-GMSB_L300TeV_Ctau50cm_13TeV-pythia8 \
-GMSB_L300TeV_Ctau5cm_13TeV-pythia8 \
-GMSB_L300TeV_Ctau600cm_13TeV-pythia8 \
-GMSB_L350TeV_Ctau0p1cm_13TeV-pythia8 \
-GMSB_L350TeV_Ctau200cm_13TeV-pythia8 \
-GMSB_L400TeV_Ctau0p01cm_13TeV-pythia8 \
-GMSB_L400TeV_Ctau0p1cm_13TeV-pythia8 \
-GMSB_L400TeV_Ctau10cm_13TeV-pythia8 \
-GMSB_L400TeV_Ctau800cm_13TeV-pythia8
+    GMSB_L100TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L100TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L100TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L150TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L150TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L150TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L200TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L200TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L200TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L250TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L250TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L250TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L300TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L300TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L300TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L350TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L350TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L350TeV_Ctau50cm_13TeV-pythia8 \
+    GMSB_L400TeV_Ctau100cm_13TeV-pythia8 \
+    GMSB_L400TeV_Ctau1cm_13TeV-pythia8 \
+    GMSB_L400TeV_Ctau50cm_13TeV-pythia8
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/RazorAnalyzer/lists/Run2/razorNtuplerV4p1/MC_Summer16_reMINIAOD/${sample}.cern.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2017/MCPrivate/${sample}.txt
+	
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
+	filesPerJob=`python -c "print int($nfiles.0/$maximumjob)+1"`
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
 	analyzer=DelayedPhotonAnalyzer
 	#rm submit/${sample}_Job*.jdl
@@ -77,7 +49,7 @@ do
 	do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
                 #noFail=`grep YYYY log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}*.out`
-		outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/orderByPt/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
+		outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2017/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
 		
 		minimumsize=100000	
 		actualsize=0
