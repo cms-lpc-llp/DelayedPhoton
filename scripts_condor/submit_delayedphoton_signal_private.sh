@@ -41,7 +41,7 @@ for sample in \
     GMSB_L400TeV_Ctau50cm_13TeV-pythia8
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2017/MCPrivate/${sample}.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2017/MC2017Private/${sample}.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	filesPerJob=`python -c "print int($nfiles.0/$maximumjob)+1"`
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`

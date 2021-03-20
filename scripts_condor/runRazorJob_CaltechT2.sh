@@ -51,6 +51,7 @@ then
 		export X509_USER_PROXY=/storage/user/qnguyen/my_proxy
 		
 		#run the job
+        echo "Getting input file list from: ${CMSSW_BASE}${inputfilelist}"
 		cat ${CMSSW_BASE}${inputfilelist} | awk "NR > (${jobnumber}*${filePerJob}) && NR <= ((${jobnumber}+1)*${filePerJob})" > inputfilelistForThisJob_${jobnumber}.txt
 		echo ""
 		echo "************************************"
