@@ -36,7 +36,7 @@ for sample in \
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2017/MCPrivate/${sample}.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2017/MC2017Private/${sample}.txt
 	
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	filesPerJob=`python -c "print int($nfiles.0/$maximumjob)+1"`
