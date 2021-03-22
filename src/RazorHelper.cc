@@ -2358,7 +2358,7 @@ void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco(){
     // photon efficiency scale factors
     // use avaerage results for run 2017BCDEF for now
     std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
-    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
+    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_GEDTightAbsSmajSminVLSieie94X.root");
     phoTightEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
 
     phoTrkVetoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
@@ -2377,7 +2377,7 @@ void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco_DelayedPhoton(){
     // photon efficiency scale factors
     // use avaerage results for run 2017BCDEF for now
     std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
-    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
+    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_OOTTightAbsSmajSminVLSieie94X.root");
     phoTightEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
 
     phoTrkVetoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
