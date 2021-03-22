@@ -2959,7 +2959,7 @@ double RazorHelper::getPhotonScaleFactor_Tight(float pt, float eta, bool invert)
   {
       if (invert)
       {
-          sf *= lookupPtEtaScaleFactor(phoTrkVetoEffSFHist, pt, eta, 20.01, 9999.0, false); 
+          sf *= lookupEtaPtScaleFactor(phoTrkVetoEffSFHist, pt, eta, 20.01, 9999.0, false); 
       }
       else
       {
