@@ -2950,7 +2950,7 @@ double RazorHelper::lookupEtaPtScaleFactor(TH2F *hist, double pt, double eta, do
     }
     else {
         std::cout << "Error: expected a histogram, got a null pointer" << std::endl;
-        return 0;
+        return 1.;
     }
 }
 
@@ -3185,6 +3185,7 @@ double RazorHelper::getPhotonScaleFactor(float pt, float eta, bool invert) {
 
 double RazorHelper::getPhotonScaleFactor_Tight(float pt, float eta, bool invert) {
     double sf = 1.0;
+    double trksf = 1.0;
     if (phoTightEffSFHist)
     {
         if( invert )
@@ -3201,8 +3202,20 @@ double RazorHelper::getPhotonScaleFactor_Tight(float pt, float eta, bool invert)
 
     if (phoTrkVetoEffSFHist)
     {
-        sf *= lookupPtEtaScaleFactor(phoTrkVetoEffSFHist, pt, eta, 20.01, 9999.0); 
+        if (invert)
+        {
+            trksf = lookupEtaPtScaleFactor(phoTrkVetoEffSFHist, pt, eta, 20.01, 9999.0, false); 
+        }
+        else
+        {
+            trksf = lookupPtEtaScaleFactor(phoTrkVetoEffSFHist, pt, eta, 20.01, 9999.0, false); 
+        }
+        sf = sf * trksf;
     }
+    
+   // if (abs(sf) < 1.0e-6 && abs(eta) < 1.5)
+    //    std::cout << "[WARNING] sf = " << sf << " for pt = " << pt  << " eta = " << eta << " trksf = " << trksf <<  "\n";
+
 
     return sf;
 }

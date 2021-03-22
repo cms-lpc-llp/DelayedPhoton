@@ -1433,11 +1433,14 @@ if(nPho>=2) HT_incPho += pho2Pt;
 
 if(pho1isStandardPhoton) 
 {
-photonEffSF = helper_GED->getPhotonScaleFactor_Tight(pho1Pt, pho1Eta, true);
-if (_phodebug) std::cout << "DEBUG getPhotonScaleFactor_Tight_GED, pt = "<<pho1Pt<<", eta ="<<pho1Eta<<", sf = "<<photonEffSF<<endl;
+    photonEffSF = helper_GED->getPhotonScaleFactor_Tight(pho1Pt, pho1Eta, true);
+    if (_phodebug && abs(photonEffSF) < 1e-6 && abs(pho1Eta) < 1.5) std::cout << "DEBUG getPhotonScaleFactor_Tight_GED, pt = "<<pho1Pt<<", eta ="<<pho1Eta<<", sf = "<<photonEffSF<<endl;
 }
-else photonEffSF = helper->getPhotonScaleFactor_Tight(pho1Pt, pho1Eta, true);
-
+else 
+{
+    photonEffSF = helper->getPhotonScaleFactor_Tight(pho1Pt, pho1Eta, true);
+    if (_phodebug && abs(photonEffSF) < 1e-6 && abs(pho1Eta) < 1.5) std::cout << "DEBUG getPhotonScaleFactor_Tight_OOT, pt = "<<pho1Pt<<", eta ="<<pho1Eta<<", sf = "<<photonEffSF<<endl;
+}
 //******************************************************
 //compute trigger efficiency weights for MC
 //******************************************************
