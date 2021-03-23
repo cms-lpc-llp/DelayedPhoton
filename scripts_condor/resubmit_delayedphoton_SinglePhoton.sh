@@ -15,7 +15,7 @@ RazorAnalyzerDir=`pwd`
 cd -
 
 job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
-filesPerJob=15
+filesPerJob=1
 
 for sample in \
 SinglePhoton_Run2017B_31Mar2018 \
