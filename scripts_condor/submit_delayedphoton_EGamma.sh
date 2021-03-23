@@ -43,7 +43,7 @@ do
 		echo "Output = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).out" >> ${jdl_file}
 		echo "Error = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).err" >> ${jdl_file}
 		echo "should_transfer_files = YES" >> ${jdl_file}
-		echo "RequestMemory = 16000" >> ${jdl_file}
+		echo "RequestMemory = 4000" >> ${jdl_file}
 		echo "RequestCpus = 1" >> ${jdl_file}
 		echo "x509userproxy = \$ENV(X509_USER_PROXY)" >> ${jdl_file}
                 echo "+RunAsOwner = True" >> ${jdl_file}
