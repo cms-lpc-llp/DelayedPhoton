@@ -6,7 +6,7 @@ mkdir -p submit
 
 if [ -z "${CMSSW_BASE}" ]
 then
-    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_6/
+    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_12/
     echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
 fi
 
@@ -15,17 +15,17 @@ RazorAnalyzerDir=`pwd`
 cd -
 
 job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
-filesPerJob=15
+filesPerJob=1
 
 for sample in \
-SinglePhoton_Run2017B_31Mar2018 \
-SinglePhoton_Run2017D_31Mar2018 \
-SinglePhoton_Run2017F_31Mar2018 \
-SinglePhoton_Run2017C_31Mar2018 \
-SinglePhoton_Run2017E_31Mar2018
+    EGamma_Run2018A \
+    EGamma_Run2018B \
+    EGamma_Run2018C \
+    EGamma_Run2018D_v2 \
+
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2017/Data2017/${sample}.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2018/Data2018/${sample}.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
 	analyzer=DelayedPhotonAnalyzer
@@ -36,7 +36,7 @@ do
 	do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		#noFail=`grep YYYY log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}*.out`
-        outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2017/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
+        outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2018/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
 
 		minimumsize=50000
                 actualsize=0
