@@ -139,6 +139,7 @@ do
                 echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel7-m202006"' >> ${jdl_file}
                 echo "+SingularityBindCVMFS = True" >> ${jdl_file}
                 echo "run_as_owner = True" >> ${jdl_file}
+                echo "+JobBatchName = \"${sample}"\" >> ${jdl_file}
 		echo "when_to_transfer_output = ON_EXIT" >> ${jdl_file}
 		echo "Queue 1" >> ${jdl_file}
 		echo "condor_submit submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl"
