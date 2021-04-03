@@ -33,9 +33,9 @@ GJets_HT-40To100_TuneCP5_13TeV-madgraphMLM-pythia8 \
 GJets_HT-600ToInf_TuneCP5_13TeV-madgraphMLM-pythia8 \
 DiPhotonJetsBox_M40_80-Sherpa \
 DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa \
-#QCD_Pt-30to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
-#QCD_Pt-30toInf_DoubleEMEnriched_MGG-40to80_TuneCP5_13TeV_Pythia8 \
-#QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
+QCD_Pt-30to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
+QCD_Pt-30toInf_DoubleEMEnriched_MGG-40to80_TuneCP5_13TeV_Pythia8 \
+QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
 
 do
 	echo "Sample " ${sample}
