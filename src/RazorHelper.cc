@@ -2709,6 +2709,7 @@ void RazorHelper::loadJECs_Razor2018_Rereco() {
     jecUnc = std::vector<JetCorrectionUncertainty*>();
     JetResolutionCalculator = std::vector<SimpleJetResolution*>();
     JetCorrectionsIOV = std::vector<std::pair<int,int> >();
+
     if (isData) {
       //IOV: 2017B
       std::vector<JetCorrectorParameters> correctionParametersB = std::vector<JetCorrectorParameters> ();
@@ -2732,6 +2733,7 @@ void RazorHelper::loadJECs_Razor2018_Rereco() {
       JetResolutionCalculator.push_back(JetResolutionCalculatorB);
       jecUnc.push_back(jecUncB);
       JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 299329 ));
+      
 
       //IOV: 2017C
       std::vector<JetCorrectorParameters> correctionParametersC = std::vector<JetCorrectorParameters> ();
@@ -2756,53 +2758,29 @@ void RazorHelper::loadJECs_Razor2018_Rereco() {
       jecUnc.push_back(jecUncC);
       JetCorrectionsIOV.push_back( std::pair<int,int>( 299368, 302029 ));
 
-      //IOV: 2017DE
-      std::vector<JetCorrectorParameters> correctionParametersDE = std::vector<JetCorrectorParameters> ();
-      correctionParametersDE.push_back(JetCorrectorParameters(
-                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunDE_V19_DATA_L1FastJet_AK4PFchs.txt", jecPathname.c_str())));
-      correctionParametersDE.push_back(JetCorrectorParameters(
-                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunDE_V19_DATA_L2Relative_AK4PFchs.txt", jecPathname.c_str())));
-      correctionParametersDE.push_back(JetCorrectorParameters(
-                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunDE_V19_DATA_L3Absolute_AK4PFchs.txt", jecPathname.c_str())));
-      correctionParametersDE.push_back(JetCorrectorParameters(
-                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunDE_V19_DATA_L2L3Residual_AK4PFchs.txt", jecPathname.c_str())));
-      JetCorrectorParameters *JetResolutionParametersDE = new JetCorrectorParameters(Form("%s/JetResolutionInputAK5PF.txt",jecPathname.c_str()));
-      FactorizedJetCorrector *JetCorrectorDE = new FactorizedJetCorrector(correctionParametersDE);
-      std::string jecUncPathDE = jecPathname+"/Autumn18_RunsABCD_V19_DATA/Autumn18_RunDE_V19_DATA_Uncertainty_AK4PFchs.txt";
-      JetCorrectionUncertainty *jecUncDE = new JetCorrectionUncertainty(jecUncPathDE);
-      SimpleJetResolution* JetResolutionCalculatorDE = new SimpleJetResolution(*JetResolutionParametersDE);
+      //IOV: 2017D
+      std::vector<JetCorrectorParameters> correctionParametersD = std::vector<JetCorrectorParameters> ();
+      correctionParametersD.push_back(JetCorrectorParameters(
+                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunD_V19_DATA_L1FastJet_AK4PFchs.txt", jecPathname.c_str())));
+      correctionParametersD.push_back(JetCorrectorParameters(
+                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunD_V19_DATA_L2Relative_AK4PFchs.txt", jecPathname.c_str())));
+      correctionParametersD.push_back(JetCorrectorParameters(
+                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunD_V19_DATA_L3Absolute_AK4PFchs.txt", jecPathname.c_str())));
+      correctionParametersD.push_back(JetCorrectorParameters(
+                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunD_V19_DATA_L2L3Residual_AK4PFchs.txt", jecPathname.c_str())));
+      JetCorrectorParameters *JetResolutionParametersD = new JetCorrectorParameters(Form("%s/JetResolutionInputAK5PF.txt",jecPathname.c_str()));
+      FactorizedJetCorrector *JetCorrectorD = new FactorizedJetCorrector(correctionParametersD);
+      std::string jecUncPathD = jecPathname+"/Autumn18_RunsABCD_V19_DATA/Autumn18_RunD_V19_DATA_Uncertainty_AK4PFchs.txt";
+      JetCorrectionUncertainty *jecUncD = new JetCorrectionUncertainty(jecUncPathD);
+      SimpleJetResolution* JetResolutionCalculatorD = new SimpleJetResolution(*JetResolutionParametersD);
+      
 
-      correctionParameters.push_back(correctionParametersDE);
-      JetResolutionParameters.push_back(JetResolutionParametersDE);
-      JetCorrector.push_back( JetCorrectorDE );
-      JetResolutionCalculator.push_back(JetResolutionCalculatorDE);
-      jecUnc.push_back(jecUncDE);
+      correctionParameters.push_back(correctionParametersD);
+      JetResolutionParameters.push_back(JetResolutionParametersD);
+      JetCorrector.push_back( JetCorrectorD );
+      JetResolutionCalculator.push_back(JetResolutionCalculatorD);
+      jecUnc.push_back(jecUncD);
       JetCorrectionsIOV.push_back( std::pair<int,int>( 302030, 304797 ));
-
-      //IOV: 2017F
-      std::vector<JetCorrectorParameters> correctionParametersF = std::vector<JetCorrectorParameters> ();
-      correctionParametersF.push_back(JetCorrectorParameters(
-                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunF_V19_DATA_L1FastJet_AK4PFchs.txt", jecPathname.c_str())));
-      correctionParametersF.push_back(JetCorrectorParameters(
-                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunF_V19_DATA_L2Relative_AK4PFchs.txt", jecPathname.c_str())));
-      correctionParametersF.push_back(JetCorrectorParameters(
-                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunF_V19_DATA_L3Absolute_AK4PFchs.txt", jecPathname.c_str())));
-      correctionParametersF.push_back(JetCorrectorParameters(
-                  Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunF_V19_DATA_L2L3Residual_AK4PFchs.txt", jecPathname.c_str())));
-      JetCorrectorParameters *JetResolutionParametersF = new JetCorrectorParameters(Form("%s/JetResolutionInputAK5PF.txt",jecPathname.c_str()));
-      FactorizedJetCorrector *JetCorrectorF = new FactorizedJetCorrector(correctionParametersF);
-      std::string jecUncPathF = jecPathname+"/Autumn18_RunsABCD_V19_DATA/Autumn18_RunF_V19_DATA_Uncertainty_AK4PFchs.txt";
-      JetCorrectionUncertainty *jecUncF = new JetCorrectionUncertainty(jecUncPathF);
-      SimpleJetResolution* JetResolutionCalculatorF = new SimpleJetResolution(*JetResolutionParametersF);
-
-      correctionParameters.push_back(correctionParametersF);
-      JetResolutionParameters.push_back(JetResolutionParametersF);
-      JetCorrector.push_back( JetCorrectorF );
-      JetResolutionCalculator.push_back(JetResolutionCalculatorF);
-      jecUnc.push_back(jecUncF);
-      JetCorrectionsIOV.push_back( std::pair<int,int>( 305040, 99999999 ));
-
-
     }
     else if (isFastsim) {
       std::cout << "Fastsim JEC\n";
