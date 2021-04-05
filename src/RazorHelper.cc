@@ -2713,25 +2713,25 @@ void RazorHelper::loadJECs_Razor2018_Rereco() {
     if (isData) {
       //IOV: 2018A
       std::vector<JetCorrectorParameters> correctionParametersA = std::vector<JetCorrectorParameters> ();
-      correctionParametersB.push_back(JetCorrectorParameters(
+      correctionParametersA.push_back(JetCorrectorParameters(
                   Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunA_V19_DATA_L1FastJet_AK4PFchs.txt", jecPathname.c_str())));
-      correctionParametersB.push_back(JetCorrectorParameters(
+      correctionParametersA.push_back(JetCorrectorParameters(
                   Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunA_V19_DATA_L2Relative_AK4PFchs.txt", jecPathname.c_str())));
-      correctionParametersB.push_back(JetCorrectorParameters(
+      correctionParametersA.push_back(JetCorrectorParameters(
                   Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunA_V19_DATA_L3Absolute_AK4PFchs.txt", jecPathname.c_str())));
-      correctionParametersB.push_back(JetCorrectorParameters(
+      correctionParametersA.push_back(JetCorrectorParameters(
                   Form("%s/Autumn18_RunsABCD_V19_DATA/Autumn18_RunA_V19_DATA_L2L3Residual_AK4PFchs.txt", jecPathname.c_str())));
-      JetCorrectorParameters *JetResolutionParametersB = new JetCorrectorParameters(Form("%s/JetResolutionInputAK5PF.txt",jecPathname.c_str()));
-      FactorizedJetCorrector *JetCorrectorB = new FactorizedJetCorrector(correctionParametersB);
-      std::string jecUncPathB = jecPathname+"/Autumn18_RunsABCD_V19_DATA/Autumn18_RunA_V19_DATA_Uncertainty_AK4PFchs.txt";
-      JetCorrectionUncertainty *jecUncB = new JetCorrectionUncertainty(jecUncPathB);
-      SimpleJetResolution* JetResolutionCalculatorB = new SimpleJetResolution(*JetResolutionParametersB);
+      JetCorrectorParameters *JetResolutionParametersA = new JetCorrectorParameters(Form("%s/JetResolutionInputAK5PF.txt",jecPathname.c_str()));
+      FactorizedJetCorrector *JetCorrectorA = new FactorizedJetCorrector(correctionParametersA);
+      std::string jecUncPathA = jecPathname+"/Autumn18_RunsABCD_V19_DATA/Autumn18_RunA_V19_DATA_Uncertainty_AK4PFchs.txt";
+      JetCorrectionUncertainty *jecUncA = new JetCorrectionUncertainty(jecUncPathA);
+      SimpleJetResolution* JetResolutionCalculatorA = new SimpleJetResolution(*JetResolutionParametersA);
 
-      correctionParameters.push_back(correctionParametersB);
-      JetResolutionParameters.push_back(JetResolutionParametersB);
-      JetCorrector.push_back( JetCorrectorB );
-      JetResolutionCalculator.push_back(JetResolutionCalculatorB);
-      jecUnc.push_back(jecUncB);
+      correctionParameters.push_back(correctionParametersA);
+      JetResolutionParameters.push_back(JetResolutionParametersA);
+      JetCorrector.push_back( JetCorrectorA );
+      JetResolutionCalculator.push_back(JetResolutionCalculatorA);
+      jecUnc.push_back(jecUncA);
       JetCorrectionsIOV.push_back( std::pair<int,int>( 1, 316995 ));
       
 
