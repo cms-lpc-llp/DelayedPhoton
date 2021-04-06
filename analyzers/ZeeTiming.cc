@@ -1,5 +1,5 @@
 #include "ZeeTiming.h"
-#include "JetCorrectorParameters.h"
+//#include "JetCorrectorParameters.h"
 #include "RazorHelper.h"
 
 //C++ includes
@@ -366,13 +366,13 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
 
   for (Long64_t jentry=0; jentry<nentries;jentry++) {
     //begin event
-     cout<<" "<<endl;
-     cout<<" "<<endl;
-     cout<<"######################"<<endl;
-     cout<<"nentries : "<<nentries<<endl;
-    cout<<"jentry : "<<jentry<<endl;
-    cout << "Processing entry " << jentry << endl;
-    //if(jentry % 10000 == 0) cout << "Processing entry " << jentry << endl;
+//     cout<<" "<<endl;
+//     cout<<" "<<endl;
+//     cout<<"######################"<<endl;
+//     cout<<"nentries : "<<nentries<<endl;
+//    cout<<"jentry : "<<jentry<<endl;
+//    cout << "Processing entry " << jentry << endl;
+    if(jentry % 10000 == 0) cout << "Processing entry " << jentry << endl;
     Long64_t ientry = LoadTree(jentry);
     // For some reason the ecalRechit pointers (ie, the vector) disappear after loading the entry. 
     // Need to manually set the pointer value.
@@ -418,12 +418,12 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
     }
     
     
-    cout<<"total ientry : "<<ientry<<endl;
+    //cout<<"total ientry : "<<ientry<<endl;
     if (ientry < 0){ 
     break;
-    cout<<"##########################"<<endl;
-    cout<<"ientry : "<<ientry<<endl;
-    cout<<"##########################"<<endl;
+    //cout<<"##########################"<<endl;
+    //cout<<"ientry : "<<ientry<<endl;
+    //cout<<"##########################"<<endl;
     }
     nb = fChain->GetEntry(jentry);   nbytes += nb;
 
@@ -571,17 +571,17 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
     double ele2_subseedtimeraw = 0;
     double ele2_subseedtimecalib = 0;
 
-    cout<<"nElectrons : "<<nElectrons<<endl;
+    //cout<<"nElectrons : "<<nElectrons<<endl;
     for(int i = 0; i < nElectrons; i++){
       //if(elePt[i] < 35) continue;
       if(fabs(eleEta[i]) > 2.5) continue;
-      cout<<"pass line "<<__LINE__<<endl;
+      //cout<<"pass line "<<__LINE__<<endl;
       if(fabs(eleEta[i]) > 1.4442 && fabs(eleEta[i]) < 1.566) continue;
-      cout<<"pass line "<<__LINE__<<endl;
+      //cout<<"pass line "<<__LINE__<<endl;
       if(!(isEGammaPOGTightElectron(i))) continue;
-      cout<<"pass line "<<__LINE__<<endl;
+      //cout<<"pass line "<<__LINE__<<endl;
       if(ecalRechit_ID->empty() ) continue;
-      cout<<"pass line "<<__LINE__<<endl;
+      //cout<<"pass line "<<__LINE__<<endl;
       
       TLorentzVector thisElectron = makeTLorentzVector(elePt[i], eleEta[i], elePhi[i], eleE[i]);
           
@@ -591,7 +591,7 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
       double rawseedHitTime =  (*ecalRechit_T)[seedhitIndex];
       double eleseedE =  (*ecalRechit_E)[seedhitIndex];
       if(eleseedE < 10.0) continue;
-      cout<<"pass line "<<__LINE__<<endl;
+      //cout<<"pass line "<<__LINE__<<endl;
 
       //find the subseed: the highest energy crystal among the neighboring crystals of the seed 
       double IC_timing_seed_zhicai = 0.0;
@@ -617,11 +617,11 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
       for (uint k=0; k<(*ele_EcalRechitIndex)[i].size(); ++k) {
         uint rechitIndex = (*ele_EcalRechitIndex)[i][k];
 	if (rechitIndex == seedhitIndex) continue;
-    cout<<"pass611L"<<endl;
+    //cout<<"pass611L"<<endl;
 
 	double thisRechitE =(*ecalRechit_E)[rechitIndex];
 	if (thisRechitE < elesubseedE) continue;
-    cout<<"pass615L"<<endl;
+    //cout<<"pass615L"<<endl;
 
 	bool isThisfromEB = bool( (*ecalRechit_ID)[rechitIndex] < 840000000 );
 	int this_iEtaiX = 0;
@@ -724,7 +724,7 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
 	double corrT = rawT_this + IC_timing_seed_zhicai + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
 
   	eleRechit_E->push_back((*ecalRechit_E)[rechitIndex]); 
-    cout<<eleRechit_E<<endl;
+    //cout<<eleRechit_E<<endl;
         eleRechit_Eta->push_back((*ecalRechit_Eta)[rechitIndex]); 
         eleRechit_Phi->push_back((*ecalRechit_Phi)[rechitIndex]); 
         if(isData) eleRechit_transpCorr->push_back((*ecalRechit_transpCorr)[rechitIndex]); 
