@@ -18,6 +18,13 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 maximumjob=20
 
 for sample in \
+    GMSB_L100TeV_Ctau10000cm_13TeV-pythia8 \
+    GMSB_L150TeV_Ctau10000cm_13TeV-pythia8 \
+    GMSB_L200TeV_Ctau10000cm_13TeV-pythia8 \
+    GMSB_L250TeV_Ctau10000cm_13TeV-pythia8 \
+    GMSB_L300TeV_Ctau10000cm_13TeV-pythia8 \
+    GMSB_L350TeV_Ctau10000cm_13TeV-pythia8 \
+    GMSB_L400TeV_Ctau10000cm_13TeV-pythia8 \
     GMSB_L100TeV_Ctau100cm_13TeV-pythia8 \
     GMSB_L100TeV_Ctau1cm_13TeV-pythia8 \
     GMSB_L100TeV_Ctau50cm_13TeV-pythia8 \
@@ -69,6 +76,7 @@ do
                 echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel7-m202006"' >> ${jdl_file}
                 echo "+SingularityBindCVMFS = True" >> ${jdl_file}
                 echo "run_as_owner = True" >> ${jdl_file}
+                echo "+JobBatchName = \"${sample}"\" >> ${jdl_file}
 		echo "when_to_transfer_output = ON_EXIT" >> ${jdl_file}
 		echo "Queue 1" >> ${jdl_file}
 		echo "condor_submit submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl"

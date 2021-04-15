@@ -20,6 +20,7 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 maximumjob=20
 
 for sample in \
+GMSB_L-100TeV_Ctau-10000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-100TeV_Ctau-1000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-100TeV_Ctau-10cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-100TeV_Ctau-1200cm_TuneCP5_13TeV-pythia8 \
@@ -27,6 +28,7 @@ GMSB_L-100TeV_Ctau-200cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-100TeV_Ctau-400cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-100TeV_Ctau-600cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-100TeV_Ctau-800cm_TuneCP5_13TeV-pythia8 \
+GMSB_L-150TeV_Ctau-10000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-150TeV_Ctau-1000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-150TeV_Ctau-10cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-150TeV_Ctau-1200cm_TuneCP5_13TeV-pythia8 \
@@ -34,6 +36,7 @@ GMSB_L-150TeV_Ctau-200cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-150TeV_Ctau-400cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-150TeV_Ctau-600cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-150TeV_Ctau-800cm_TuneCP5_13TeV-pythia8 \
+GMSB_L-200TeV_Ctau-10000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-200TeV_Ctau-1000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-200TeV_Ctau-10cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-200TeV_Ctau-1200cm_TuneCP5_13TeV-pythia8 \
@@ -41,6 +44,7 @@ GMSB_L-200TeV_Ctau-200cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-200TeV_Ctau-400cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-200TeV_Ctau-600cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-200TeV_Ctau-800cm_TuneCP5_13TeV-pythia8 \
+GMSB_L-250TeV_Ctau-10000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-250TeV_Ctau-1000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-250TeV_Ctau-10cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-250TeV_Ctau-1200cm_TuneCP5_13TeV-pythia8 \
@@ -48,6 +52,7 @@ GMSB_L-250TeV_Ctau-200cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-250TeV_Ctau-400cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-250TeV_Ctau-600cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-250TeV_Ctau-800cm_TuneCP5_13TeV-pythia8 \
+GMSB_L-300TeV_Ctau-10000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-300TeV_Ctau-1000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-300TeV_Ctau-10cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-300TeV_Ctau-1200cm_TuneCP5_13TeV-pythia8 \
@@ -55,6 +60,7 @@ GMSB_L-300TeV_Ctau-200cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-300TeV_Ctau-400cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-300TeV_Ctau-600cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-300TeV_Ctau-800cm_TuneCP5_13TeV-pythia8 \
+GMSB_L-350TeV_Ctau-10000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-350TeV_Ctau-1000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-350TeV_Ctau-10cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-350TeV_Ctau-1200cm_TuneCP5_13TeV-pythia8 \
@@ -62,12 +68,14 @@ GMSB_L-350TeV_Ctau-200cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-350TeV_Ctau-400cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-350TeV_Ctau-600cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-350TeV_Ctau-800cm_TuneCP5_13TeV-pythia8 \
+GMSB_L-400TeV_Ctau-10000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-400TeV_Ctau-1000cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-400TeV_Ctau-10cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-400TeV_Ctau-1200cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-400TeV_Ctau-200cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-400TeV_Ctau-400cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-400TeV_Ctau-600cm_TuneCP5_13TeV-pythia8 \
+GMSB_L-400TeV_Ctau-800cm_TuneCP5_13TeV-pythia8 \
 GMSB_L-400TeV_Ctau-800cm_TuneCP5_13TeV-pythia8 \
 
 do

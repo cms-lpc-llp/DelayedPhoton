@@ -6,25 +6,28 @@ import re
 
 lumi_2016 = 35922.0
 lumi_2017 = 41530.0
-lumi = lumi_2016
+lumi = lumi_2017
 
 cuts = OrderedDict()
 cuts['None'] = " 1 "
-cuts['Trigger'] = " && HLTDecision[81] == 1"
-cuts['nPhoton>1'] = " && n_Photons > 1 "
+cuts['nPhoton>=1'] = " && n_Photons >=1 "
 cuts['photonIsEB'] = "&& abs(pho1Eta)<1.4442 "
 cuts['photonPT>70'] = "&& pho1Pt > 70 "
-#cuts['METFilters'] =  " && Flag_HBHENoiseFilter == 1 && Flag_HBHEIsoNoiseFilter ==1 && Flag_goodVertices == 1 && Flag_eeBadScFilter == 1 && Flag_EcalDeadCellTriggerPrimitiveFilter == 1 && Flag_CSCTightHaloFilter == 1  && Flag_badMuonFilter == 1 && Flag_badGlobalMuonFilter == 0 && Flag_duplicateMuonFilter ==0"
+cuts['METFilters'] =  " && Flag_HBHENoiseFilter == 1 && Flag_HBHEIsoNoiseFilter ==1 && Flag_goodVertices == 1 && Flag_eeBadScFilter == 1 && Flag_EcalDeadCellTriggerPrimitiveFilter == 1 && Flag_CSCTightHaloFilter == 1  && Flag_badMuonFilter == 1 && Flag_badGlobalMuonFilter == 0 && Flag_duplicateMuonFilter ==0"
 cuts['photonR9>0.9'] = "  && pho1R9 > 0.9 "
-#cuts['photonTrackVeto'] = " && pho1passTrackVeto "
+cuts['photonTrackVeto'] = " && pho1passTrackVeto "
 cuts['photonHoverE<0.046'] = " && pho1HoverE < 0.04596 "
 cuts['photonIetaeta<0.014'] = " && pho1SigmaIetaIeta < 0.014 "
-cuts['photonIsolationLoose'] = " && pho1passIsoLoose_comboIso "
 cuts['photonSminor<0.4'] = " && pho1Sminor < 0.4"
-#cuts['photonSmajor'] = " && pho1passSmajorTight" 
+cuts['photonSmajor'] = " && pho1passSmajorTight" 
+cuts['photonIsolationTight'] = " && pho1passIsoTight_comboIso "
 cuts['nJets>2'] = " && n_Jets > 2 "
+cuts['HT'] = " && HT > 400"
 #cuts['HT'] = " && ((n_Photons == 1 && (HT - pho1Pt) > 400) || (n_Photons >=2 && (HT - pho1Pt -pho2Pt) > 400))"
-#cuts['nPhoton>1'] = " && n_Photons > 1 "
+cuts['Trigger'] = " && HLTDecision[880] == 1"
+cuts['photonTriggerCut'] = " && abs(pho1ecalPFClusterIso) < (5+0.01*pho1Pt) && abs(pho1hcalPFClusterIso) < (12.5+0.03*pho1Pt+3.0e-5*pho1Pt*pho1Pt) && abs(pho1trkSumPtHollowConeDR03) < (6+2.0e-3*pho1Pt) "
+cuts['pho2cuts'] = " && (pho2Pt > 40 && (abs(pho2Eta) < 1.4442 || (abs(pho2Eta) > 1.566 && abs(pho2Eta) < 2.5))) && abs(pho2ecalPFClusterIso) < 30.0 && abs(pho2hcalPFClusterIso) < 30.0 && abs(pho2trkSumPtHollowConeDR03) < 30.0 "
+#cuts['nPhoton==1'] = " && n_Photons == 1 "
 
 def getXsecBR(Lambda, Ctau):
     fxsecBR = 0.0
@@ -39,9 +42,9 @@ def getXsecBR(Lambda, Ctau):
     if Ctau_this == "0.001":
         Ctau_this = "0_001"
 
-    model_to_find="L"+str(Lambda)+"TeV_Ctau"+Ctau_this+"cm"
+    model_to_find="L-"+str(Lambda)+"TeV_Ctau-"+Ctau_this+"cm"
     print("Finding model {}".format(model_to_find))
-    with open("/storage/user/qnguyen/DelayedPhoton/CMSSW_8_1_0/src/HiggsAnalysis/DelayedPhotonLimit/data/XsecBR.dat","r") as xsec_file:
+    with open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhotonID/data/XsecBR.dat","r") as xsec_file:
         for this_model in xsec_file:
             this_model_array = shlex.split(this_model)
             if this_model_array[0] == model_to_find:

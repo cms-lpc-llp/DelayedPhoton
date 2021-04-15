@@ -755,6 +755,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         b_pdfWeights->SetAddress(&pdfWeights);
         b_alphasWeights->SetAddress(&alphasWeights);
     }
+
     //std::cout << "[DEBUG] dummy->GetAddress(): " << dummy->GetAddress() << std::endl;
     //std::cout << "[DEBUG] fChain->GetBranchStatus(\"ecalRechit_ID\"): " << fChain->GetBranchStatus("ecalRechit_ID") << std::endl;
     if (ientry < 0) 
