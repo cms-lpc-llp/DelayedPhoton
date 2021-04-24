@@ -206,6 +206,10 @@ public :
    Float_t         pho_seedRecHitSwitchToGain1[700];   //[nPhotons]
    Float_t         pho_anyRecHitSwitchToGain6[700];   //[nPhotons]
    Float_t         pho_anyRecHitSwitchToGain1[700];   //[nPhotons]
+   Float_t         pho_energy_scale[700];   //[nPhotons]
+   Float_t         pho_energy_scale_up[700];   //[nPhotons]
+   Float_t         pho_energy_scale_down[700];   //[nPhotons]
+   Float_t         pho_energy_smear[700];   //[nPhotons]
    std::vector<std::vector<unsigned int> > *pho_EcalRechitIndex;
    std::vector<unsigned int> *pho_SeedRechitIndex;
    Int_t           nJets;
@@ -555,6 +559,10 @@ public :
    TBranch        *b_pho_isConversion;   //!
    TBranch        *b_pho_passEleVeto;   //!
    TBranch        *b_pho_trackMatching;   //!
+   TBranch        *b_pho_energy_scale;   //!
+   TBranch        *b_pho_energy_scale_up;   //!
+   TBranch        *b_pho_energy_scale_down;   //!
+   TBranch        *b_pho_energy_smear;   //!
    TBranch        *b_pho_RegressionE;   //!
    TBranch        *b_pho_RegressionEUncertainty;   //!
    //TBranch        *b_pho_IDMVA;   //!
@@ -1023,6 +1031,10 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("pho_isConversion", pho_isConversion, &b_pho_isConversion);
    fChain->SetBranchAddress("pho_passEleVeto", pho_passEleVeto, &b_pho_passEleVeto);
    fChain->SetBranchAddress("pho_trackMatching", pho_trackMatching, &b_pho_trackMatching);
+   fChain->SetBranchAddress("pho_energy_scale", pho_energy_scale, &b_pho_energy_scale);
+   fChain->SetBranchAddress("pho_energy_scale_down", pho_energy_scale_down, &b_pho_energy_scale_down);
+   fChain->SetBranchAddress("pho_energy_scale_up", pho_energy_scale_up, &b_pho_energy_scale_up);
+   fChain->SetBranchAddress("pho_energy_smear", pho_energy_smear, &b_pho_energy_smear);
    fChain->SetBranchAddress("pho_RegressionE", pho_RegressionE, &b_pho_RegressionE);
    fChain->SetBranchAddress("pho_RegressionEUncertainty", pho_RegressionEUncertainty, &b_pho_RegressionEUncertainty);
    //fChain->SetBranchAddress("pho_IDMVA", pho_IDMVA, &b_pho_IDMVA);
