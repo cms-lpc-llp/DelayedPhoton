@@ -111,7 +111,7 @@ for sample in \
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2018/Signal/${sample}.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2018_pho_corr/Signal/${sample}.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	filesPerJob=`python -c "print int($nfiles.0/$maximumjob)+1"`
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
@@ -126,7 +126,7 @@ do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		echo "Universe = vanilla" > ${jdl_file}
 		echo "Executable = ${job_script}" >> ${jdl_file}
-		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2018/jobs/ ${analyzer} ${inputfilelist} no 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
+		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2018_pho_corr/jobs/ ${analyzer} ${inputfilelist} no 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
 		echo "Log = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_PC.log" >> ${jdl_file}
 		echo "Output = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).out" >> ${jdl_file}
 		echo "Error = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).err" >> ${jdl_file}
