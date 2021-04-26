@@ -22,13 +22,13 @@ parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFo
 
 parser.add_argument('--njobs',
     type=int,
-    default=5,
+    default=10,
     help="Number of concurrent jobs"
 )
 
 parser.add_argument('--nfiles',
     type=int,
-    default=250,
+    default=100,
     help="Number of files per job"
 )
 
