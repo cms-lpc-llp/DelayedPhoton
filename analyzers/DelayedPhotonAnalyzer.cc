@@ -936,7 +936,6 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
     TVector3 vtx( pvX, pvY, pvZ );
         
-
     for(int ind_pho = 0; ind_pho < nPhotons; ind_pho++) 
     { //photon loop
         // apply cuts
@@ -979,7 +978,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         //const EnergyScaleCorrection_class_2017::SmearCorrection_class_2017* smearCorr = photonCorrector->EnergyScaleCorrection_class_2017::getSmearCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), fabs(pho_superClusterEta[ind_pho]), phoR9[ind_pho], 12);
         //if (scaleCorr!=NULL) 
         //{
-            scale  = pho_energy_scale[ind_pho]/phoE[ind_pho];// scaleCorr->scale();
+            scale  = pho_energy_scale[ind_pho];// scaleCorr->scale();
             //scaleUnc = scaleCorr->scaleErr(EnergyScaleCorrection_class_2017::kErrGainBitNr);
             scaleUp = pho_energy_scale_up[ind_pho]/phoE[ind_pho];//scale + scaleUnc;
             scaleDown = pho_energy_scale_down[ind_pho]/phoE[ind_pho];//scale - scaleUnc;
@@ -1426,6 +1425,9 @@ else
 }
 
 n_Photons_reco = nPho;
+
+// Cut the leading photon pT at 70 GeV to reduce the output size
+if (pho1Pt < 70) continue;
 
 // if(nPho == 0) continue; 
 
