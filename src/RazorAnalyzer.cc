@@ -277,6 +277,10 @@ void RazorAnalyzer::EnablePhotons(){
     fChain->SetBranchStatus("pho_anyRecHitSwitchToGain1", 1);
     fChain->SetBranchStatus("pho_EcalRechitIndex", 1);
     fChain->SetBranchStatus("pho_SeedRechitIndex", 1);
+    fChain->SetBranchStatus("pho_energy_scale", 1);
+    fChain->SetBranchStatus("pho_energy_scale_up", 1);
+    fChain->SetBranchStatus("pho_energy_scale_down", 1);
+    fChain->SetBranchStatus("pho_energy_smear", 1);
 
 }
 

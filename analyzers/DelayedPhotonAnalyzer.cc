@@ -34,6 +34,8 @@ double timecorr_smear_aa = 6408.7*6408.7 - 6143.0*6143.0;
 //double timecorr_smear_bb = 2.0*211.1*211.1 - 2.0*96.2*96.2;
 double timecorr_smear_bb = 2.0*289.1*289.1 - 2.0*168.8*168.8;
 
+bool save_rechit = false;
+
 #define _phodebug 0
 
 float DelayedPhotonAnalyzer::getTimeCalibConstant(TTree *tree, vector <uint> & start_run, vector <uint> & end_run, uint run, uint detID) {
@@ -499,14 +501,17 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho1passIsoTight_privatePF", &pho1passIsoTight_privatePF, "pho1passIsoTight_privatePF/O");
   outputTree->Branch("pho1passIsoTight_OOT", &pho1passIsoTight_OOT, "pho1passIsoTight_OOT/O");
   outputTree->Branch("pho1passHLTFilter", pho1passHLTFilter, "pho1passHLTFilter[100]/O");
-  outputTree->Branch("pho1_rechitE", pho1_rechitE, "pho1_rechitE[100]/F");
-  outputTree->Branch("pho1_rechitX", pho1_rechitX, "pho1_rechitX[100]/F");
-  outputTree->Branch("pho1_rechitY", pho1_rechitY, "pho1_rechitY[100]/F");
-  outputTree->Branch("pho1_rechitZ", pho1_rechitZ, "pho1_rechitZ[100]/F");
-  outputTree->Branch("pho1_rechitEta", pho1_rechitEta, "pho1_rechitEta[100]/F");
-  outputTree->Branch("pho1_rechitPhi", pho1_rechitPhi, "pho1_rechitPhi[100]/F");
-  outputTree->Branch("pho1_rechitT", pho1_rechitT, "pho1_rechitT[100]/F");
-
+  
+  if (save_rechit)
+  {
+      outputTree->Branch("pho1_rechitE", pho1_rechitE, "pho1_rechitE[100]/F");
+      outputTree->Branch("pho1_rechitX", pho1_rechitX, "pho1_rechitX[100]/F");
+      outputTree->Branch("pho1_rechitY", pho1_rechitY, "pho1_rechitY[100]/F");
+      outputTree->Branch("pho1_rechitZ", pho1_rechitZ, "pho1_rechitZ[100]/F");
+      outputTree->Branch("pho1_rechitEta", pho1_rechitEta, "pho1_rechitEta[100]/F");
+      outputTree->Branch("pho1_rechitPhi", pho1_rechitPhi, "pho1_rechitPhi[100]/F");
+      outputTree->Branch("pho1_rechitT", pho1_rechitT, "pho1_rechitT[100]/F");
+  }
   outputTree->Branch("pho1passIsoLoose_comboIso", &pho1passIsoLoose_comboIso, "pho1passIsoLoose_comboIso/O");
   outputTree->Branch("pho1passIsoMedium_comboIso", &pho1passIsoMedium_comboIso, "pho1passIsoMedium_comboIso/O");
   outputTree->Branch("pho1passIsoTight_comboIso", &pho1passIsoTight_comboIso, "pho1passIsoTight_comboIso/O");
@@ -589,14 +594,18 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho2passIsoTight_privatePF", &pho2passIsoTight_privatePF, "pho2passIsoTight_privatePF/O");
   outputTree->Branch("pho2passIsoTight_OOT", &pho2passIsoTight_OOT, "pho2passIsoTight_OOT/O");
   outputTree->Branch("pho2passHLTFilter", pho2passHLTFilter, "pho2passHLTFilter[100]/O");
-  outputTree->Branch("pho2_rechitE", pho2_rechitE, "pho2_rechitE[100]/F");
-  outputTree->Branch("pho2_rechitX", pho2_rechitX, "pho2_rechitX[100]/F");
-  outputTree->Branch("pho2_rechitY", pho2_rechitY, "pho2_rechitY[100]/F");
-  outputTree->Branch("pho2_rechitZ", pho2_rechitZ, "pho2_rechitZ[100]/F");
-  outputTree->Branch("pho2_rechitEta", pho2_rechitEta, "pho2_rechitEta[100]/F");
-  outputTree->Branch("pho2_rechitPhi", pho2_rechitPhi, "pho2_rechitPhi[100]/F");
-  outputTree->Branch("pho2_rechitT", pho2_rechitT, "pho2_rechitT[100]/F");
- 
+  
+  if (save_rechit)
+  {
+      outputTree->Branch("pho2_rechitE", pho2_rechitE, "pho2_rechitE[100]/F");
+      outputTree->Branch("pho2_rechitX", pho2_rechitX, "pho2_rechitX[100]/F");
+      outputTree->Branch("pho2_rechitY", pho2_rechitY, "pho2_rechitY[100]/F");
+      outputTree->Branch("pho2_rechitZ", pho2_rechitZ, "pho2_rechitZ[100]/F");
+      outputTree->Branch("pho2_rechitEta", pho2_rechitEta, "pho2_rechitEta[100]/F");
+      outputTree->Branch("pho2_rechitPhi", pho2_rechitPhi, "pho2_rechitPhi[100]/F");
+      outputTree->Branch("pho2_rechitT", pho2_rechitT, "pho2_rechitT[100]/F");
+  }
+
   outputTree->Branch("pho2passIsoLoose_comboIso", &pho2passIsoLoose_comboIso, "pho2passIsoLoose_comboIso/O");
   outputTree->Branch("pho2passIsoMedium_comboIso", &pho2passIsoMedium_comboIso, "pho2passIsoMedium_comboIso/O");
   outputTree->Branch("pho2passIsoTight_comboIso", &pho2passIsoTight_comboIso, "pho2passIsoTight_comboIso/O");
@@ -927,7 +936,6 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
     TVector3 vtx( pvX, pvY, pvZ );
         
-
     for(int ind_pho = 0; ind_pho < nPhotons; ind_pho++) 
     { //photon loop
         // apply cuts
@@ -966,17 +974,17 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         double scaleUp = 1;
         double scaleDown = 1;
         double smear = 0;
-        const EnergyScaleCorrection_class_2017::ScaleCorrection_class_2017* scaleCorr = photonCorrector->EnergyScaleCorrection_class_2017::getScaleCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), fabs(pho_superClusterEta[ind_pho]), phoR9[ind_pho], 12);
-        const EnergyScaleCorrection_class_2017::SmearCorrection_class_2017* smearCorr = photonCorrector->EnergyScaleCorrection_class_2017::getSmearCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), fabs(pho_superClusterEta[ind_pho]), phoR9[ind_pho], 12);
-        if (scaleCorr!=NULL) 
-        {
-            scale  = scaleCorr->scale();
-            scaleUnc = scaleCorr->scaleErr(EnergyScaleCorrection_class_2017::kErrGainBitNr);
-            scaleUp = scale + scaleUnc;
-            scaleDown = scale - scaleUnc;
-        }
-        if (scaleCorr!=NULL) 
-        if (smearCorr!=NULL) smear  = smearCorr->sigma(phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
+        //const EnergyScaleCorrection_class_2017::ScaleCorrection_class_2017* scaleCorr = photonCorrector->EnergyScaleCorrection_class_2017::getScaleCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), fabs(pho_superClusterEta[ind_pho]), phoR9[ind_pho], 12);
+        //const EnergyScaleCorrection_class_2017::SmearCorrection_class_2017* smearCorr = photonCorrector->EnergyScaleCorrection_class_2017::getSmearCorr(run, phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]), fabs(pho_superClusterEta[ind_pho]), phoR9[ind_pho], 12);
+        //if (scaleCorr!=NULL) 
+        //{
+            scale  = pho_energy_scale[ind_pho];// scaleCorr->scale();
+            //scaleUnc = scaleCorr->scaleErr(EnergyScaleCorrection_class_2017::kErrGainBitNr);
+            scaleUp = pho_energy_scale_up[ind_pho]/phoE[ind_pho];//scale + scaleUnc;
+            scaleDown = pho_energy_scale_down[ind_pho]/phoE[ind_pho];//scale - scaleUnc;
+        //}
+        //if (smearCorr!=NULL) smear  = smearCorr->sigma(phoE[ind_pho]/cosh(pho_superClusterEta[ind_pho]));
+        smear = pho_energy_smear[ind_pho];
 
         if (doPhotonScaleCorrection) {
             if (isData) {
@@ -1417,6 +1425,9 @@ else
 }
 
 n_Photons_reco = nPho;
+
+// Cut the leading photon pT at 70 GeV to reduce the output size
+if (pho1Pt < 70) continue;
 
 // if(nPho == 0) continue; 
 
