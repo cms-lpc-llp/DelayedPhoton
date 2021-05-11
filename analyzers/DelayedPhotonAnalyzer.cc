@@ -27,8 +27,27 @@ const bool photonOrderByTime = false;
 const int N_E_divide = 19;
 double E_divide[N_E_divide] = {43.0, 46.0, 49.0, 52.0, 55.0, 58.0, 61.0, 64.0, 67.0, 70.0, 73.0, 78.0, 84.0, 91.0, 100.0, 115.0, 140.0, 190.0, 1000.0};
 //double timecorr_shift[N_E_divide] = {277.32228254, 275.67500044, 272.10244004, 287.15428262, 294.29875716, 287.44070277, 282.95400642, 279.80934988, 282.70083441, 277.48972614, 275.41563559, 274.64132692, 268.13864834, 266.62392304, 270.24297452, 260.13781686, 263.16768474, 242.21320465, 181.26510246};
-double timecorr_shift[N_E_divide] = {279.9466476,  278.14972231, 289.29761875, 289.53508063, 294.00756053, 285.88226868, 286.03238378, 281.17150628, 282.09074926, 277.63137454, 274.44859489, 276.70782472, 271.64726448, 272.08565454, 261.00671411, 260.43733686, 258.90569305, 250.88234587, 188.61409597};
+double timecorr_shift[N_E_divide] = {242.9678,
+   243.4894,
+   242.4179,
+   237.5386,
+   231.024,
+   221.0301,
+   207.6417,
+   191.9178,
+   188.9125,
+   179.7209,
+   172.9115,
+   148.4029,
+   136.2686,
+   110.3883,
+   101.6305,
+   100.464,
+   110.376,
+   92.20504,
+   55.83635};
 
+double timecorr_smear[N_E_divide] = {130.2393, 126.0633, 134.4726, 142.9756, 142.9673, 145.7418, 161.0999, 161.5472, 169.417, 175.4376, 181.5396, 195.1939, 197.1906, 200.2692, 209.381, 210.9972, 207.1109, 212.539, 210.5711};
 //double timecorr_smear_aa = 6591.9*6591.9 - 6536.8*6536.8;
 double timecorr_smear_aa = 6408.7*6408.7 - 6143.0*6143.0;
 //double timecorr_smear_bb = 2.0*211.1*211.1 - 2.0*96.2*96.2;
@@ -1396,8 +1415,18 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
         TR_SHIFT1 = 0.001*timecorr_shift[E_bin1]; 
         TR_SHIFT2 = 0.001*timecorr_shift[E_bin2]; 
 
-        if(pho1Pt>0.0) TR_SMEAR1 = 0.001*sqrt((timecorr_smear_aa/(pho1Pt*pho1Pt) + timecorr_smear_bb));
-        if(pho2Pt>0.0) TR_SMEAR2 = 0.001*sqrt((timecorr_smear_aa/(pho2Pt*pho2Pt) + timecorr_smear_bb));
+        if(pho1Pt>0.0) 
+        {
+            if (pho1Pt>110) TR_SMEAR1 = 0.80*0.001*timecorr_smear[E_bin1];//0.001*sqrt((timecorr_smear_aa/(pho1Pt*pho1Pt) + timecorr_smear_bb));
+            else if (pho1Pt>70) TR_SMEAR1 = 0.78*0.001*timecorr_smear[E_bin1];
+            else TR_SMEAR1 = 0.75*0.001*timecorr_smear[E_bin1];
+        }
+        if (pho2Pt>0.0) 
+        {
+            if (pho2Pt>110) TR_SMEAR2 = 0.80*0.001*timecorr_smear[E_bin2];//0.001*sqrt((timecorr_smear_aa/(pho2Pt*pho2Pt) + timecorr_smear_bb));
+            else if (pho2Pt>70) TR_SMEAR2 = 0.78*0.001*timecorr_smear[E_bin2];
+            else TR_SMEAR2 = 0.75*0.001*timecorr_smear[E_bin2];
+        }
 
         std::random_device rd;
         std::mt19937 e2(rd());

@@ -105,10 +105,11 @@ then
 		echo "gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}"
 		#gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org:2811${outputDirectory}/${outputfile}
 		env -i X509_USER_PROXY=${x509loc} gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org:2811${outputDirectory}/${outputfile}
-		if [ -f /mnt/hadoop${outputDirectory}/${outputfile} ]
+		if [ -f /mnt/hadoop/${outputDirectory}/${outputfile} ]
 		then
-			echo "SUCCESS ============ good news, job finished successfully "
+            echo "SUCCESS ============ good news, job finished successfully "
 		else
+			echo "Cannot find /mnt/hadoop/${outputDirectory}/${outputfile} "
 			echo "FAILED ============ somehow job failed, please consider resubmitting"
 		fi
 	else

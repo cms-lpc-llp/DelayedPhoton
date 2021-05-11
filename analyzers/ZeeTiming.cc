@@ -20,8 +20,46 @@ const double SPEED_OF_LIGHT = 29.9792458; // speed of light in cm / ns
 
 const int N_E_divide = 19;
 double E_divide[N_E_divide] = {43.0, 46.0, 49.0, 52.0, 55.0, 58.0, 61.0, 64.0, 67.0, 70.0, 73.0, 78.0, 84.0, 91.0, 100.0, 115.0, 140.0, 190.0, 1000.0};
-double timecorr_shift[N_E_divide] = {279.9466476,  278.14972231, 289.29761875, 289.53508063, 294.00756053, 285.88226868, 286.03238378, 281.17150628, 282.09074926, 277.63137454, 274.44859489, 276.70782472, 271.64726448, 272.08565454, 261.00671411, 260.43733686, 258.90569305, 250.88234587, 188.61409597};
+double timecorr_shift[N_E_divide] = {242.9678,
+   243.4894,
+   242.4179,
+   237.5386,
+   231.024,
+   221.0301,
+   207.6417,
+   191.9178,
+   188.9125,
+   179.7209,
+   172.9115,
+   148.4029,
+   136.2686,
+   110.3883,
+   101.6305,
+   100.464,
+   110.376,
+   92.20504,
+   55.83635};
 
+double timecorr_smear[N_E_divide] = {130.2393, 126.0633, 134.4726, 142.9756, 142.9673, 145.7418, 161.0999, 161.5472, 169.417, 175.4376, 181.5396, 195.1939, 197.1906, 200.2692, 209.381, 210.9972, 207.1109, 212.539, 210.5711};
+//double timecorr_smear[N_E_divide] = {98.62667,
+//   112.2995,
+//   119.613,
+//   125.42,
+//   130.2732,
+//   116.1698,
+//   139.3345,
+//   148.8781,
+//   150.3087,
+//   156.022,
+//   151.6024,
+//   165.3809,
+//   172.1358,
+//   173.1162,
+//   261.1201,
+//   260.5687,
+//   254.3193,
+//   264.3604,
+//   207.0281};
 double timecorr_smear_aa = 6408.7*6408.7 - 6143.0*6143.0;
 double timecorr_smear_bb = 2.0*289.1*289.1 - 2.0*168.8*168.8;
 
@@ -615,42 +653,42 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
       double IC_timing_subseed_zhicai = 0.0;
 
       for (uint k=0; k<(*ele_EcalRechitIndex)[i].size(); ++k) {
-        uint rechitIndex = (*ele_EcalRechitIndex)[i][k];
-	if (rechitIndex == seedhitIndex) continue;
-    //cout<<"pass611L"<<endl;
+          uint rechitIndex = (*ele_EcalRechitIndex)[i][k];
+          if (rechitIndex == seedhitIndex) continue;
+          //cout<<"pass611L"<<endl;
 
-	double thisRechitE =(*ecalRechit_E)[rechitIndex];
-	if (thisRechitE < elesubseedE) continue;
-    //cout<<"pass615L"<<endl;
+          double thisRechitE =(*ecalRechit_E)[rechitIndex];
+          if (thisRechitE < elesubseedE) continue;
+          //cout<<"pass615L"<<endl;
 
-	bool isThisfromEB = bool( (*ecalRechit_ID)[rechitIndex] < 840000000 );
-	int this_iEtaiX = 0;
-	int this_iPhiiY = 0;
-        if(isThisfromEB)
-	{
-		this_iEtaiX = iEta_or_iX_from_detID( (*ecalRechit_ID)[rechitIndex] , true);
-                this_iPhiiY = iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , true);
-	}
-	else
-	{
-		this_iEtaiX = iEta_or_iX_from_detID( (*ecalRechit_ID)[rechitIndex] , false);
-                this_iPhiiY = iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , false);	
-	}
-	int distance_from_seed = (this_iEtaiX-seed_iEtaiX)*(this_iEtaiX-seed_iEtaiX) + (this_iPhiiY-seed_iPhiiY)*(this_iPhiiY-seed_iPhiiY);
-	if(distance_from_seed >  1) continue;//only accept neighboring crystals
-	
-	if(thisRechitE > elesubseedE)
-	{
-		elesubseedE = thisRechitE;
-		subseedhitIndex = rechitIndex;
-	}
+          bool isThisfromEB = bool( (*ecalRechit_ID)[rechitIndex] < 840000000 );
+          int this_iEtaiX = 0;
+          int this_iPhiiY = 0;
+          if(isThisfromEB)
+          {
+              this_iEtaiX = iEta_or_iX_from_detID( (*ecalRechit_ID)[rechitIndex] , true);
+              this_iPhiiY = iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , true);
+          }
+          else
+          {
+              this_iEtaiX = iEta_or_iX_from_detID( (*ecalRechit_ID)[rechitIndex] , false);
+              this_iPhiiY = iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , false);	
+          }
+          int distance_from_seed = (this_iEtaiX-seed_iEtaiX)*(this_iEtaiX-seed_iEtaiX) + (this_iPhiiY-seed_iPhiiY)*(this_iPhiiY-seed_iPhiiY);
+          if(distance_from_seed >  1) continue;//only accept neighboring crystals
+
+          if(thisRechitE > elesubseedE)
+          {
+              elesubseedE = thisRechitE;
+              subseedhitIndex = rechitIndex;
+          }
 
       }
 
 
       if(isFromEB && isData)
       {
-		int subseed_iEtaiX = iEta_or_iX_from_detID( (*ecalRechit_ID)[subseedhitIndex] , true);
+          int subseed_iEtaiX = iEta_or_iX_from_detID( (*ecalRechit_ID)[subseedhitIndex] , true);
 		int subseed_iPhiiY = iPhi_or_iY_from_detID( (*ecalRechit_ID)[subseedhitIndex] , true);
 		//IC_timing_subseed_zhicai = -1.0* h2_IC_timing_map->GetBinContent(subseed_iEtaiX+85+1,subseed_iPhiiY);
       }
@@ -1002,9 +1040,19 @@ if(!isData)
         TR_SHIFT1 = 0.001*timecorr_shift[E_bin1];
         TR_SHIFT2 = 0.001*timecorr_shift[E_bin2];
 
-        if(ele1E>0.0) TR_SMEAR1 = 0.001*sqrt((timecorr_smear_aa/(ele1E*ele1E) + timecorr_smear_bb));
-        if(ele2E>0.0) TR_SMEAR2 = 0.001*sqrt((timecorr_smear_aa/(ele2E*ele2E) + timecorr_smear_bb));
+        if(ele1E>0.0) 
+        {
+            if (ele1E>110) TR_SMEAR1 = 0.001*timecorr_smear[E_bin1]; //0.001*sqrt((timecorr_smear_aa/(ele1E*ele1E) + timecorr_smear_bb));
+            else if (ele1E>70) TR_SMEAR1 = 0.001*timecorr_smear[E_bin1];
+            else TR_SMEAR1 = 0.001*timecorr_smear[E_bin1];
 
+        }
+        if(ele2E>0.0) 
+        {
+            if (ele2E>110) TR_SMEAR2 = 0.001*timecorr_smear[E_bin2]; //0.001*sqrt((timecorr_smear_aa/(ele2E*ele2E) + timecorr_smear_bb));
+            else if (ele2E>70) TR_SMEAR2 = 0.001*timecorr_smear[E_bin2];
+            else TR_SMEAR2 = 0.001*timecorr_smear[E_bin2];
+        }
         std::random_device rd;
         std::mt19937 e2(rd());
         std::normal_distribution<> dist1(t1, TR_SMEAR1);

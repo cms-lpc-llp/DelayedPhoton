@@ -10,21 +10,23 @@ then
 fi
     
 for sample in \
+GJets_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8 \
+GJets_HT-200To400_TuneCP5_13TeV-madgraphMLM-pythia8 \
+GJets_HT-400To600_TuneCP5_13TeV-madgraphMLM-pythia8 \
+GJets_HT-40To100_TuneCP5_13TeV-madgraphMLM-pythia8 \
+GJets_HT-600ToInf_TuneCP5_13TeV-madgraphMLM-pythia8 \
 DiPhotonJetsBox_M40_80-Sherpa \
 DiPhotonJetsBox_MGG-80toInf_13TeV-Sherpa \
-GJet_Pt-20to40_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
-GJet_Pt-20toInf_DoubleEMEnriched_MGG-40to80_TuneCP5_13TeV_Pythia8 \
-GJet_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
 QCD_Pt-120to170_EMEnriched_TuneCP5_13TeV_pythia8 \
 QCD_Pt-15to20_EMEnriched_TuneCP5_13TeV_pythia8 \
 QCD_Pt-170to300_EMEnriched_TuneCP5_13TeV_pythia8 \
 QCD_Pt-20to30_EMEnriched_TuneCP5_13TeV_pythia8 \
 QCD_Pt-300toInf_EMEnriched_TuneCP5_13TeV_pythia8 \
 QCD_Pt-30to50_EMEnriched_TuneCP5_13TeV_pythia8 \
-QCD_Pt-30toInf_DoubleEMEnriched_MGG-40to80_TuneCP5_13TeV_Pythia8 \
-QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
 QCD_Pt-50to80_EMEnriched_TuneCP5_13TeV_pythia8 \
 QCD_Pt-80to120_EMEnriched_TuneCP5_13TeV_pythia8 \
+QCD_Pt-30toInf_DoubleEMEnriched_MGG-40to80_TuneCP5_13TeV_Pythia8 \
+QCD_Pt-40toInf_DoubleEMEnriched_MGG-80toInf_TuneCP5_13TeV_Pythia8 \
 
 do
     hadd -k -f ${sample}.root /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2018_pho_corr/jobs/${sample}_Job*.root
