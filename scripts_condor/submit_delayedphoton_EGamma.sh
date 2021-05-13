@@ -17,10 +17,10 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 filesPerJob=1
 
 for sample in \
-    EGamma_Run2018A \
-    EGamma_Run2018B \
-    EGamma_Run2018C \
     EGamma_Run2018D \
+#    EGamma_Run2018A \
+#    EGamma_Run2018B \
+#    EGamma_Run2018C \
 
 do
 	echo "Sample " ${sample}
@@ -48,7 +48,7 @@ do
 		echo "x509userproxy = \$ENV(X509_USER_PROXY)" >> ${jdl_file}
                 echo "+RunAsOwner = True" >> ${jdl_file}
                 echo "+InteractiveUser = true" >> ${jdl_file}
-                echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel7-m202006"' >> ${jdl_file}
+                echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel7"' >> ${jdl_file}
                 echo "+SingularityBindCVMFS = True" >> ${jdl_file}
                 echo "run_as_owner = True" >> ${jdl_file}
                 echo "+JobBatchName = \"${sample}"\" >> ${jdl_file}
