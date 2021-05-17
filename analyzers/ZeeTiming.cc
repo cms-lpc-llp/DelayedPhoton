@@ -17,69 +17,30 @@
 using namespace std;
 const double SPEED_OF_LIGHT = 29.9792458; // speed of light in cm / ns
 
-/*
-// For pre-legacy
-const int N_E_divide = 20;
-double E_divide[N_E_divide] = {40.0,43.0, 46.0, 49.0, 52.0, 55.0, 58.0, 61.0, 64.0, 67.0, 70.0, 73.0, 78.0, 84.0, 91.0, 100.0, 115.0, 140.0, 190.0, 1000.0};
-double timecorr_shift[N_E_divide] = {234.1244, 232.398, 232.7482, 228.4579, 223.5565, 214.0472, 194.8198, 194.8198, 187.5414, 176.1257, 169.7194, 157.4369, 134.6832, 124.9911, 98.90306, 104.8289, 102.0133, 89.85277, 99.03411, 38.9981};
+//For 2017
+const int N_E_divide = 9;
+double E_divide[N_E_divide] = {70.0, 75.0, 81.0, 89.0, 100.0, 115.0, 140.0, 190.0, 300, 1000.0};
+double timecorr_shift[N_E_divide] = {268.7409,
+257.8304,
+249.6534,
+241.3717,
+235.2159,
+231.8436,
+228.6697,
+199.7499,
+97.20482};
 
-double timecorr_smear_aa = 7326.1*7326.1 - 5809.4*5809.4;
-double timecorr_smear_bb = 2.0*195.2*195.2 - 2.0*130.0*130.0;
-*/
-
-
-//// For Ultra-legacy
-//const int N_E_divide = 20;
-//double E_divide[N_E_divide] = {40.0,43.0, 46.0, 49.0, 52.0, 55.0, 58.0, 61.0, 64.0, 67.0, 70.0, 73.0, 78.0, 84.0, 91.0, 100.0, 115.0, 140.0, 190.0, 1000.0};
-//double timecorr_shift[N_E_divide] = {242.3001, 240.9501, 239.8581, 238.1711, 233.0166, 221.8056, 209.1519, 200.4273, 189.414, 177.5025, 166.8654, 175.0803, 128.5933, 117.686, 104.808, 114.3373, 115.578, 118.0999, 62.32346};
-//
-//double timecorr_smear_aa = 7436.9*7436.9 - 7687.4*7687.4;
-//double timecorr_smear_bb = 2.0*196.1*196.1 - 2.0*124.3*124.3;
-//
-const int N_E_divide = 19;
-double E_divide[N_E_divide] = {43.0, 46.0, 49.0, 52.0, 55.0, 58.0, 61.0, 64.0, 67.0, 70.0, 73.0, 78.0, 84.0, 91.0, 100.0, 115.0, 140.0, 190.0, 1000.0};
-double timecorr_shift[N_E_divide] = {242.9678,
-   243.4894,
-   242.4179,
-   237.5386,
-   231.024,
-   221.0301,
-   207.6417,
-   191.9178,
-   188.9125,
-   179.7209,
-   172.9115,
-   148.4029,
-   136.2686,
-   110.3883,
-   101.6305,
-   100.464,
-   110.376,
-   92.20504,
-   55.83635};
-
-double timecorr_smear[N_E_divide] = {130.2393, 126.0633, 134.4726, 142.9756, 142.9673, 145.7418, 161.0999, 161.5472, 169.417, 175.4376, 181.5396, 195.1939, 197.1906, 200.2692, 209.381, 210.9972, 207.1109, 212.539, 210.5711};
-//double timecorr_smear[N_E_divide] = {98.62667,
-//   112.2995,
-//   119.613,
-//   125.42,
-//   130.2732,
-//   116.1698,
-//   139.3345,
-//   148.8781,
-//   150.3087,
-//   156.022,
-//   151.6024,
-//   165.3809,
-//   172.1358,
-//   173.1162,
-//   261.1201,
-//   260.5687,
-//   254.3193,
-//   264.3604,
-//   207.0281};
-double timecorr_smear_aa = 6408.7*6408.7 - 6143.0*6143.0;
-double timecorr_smear_bb = 2.0*289.1*289.1 - 2.0*168.8*168.8;
+double timecorr_smear[N_E_divide] = {334.3207,
+340.3101,
+344.9176,
+345.0034,
+341.64,
+339.5056,
+344.5764,
+353.4736,
+351.3277};
+double timecorr_smear_aa = 4814.5*4814.5 - 6452.0*6452.0;
+double timecorr_smear_bb = 2.0*278.8*278.8 - 2.0*123.5*123.5;
 
 float ZeeTiming::getTimeCalibConstant(TTree *tree, vector <uint> & start_run, vector <uint> & end_run, uint run, uint detID) {
   float timeCalib = 0.0;
@@ -156,7 +117,7 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
   TRandom3 random(3003);
   //bool doPhotonScaleCorrection = true;
 
-  string analysisTag = "Razor2018_Rereco_DelayedPhoton";
+  string analysisTag = "Razor2017_31Mar2018Rereco_DelayedPhoton";
   if ( label != "") analysisTag = label;
 
   RazorHelper *helper = 0;
@@ -466,7 +427,7 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
         b_ecalRechit_pedrms1->SetAddress(&ecalRechit_pedrms1);
     }
     
-    else
+    if (!isData)
     {
         b_scaleWeights->SetAddress(&scaleWeights);
         b_pdfWeights->SetAddress(&pdfWeights);
