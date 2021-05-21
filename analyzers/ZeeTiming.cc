@@ -19,7 +19,7 @@ const double SPEED_OF_LIGHT = 29.9792458; // speed of light in cm / ns
 
 //For 2017
 const int N_E_divide = 9;
-double E_divide[N_E_divide] = {70.0, 75.0, 81.0, 89.0, 100.0, 115.0, 140.0, 190.0, 300, 1000.0};
+double E_divide[N_E_divide] = { 75.0, 81.0, 89.0, 100.0, 115.0, 140.0, 190.0, 300, 1000.0};
 double timecorr_shift[N_E_divide] = {268.7409,
 257.8304,
 249.6534,
