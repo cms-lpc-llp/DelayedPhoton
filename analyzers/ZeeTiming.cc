@@ -39,23 +39,21 @@ double timecorr_smear_bb = 2.0*195.2*195.2 - 2.0*130.0*130.0;
 const int N_E_divide = 7;
 double E_divide[N_E_divide] = {80.0, 90.0, 100.0, 115.0, 140.0, 190.0, 1000.0};
 //double E_divide[N_E_divide] = {43.0, 46.0, 49.0, 52.0, 55.0, 58.0, 61.0, 64.0, 67.0, 70.0, 73.0, 78.0, 84.0, 91.0, 100.0, 115.0, 140.0, 190.0, 1000.0};
-double timecorr_shift[N_E_divide] = {155.03218469,
-    121.22097313,
-    100.91882651,
-    100.46396416,
-    110.37597545,
-    92.20503908,
-    55.83635117};
+double timecorr_shift[N_E_divide] = {152.7649806,
+    120.267913,
+    102.08749607,
+    96.59184902,
+    104.70565521, 
+    111.11834346,
+    66.66772558};
 
-double timecorr_smear[N_E_divide] = {190.97334851,
-    201.14516568,
-    209.54176123,
-    210.99723574,
-    207.11087658,       
-    212.53898272,  
-    210.57106027,
-};
-
+double timecorr_smear[N_E_divide] = {192.55366472,
+    204.68341335,
+    211.73174829,
+    209.75734017,
+    209.24829624,
+    207.83320967,
+    211.53772379};
 
 double timecorr_smear_aa = 6408.7*6408.7 - 6143.0*6143.0;
 double timecorr_smear_bb = 2.0*289.1*289.1 - 2.0*168.8*168.8;
@@ -227,6 +225,8 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
   float t1_subseed, t2_subseed;
   float seed1_pedestal, seed2_pedestal;
   float subseed1_pedestal, subseed2_pedestal;
+  float seed1_pedestalGeV, seed2_pedestalGeV;
+  float subseed1_pedestalGeV, subseed2_pedestalGeV;
   float seed1_transpCorr, seed2_transpCorr;
   float subseed1_transpCorr, subseed2_transpCorr;
   float t1raw_seed, t2raw_seed;
@@ -326,6 +326,10 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
   outputTree->Branch("subseed1_pedestal", &subseed1_pedestal, "subseed1_pedestal/F");
   outputTree->Branch("seed2_pedestal", &seed2_pedestal, "seed2_pedestal/F");
   outputTree->Branch("subseed2_pedestal", &subseed2_pedestal, "subseed2_pedestal/F");
+  outputTree->Branch("seed1_pedestalGeV", &seed1_pedestalGeV, "seed1_pedestalGeV/F");
+  outputTree->Branch("subseed1_pedestalGeV", &subseed1_pedestalGeV, "subseed1_pedestalGeV/F");
+  outputTree->Branch("seed2_pedestalGeV", &seed2_pedestalGeV, "seed2_pedestalGeV/F");
+  outputTree->Branch("subseed2_pedestalGeV", &subseed2_pedestalGeV, "subseed2_pedestalGeV/F");
   outputTree->Branch("seed1_transpCorr", &seed1_transpCorr, "seed1_transpCorr/F");
   outputTree->Branch("subseed1_transpCorr", &subseed1_transpCorr, "subseed1_transpCorr/F");
   outputTree->Branch("seed2_transpCorr", &seed2_transpCorr, "seed2_transpCorr/F");
@@ -493,6 +497,10 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
     subseed1_pedestal = -999;
     seed2_pedestal = -999;
     subseed2_pedestal = -999;
+    seed1_pedestalGeV = -999;
+    subseed1_pedestalGeV = -999;
+    seed2_pedestalGeV = -999;
+    subseed2_pedestalGeV = -999;
     seed1_transpCorr = -999;
     subseed1_transpCorr = -999;
     seed2_transpCorr = -999;
@@ -706,8 +714,11 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
  
 
 
-      double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.0;
-      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.0;
+      double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 2.0;
+      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 2.0;
+	  double ADCToGeV = getADCToGeV(runNum, isFromEB);
+	  double seedPedNoiseGeV = seedPedNoise * ADCToGeV;
+      double subseedPedNoiseGeV = subseedPedNoise * ADCToGeV;
       //double seedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[seedhitIndex]) : 1.0;
       //double subseedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[subseedhitIndex]) : 1.0;
    
@@ -777,9 +788,8 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
           eleRechit_IPhiIY->push_back(iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , false));
         }	
 
-	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 0.042; // 42 MeV for MC
+	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 2.0; 
 	//double pedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex]) : 0.042; // 42 MeV for MC
-	double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1.0;
 	double sigmaE = pedNoise * ADCToGeV;
         eleRechit_pedestal->push_back(sigmaE); 
 
@@ -832,6 +842,8 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
         ele2IsEB=ele1IsEB;
 	seed2_pedestal=seed1_pedestal;
 	subseed2_pedestal=subseed1_pedestal;
+    seed2_pedestalGeV = seed1_pedestalGeV;
+    subseed2_pedestalGeV = subseed2_pedestalGeV;
 	ele2_time = ele1_time;
 	ele2_time_TOF2 = ele1_time_TOF2;
 	ele2_seedtime = ele1_seedtime;
@@ -871,7 +883,9 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
 	/////
 	ele1 = thisElectron;
 	seed1_pedestal = seedPedNoise; 
-	subseed1_pedestal = subseedPedNoise; 
+	subseed1_pedestal = subseedPedNoise;
+    seed1_pedestalGeV = seedPedNoiseGeV;
+    subseed1_pedestalGeV = subseedPedNoiseGeV;
 	if(isData) seed1_transpCorr = (*ecalRechit_transpCorr)[seedhitIndex]; 
 	if(isData) subseed1_transpCorr = (*ecalRechit_transpCorr)[subseedhitIndex]; 
 	ele1_time = weightedTime;
