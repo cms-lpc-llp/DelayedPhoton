@@ -17,10 +17,10 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 filesPerJob=1
 
 for sample in \
-    EGamma_Run2018D \
     EGamma_Run2018A \
     EGamma_Run2018B \
     EGamma_Run2018C \
+    #EGamma_Run2018D \
 
 do
 	echo "Sample " ${sample}
