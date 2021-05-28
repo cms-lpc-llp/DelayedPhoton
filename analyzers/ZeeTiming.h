@@ -12,9 +12,9 @@ class ZeeTiming: public RazorAnalyzer {
 		float getPedestalNoise(TTree *tree, vector <uint> & start_time, vector <uint> & end_time, uint time, uint detID);
 		float getADCToGeV( uint run, int isFromEB);
 
-		// for 2018ABC pre-legacy
-        const double N_EB = 32.0;   //ns
-        const double C_EB = 0.101; //ns
+		// for 2018D pre-legacy
+        const double N_EB = 34.3;   //ns
+        const double C_EB = 0.100; //ns
         const double N_EB_MC = 43.5; //ns
         const double C_EB_MC = 0.086; //ns
 
