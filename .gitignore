@@ -22,7 +22,6 @@ test.*
 *.pcm
 *.csv
 .__*
-*.tex
 *.gif
 *.png
 bin/*
