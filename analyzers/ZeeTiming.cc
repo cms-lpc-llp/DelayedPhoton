@@ -209,6 +209,8 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
   float t1_subseed, t2_subseed;
   float seed1_pedestal, seed2_pedestal;
   float subseed1_pedestal, subseed2_pedestal;
+  float seed1_pedestalGeV, seed2_pedestalGeV;
+  float subseed1_pedestalGeV, subseed2_pedestalGeV;
   float seed1_transpCorr, seed2_transpCorr;
   float subseed1_transpCorr, subseed2_transpCorr;
   float t1raw_seed, t2raw_seed;
@@ -308,6 +310,10 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
   outputTree->Branch("subseed1_pedestal", &subseed1_pedestal, "subseed1_pedestal/F");
   outputTree->Branch("seed2_pedestal", &seed2_pedestal, "seed2_pedestal/F");
   outputTree->Branch("subseed2_pedestal", &subseed2_pedestal, "subseed2_pedestal/F");
+  outputTree->Branch("seed1_pedestalGeV", &seed1_pedestalGeV, "seed1_pedestalGeV/F");
+  outputTree->Branch("subseed1_pedestalGeV", &subseed1_pedestalGeV, "subseed1_pedestalGeV/F");
+  outputTree->Branch("seed2_pedestalGeV", &seed2_pedestalGeV, "seed2_pedestalGeV/F");
+  outputTree->Branch("subseed2_pedestalGeV", &subseed2_pedestalGeV, "subseed2_pedestalGeV/F");
   outputTree->Branch("seed1_transpCorr", &seed1_transpCorr, "seed1_transpCorr/F");
   outputTree->Branch("subseed1_transpCorr", &subseed1_transpCorr, "subseed1_transpCorr/F");
   outputTree->Branch("seed2_transpCorr", &seed2_transpCorr, "seed2_transpCorr/F");
@@ -475,6 +481,10 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
     subseed1_pedestal = -999;
     seed2_pedestal = -999;
     subseed2_pedestal = -999;
+    seed1_pedestalGeV = -999;
+    subseed1_pedestalGeV = -999;
+    seed2_pedestalGeV = -999;
+    subseed2_pedestalGeV = -999;
     seed1_transpCorr = -999;
     subseed1_transpCorr = -999;
     seed2_transpCorr = -999;
@@ -688,10 +698,13 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
  
 
 
-      double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.0;
-      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.0;
+      double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 2.0;
+      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 2.0;
       //double seedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[seedhitIndex]) : 1.0;
       //double subseedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[subseedhitIndex]) : 1.0;
+	  double ADCToGeV = getADCToGeV(runNum, isFromEB);
+	  double seedPedNoiseGeV = seedPedNoise * ADCToGeV;
+	  double subseedPedNoiseGeV = subseedPedNoise * ADCToGeV;
    
       double tmpSumWeightedTime = 0;
       double tmpSumWeightedTime_TOF2 = 0;
@@ -759,9 +772,8 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
           eleRechit_IPhiIY->push_back(iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , false));
         }	
 
-	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 0.042; // 42 MeV for MC
+	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 2; // 42 MeV for MC
 	//double pedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex]) : 0.042; // 42 MeV for MC
-	double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1.0;
 	double sigmaE = pedNoise * ADCToGeV;
         eleRechit_pedestal->push_back(sigmaE); 
 
@@ -814,6 +826,8 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
         ele2IsEB=ele1IsEB;
 	seed2_pedestal=seed1_pedestal;
 	subseed2_pedestal=subseed1_pedestal;
+	seed2_pedestalGeV=seed1_pedestalGeV;
+	subseed2_pedestalGeV=subseed1_pedestalGeV;
 	ele2_time = ele1_time;
 	ele2_time_TOF2 = ele1_time_TOF2;
 	ele2_seedtime = ele1_seedtime;
@@ -854,6 +868,8 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
 	ele1 = thisElectron;
 	seed1_pedestal = seedPedNoise; 
 	subseed1_pedestal = subseedPedNoise; 
+	seed1_pedestalGeV = seedPedNoiseGeV; 
+	subseed1_pedestalGeV = subseedPedNoiseGeV; 
 	if(isData) seed1_transpCorr = (*ecalRechit_transpCorr)[seedhitIndex]; 
 	if(isData) subseed1_transpCorr = (*ecalRechit_transpCorr)[subseedhitIndex]; 
 	ele1_time = weightedTime;
