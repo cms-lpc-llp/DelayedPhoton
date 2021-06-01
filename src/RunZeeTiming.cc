@@ -170,6 +170,11 @@ int main(int argc, char* argv[]){
     //------ EXECUTE ------//
     cout << "Executing ZeeTiming..." << endl;
     analyzer.EnableAllWithEcalRechits();
+	if (!isData)
+	{
+	   cout << "[INFO] Reading Gen information..." <<endl;
+	   analyzer.EnableGenInfo();
+	}
     analyzer.Analyze(isData, option, outputFileName, label);
     cout << "Process completed!" << endl;
     cerr << "------------------------------" << endl; //present so that an empty .err file corresponds to a failed job
