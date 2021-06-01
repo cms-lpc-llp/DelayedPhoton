@@ -20,27 +20,23 @@ const double SPEED_OF_LIGHT = 29.9792458; // speed of light in cm / ns
 //For 2017
 const int N_E_divide = 9;
 double E_divide[N_E_divide] = { 75.0, 81.0, 89.0, 100.0, 115.0, 140.0, 190.0, 300, 1000.0};
-double timecorr_shift[N_E_divide] = {268.7409,
-257.8304,
-249.6534,
-241.3717,
+double timecorr_shift[N_E_divide] = {263.1344,
+250.1765,
+240.8764,
 235.2159,
 231.8436,
 228.6697,
-199.7499,
-97.20482};
+176.4202};
 
-double timecorr_smear[N_E_divide] = {334.3207,
-340.3101,
-344.9176,
-345.0034,
+double timecorr_smear[N_E_divide] = {338.2739,
+344.9471,
+344.7227,
 341.64,
 339.5056,
 344.5764,
-353.4736,
-351.3277};
-double timecorr_smear_aa = 4814.5*4814.5 - 6452.0*6452.0;
-double timecorr_smear_bb = 2.0*278.8*278.8 - 2.0*123.5*123.5;
+351.453};
+double timecorr_smear_aa = 6931.2*6931.2 - 6497.6*6497.6;
+double timecorr_smear_bb = 2.0*271.9*271.9 - 2.0*123.9*123.9;
 
 float ZeeTiming::getTimeCalibConstant(TTree *tree, vector <uint> & start_run, vector <uint> & end_run, uint run, uint detID) {
   float timeCalib = 0.0;
