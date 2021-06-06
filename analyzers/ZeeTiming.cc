@@ -93,6 +93,7 @@ float ZeeTiming::getPedestalNoise(TTree *tree, vector <uint> & start_time, vecto
 // Based on CondDB https://github.com/ferriff/usercode
 // conddb_dumper -O EcalADCToGeVConstant -t EcalADCToGeVConstant_Run1_Run2_V04_offline -j -o constant
 float ZeeTiming::getADCToGeV(uint run, int isFromEB) {
+   double ADCToGeV = 0;
   //EB
   if (isFromEB == 1) {
     if (run >= 1 && run <= 271950) ADCToGeV = 0.039680;
