@@ -41,7 +41,7 @@ def getXsecBR(Lambda, Ctau):
 
     model_to_find="L"+str(Lambda)+"TeV_Ctau"+Ctau_this+"cm"
     print("Finding model {}".format(model_to_find))
-    with open("/storage/user/qnguyen/DelayedPhoton/CMSSW_8_1_0/src/HiggsAnalysis/DelayedPhotonLimit/data/XsecBR.dat","r") as xsec_file:
+    with open("/storage/af/user/qnguyen/DelayedPhoton/CMSSW_8_1_0/src/HiggsAnalysis/DelayedPhotonLimit/data/XsecBR.dat","r") as xsec_file:
         for this_model in xsec_file:
             this_model_array = shlex.split(this_model)
             if this_model_array[0] == model_to_find:
@@ -52,7 +52,7 @@ def getXsecBR(Lambda, Ctau):
     return fxsecBR,efxsecBR
 
 def getXS(sample):
-    with open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhotonID/data/all_bkg_back.list", "r") as xsfile:
+    with open("/storage/af/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhotonID/data/all_bkg_back.list", "r") as xsfile:
         allxs = xsfile.readlines()
         for xs in allxs:
             if xs.split(' ')[0] in sample:

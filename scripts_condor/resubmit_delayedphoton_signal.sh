@@ -20,8 +20,8 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 maximumjob=20
 
 for sample in \
-    GMSB_L-100TeV_Ctau-10000cm_TuneCP5_13TeV-pythia8 \
     GMSB_L-100TeV_Ctau-1000cm_TuneCP5_13TeV-pythia8 \
+    GMSB_L-100TeV_Ctau-10000cm_TuneCP5_13TeV-pythia8 \
     GMSB_L-100TeV_Ctau-100cm_TuneCP5_13TeV-pythia8 \
     GMSB_L-100TeV_Ctau-10cm_TuneCP5_13TeV-pythia8 \
     GMSB_L-100TeV_Ctau-1200cm_TuneCP5_13TeV-pythia8 \
@@ -113,7 +113,7 @@ for sample in \
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2018_pho_corr/Signal/${sample}.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2018/Signal/${sample}.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	filesPerJob=`python -c "print int($nfiles.0/$maximumjob)+1"`
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
@@ -125,7 +125,7 @@ do
 	do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
                 #noFail=`grep YYYY log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}*.out`
-		outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2018_pho_corr/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
+		outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2018D/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
 		
 		minimumsize=50000	
 		actualsize=0

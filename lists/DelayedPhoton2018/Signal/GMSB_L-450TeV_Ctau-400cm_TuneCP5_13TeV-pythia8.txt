@@ -1,1 +1,1 @@
-/mnt/hadoop/store/group/phys_susy/razor/run2/Run2DelayedPhotonNtuple/MC2018/MC2018CentralGMSB/GMSB_L-450TeV_Ctau-400cm_TuneCP5_13TeV-pythia8/crab_prod_Run2DelayedPhotonNtupler_MC2018_GMSB_L450TeV_Ctau-400cm_central/210310_064918/0000/razorNtuple_1.root
+/mnt/hadoop/store/group/phys_susy/razor/run2/Run2DelayedPhotonNtuple/MC2018/MC2018CentralGMSB/GMSB_L-450TeV_Ctau-400cm_TuneCP5_13TeV-pythia8/crab_prod_Run2DelayedPhotonNtupler_MC2018_GMSB_L450TeV_Ctau-400cm_central/210522_101256/0000/razorNtuple_1.root

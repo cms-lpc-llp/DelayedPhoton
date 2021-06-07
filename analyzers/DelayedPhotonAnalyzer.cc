@@ -24,31 +24,29 @@ const int NUM_PDF_WEIGHTS = 60;
 
 const bool photonOrderByTime = false;
 //const double TR_SMEAR = 0.2210;
-const int N_E_divide = 19;
-double E_divide[N_E_divide] = {43.0, 46.0, 49.0, 52.0, 55.0, 58.0, 61.0, 64.0, 67.0, 70.0, 73.0, 78.0, 84.0, 91.0, 100.0, 115.0, 140.0, 190.0, 1000.0};
-//double timecorr_shift[N_E_divide] = {277.32228254, 275.67500044, 272.10244004, 287.15428262, 294.29875716, 287.44070277, 282.95400642, 279.80934988, 282.70083441, 277.48972614, 275.41563559, 274.64132692, 268.13864834, 266.62392304, 270.24297452, 260.13781686, 263.16768474, 242.21320465, 181.26510246};
-double timecorr_shift[N_E_divide] = {242.9678,
-   243.4894,
-   242.4179,
-   237.5386,
-   231.024,
-   221.0301,
-   207.6417,
-   191.9178,
-   188.9125,
-   179.7209,
-   172.9115,
-   148.4029,
-   136.2686,
-   110.3883,
-   101.6305,
-   100.464,
-   110.376,
-   92.20504,
-   55.83635};
 
-double timecorr_smear[N_E_divide] = {130.2393, 126.0633, 134.4726, 142.9756, 142.9673, 145.7418, 161.0999, 161.5472, 169.417, 175.4376, 181.5396, 195.1939, 197.1906, 200.2692, 209.381, 210.9972, 207.1109, 212.539, 210.5711};
-//double timecorr_smear_aa = 6591.9*6591.9 - 6536.8*6536.8;
+const int N_E_divide = 7;
+double E_divide[N_E_divide] = {80.0, 90.0, 100.0, 115.0, 140.0, 190.0, 1000.0};
+//double E_divide[N_E_divide] = {43.0, 46.0, 49.0, 52.0, 55.0, 58.0, 61.0, 64.0, 67.0, 70.0, 73.0, 78.0, 84.0, 91.0, 100.0, 115.0, 140.0, 190.0, 1000.0};
+double timecorr_shift[N_E_divide] = {-197.28265058,
+    -216.98040837,
+    -226.87610333,
+    -235.21804212,
+    -232.84794294,
+    -233.59595044,
+    -284.62849739};
+    
+double timecorr_smear[N_E_divide] = {293.55708943,
+    298.57465698,
+    300.22727542,
+    298.93589132,
+    302.28893673, 
+    296.86536671,
+    309.98238805};
+    
+
+
+
 double timecorr_smear_aa = 6408.7*6408.7 - 6143.0*6143.0;
 //double timecorr_smear_bb = 2.0*211.1*211.1 - 2.0*96.2*96.2;
 double timecorr_smear_bb = 2.0*289.1*289.1 - 2.0*168.8*168.8;
@@ -1123,9 +1121,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
             double corrT = calibratedSeedHitTime_this + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
 
-            double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.0;  
+            double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 2.0;  
             //double pedNoise = 1;
-            double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1;
+            double ADCToGeV = getADCToGeV(runNum, isFromEB);
             double sigmaE = pedNoise * ADCToGeV;
 
             double sigmaT2 = N_EB*N_EB / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + 2.0 * C_EB * C_EB;
