@@ -20,7 +20,7 @@ jobnumber=$8
 outputfile=$9
 
 currentDir=`pwd`
-homeDir=/storage/user/$(whoami)/
+homeDir=/storage/af/user/$(whoami)/
 runDir=${currentDir}/$(whoami)_${code_dir_suffix}/
 rm -rf ${runDir}
 mkdir -p ${runDir}
@@ -31,7 +31,7 @@ if [ -f /cvmfs/cms.cern.ch/cmsset_default.sh ]
 then
 
 	#setup cmssw
-	cd ${homeDir}/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/
+	cd ${homeDir}/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/
 	workDir=`pwd`
 	echo "entering directory: ${workDir}"
 	source /cvmfs/cms.cern.ch/cmsset_default.sh
@@ -48,7 +48,7 @@ then
 		cp $CMSSW_BASE/src/DelayedPhoton/RazorRun_T2 ./
 
 		#get grid proxy
-		export X509_USER_PROXY=/storage/user/qnguyen/my_proxy
+		export X509_USER_PROXY=/storage/af/user/${whoami}/my_proxy
 		
 		#run the job
 		cat ${CMSSW_BASE}${inputfilelist} | awk "NR > (${jobnumber}*${filePerJob}) && NR <= ((${jobnumber}+1)*${filePerJob})" > inputfilelistForThisJob_${jobnumber}.txt
@@ -86,7 +86,7 @@ then
 
 		echo ${outputfile}
 		echo ${outputDirectory}
-		mkdir -p /mnt/hadoop/${outputDirectory}
+		gfal-mkdir -p gsiftp://transfer-lb.ultralight.org//storage/cms/${outputDirectory}
 
 		##^_^##
 		echo "RazorRun_T2 finished"
@@ -99,9 +99,11 @@ then
 		echo "copying output file to /mnt/hadoop/${outputDirectory}"
         eval `scram unsetenv -sh`
 		#cp ${outputfile} /mnt/hadoop/${outputDirectory}
-		echo "gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}"
-		env -i X509_USER_PROXY=${x509loc} gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}
-		if [ -f /mnt/hadoop/${outputDirectory}/${outputfile} ]
+		echo "gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer-lb.ultralight.org//storage/cms/${outputDirectory}/${outputfile}"
+		#echo "gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}"
+		#gfal-copy gsiftp://transfer-lb.ultralight.org//storage/cms/store/group/
+		env -i X509_USER_PROXY=${x509loc} gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer-lb.ultralight.org//storage/cms/${outputDirectory}/${outputfile}
+		if [ -f /storage/cms/${outputDirectory}/${outputfile} ]
 		then
 			echo "SUCCESS ============ good news, job finished successfully "
 		else
