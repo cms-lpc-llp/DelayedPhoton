@@ -1,0 +1,1 @@
+/storage/cms/store/group/phys_susy/razor/run2/Run2DelayedPhotonNtuple/Data2018/EGamma/crab_prod_Run2DelayedPhotonNtupler_Data2018_EGamma_Run2018A/201022_050536/0000/razorNtuple_1-1.root
