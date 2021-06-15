@@ -20,7 +20,7 @@ jobnumber=$8
 outputfile=$9
 
 currentDir=`pwd`
-homeDir=/storage/user/$(whoami)/
+homeDir=/storage/af/user/$(whoami)/
 runDir=${currentDir}/$(whoami)_${code_dir_suffix}/
 rm -rf ${runDir}
 mkdir -p ${runDir}
@@ -48,7 +48,7 @@ then
 		cp $CMSSW_BASE/src/DelayedPhoton/RazorRun_T2 ./
 
 		#get grid proxy
-		export X509_USER_PROXY=/storage/user/qnguyen/my_proxy
+		export X509_USER_PROXY=/storage/af/user/qnguyen/my_proxy
 		
 		#run the job
         echo "Getting input file list from: ${CMSSW_BASE}${inputfilelist}"
@@ -87,7 +87,12 @@ then
 
 		echo ${outputfile}
 		echo ${outputDirectory}
-		mkdir -p /mnt/hadoop/${outputDirectory}
+        if [ ! -d /storage/cms/${outputDirectory} ];
+        then
+            eval `scram unsetenv -sh`
+            gfal-mkdir gsiftp://transfer-lb.ultralight.org//storage/cms/${outputDirectory}
+            eval `scram runtime -sh`
+        fi
 
 		##^_^##
 		echo "RazorRun_T2 finished"
@@ -97,11 +102,11 @@ then
 		echo "I slept for 2 second" 
 
 		##job finished, copy file to T2
-		echo "copying output file to /mnt/hadoop/${outputDirectory}"
-		#cp ${outputfile} /mnt/hadoop/${outputDirectory}
-		echo "gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}"
-		env -i X509_USER_PROXY=${x509loc} gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer.ultralight.org/${outputDirectory}/${outputfile}
-		if [ -f /mnt/hadoop/${outputDirectory}/${outputfile} ]
+		echo "copying output file to /storage/cms/${outputDirectory}"
+        eval `scram unsetenv -sh`
+		echo "gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer-lb.ultralight.org/storage/cms/${outputDirectory}/${outputfile}"
+		env -i X509_USER_PROXY=${x509loc} gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer-lb.ultralight.org/storage/cms/${outputDirectory}/${outputfile}
+		if [ -f /storage/cms/${outputDirectory}/${outputfile} ]
 		then
 			echo "SUCCESS ============ good news, job finished successfully "
 		else
