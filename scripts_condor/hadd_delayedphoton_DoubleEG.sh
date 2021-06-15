@@ -1,14 +1,18 @@
 #!/bin/sh
 
-export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
+export X509_USER_PROXY=/storage/af/user/$(whoami)/my_proxy
 
-OUTDIR=/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/legacy/hadd/
+OUTDIR=/storage/cms/store/group/phys_llp/DelayedPhoton/2016/hadd/
 
-if [ ! -d /mnt/hadoop/${OUTDIR} ]
+if [ ! -d ${OUTDIR} ]
 then
     echo "${OUTDIR} does not exist. Creating one..."
-    hadoop fs -mkdir ${OUTDIR}
+    eval `scram unsetenv -sh`
+    gfal-mkdir gsiftp://transfer-lb.ultralight.org//storage/cms/${outputDirectory}
+    eval `scram runtime -sh`
 fi
+
+root.exe -b -l -q startup.C+
 
 for sample in \
 DoubleEG_Run2016B_v2 \
@@ -21,8 +25,10 @@ DoubleEG_Run2016H
 
 do
 
-    hadd -k -f ${sample}.root /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/legacy/jobs/${sample}_Job*.root
-    hadoop fs -put -f ${sample}.root ${OUTDIR}
+    LD_PRELOAD=/storage/af/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/scripts_condor/startup_C.so hadd -k -f ${sample}.root /storage/cms/store/group/phys_llp/DelayedPhoton/2016/jobs/${sample}_Job*.root
+    eval `scram unsetenv -sh`
+    gfal-copy -t 4800 -T 4800 -p -f --checksum-mode=both ${sample}.root gsiftp://transfer-lb.ultralight.org/${OUTDIR}/${sample}.root
+    eval `scram runtime -sh`
     rm ${sample}.root
 done
 

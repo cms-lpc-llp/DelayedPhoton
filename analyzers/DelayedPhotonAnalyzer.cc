@@ -292,10 +292,10 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   float pho1E, pho1Pt, pho1Pt_scaleUp, pho1Pt_scaleDown, pho1Pt_smearUp, pho1Pt_smearDown, pho1Eta, pho1Phi, pho1SeedE, pho1SeedPt, pho1SeedEta, pho1SeedPhi, pho1SC_E, pho1SC_Pt, pho1SC_Eta, pho1SC_Phi, pho1angle_xtal, pho1SigmaIetaIeta, pho1R9, pho1HoverE, pho1sumChargedHadronPt, pho1sumNeutralHadronEt, pho1sumPhotonEt, pho1PFsumChargedHadronPt, pho1PFsumNeutralHadronEt, pho1PFsumPhotonEt, pho1ecalPFClusterIso, pho1hcalPFClusterIso, pho1trkSumPtHollowConeDR03, pho1sigmaEOverE, pho1SeedTimeRaw, pho1SeedTimeCalib, pho1SeedTimeCalibTOF, pho1SeedTimeGenV, pho1ClusterTime, pho1ClusterTime_SmearToData, pho1Sminor_private, pho1Smajor_private, pho1Sminor, pho1Smajor, pho1Setaeta, pho1Sphiphi, pho1Setaphi, pho1GenE, pho1GenPt, pho1GenEta, pho1GenPhi, pho1ClusterTime_scaleUp, pho1ClusterTime_scaleDown, pho1ClusterTime_smearUp, pho1ClusterTime_smearDown;
   float pho2E, pho2Pt, pho2Pt_scaleUp, pho2Pt_scaleDown, pho2Pt_smearUp, pho2Pt_smearDown, pho2Eta, pho2Phi, pho2SeedE, pho2SeedPt, pho2SeedEta, pho2SeedPhi, pho2SC_E, pho2SC_Pt, pho2SC_Eta, pho2SC_Phi, pho2angle_xtal, pho2SigmaIetaIeta, pho2R9, pho2HoverE, pho2sumChargedHadronPt, pho2sumNeutralHadronEt, pho2sumPhotonEt, pho2PFsumChargedHadronPt, pho2PFsumNeutralHadronEt, pho2PFsumPhotonEt, pho2ecalPFClusterIso, pho2hcalPFClusterIso, pho2trkSumPtHollowConeDR03, pho2sigmaEOverE, pho2SeedTimeRaw, pho2SeedTimeCalib, pho2SeedTimeCalibTOF, pho2SeedTimeGenV, pho2ClusterTime, pho2ClusterTime_SmearToData, pho2Sminor_private, pho2Smajor_private, pho2Smajor, pho2Sminor, pho2Setaeta, pho2Sphiphi, pho2Setaphi, pho2GenE, pho2GenPt, pho2GenEta, pho2GenPhi;
   bool pho1passEleVeto, pho1passIsoLoose, pho1passIsoMedium, pho1passIsoTight, pho1isStandardPhoton, pho1isPromptPhoton, pho1isDelayedPhoton;
-  bool pho1passHLTFilter[100], pho2passHLTFilter[100];
-  float pho1_rechitE[100], pho1_rechitX[100], pho1_rechitY[100], pho1_rechitZ[100], pho1_rechitEta[100], pho1_rechitPhi[100], pho1_rechitT[100];
-  float pho2_rechitE[100], pho2_rechitX[100], pho2_rechitY[100], pho2_rechitZ[100], pho2_rechitEta[100], pho2_rechitPhi[100], pho2_rechitT[100];
-  float phorechitE[100], phorechitX[100], phorechitY[100], phorechitZ[100], phorechitEta[100], phorechitPhi[100], phorechitT[100];
+  bool pho1passHLTFilter[500], pho2passHLTFilter[500];
+  float pho1_rechitE[500], pho1_rechitX[500], pho1_rechitY[500], pho1_rechitZ[500], pho1_rechitEta[500], pho1_rechitPhi[500], pho1_rechitT[500];
+  float pho2_rechitE[500], pho2_rechitX[500], pho2_rechitY[500], pho2_rechitZ[500], pho2_rechitEta[500], pho2_rechitPhi[500], pho2_rechitT[500];
+  float phorechitE[500], phorechitX[500], phorechitY[500], phorechitZ[500], phorechitEta[500], phorechitPhi[500], phorechitT[500];
   bool pho1passIsoLoose_privatePF, pho1passIsoMedium_privatePF, pho1passIsoTight_privatePF;
   bool pho1passIsoLoose_OOT, pho1passIsoMedium_OOT, pho1passIsoTight_OOT;
   bool pho1passIsoLoose_comboIso, pho1passIsoMedium_comboIso, pho1passIsoTight_comboIso;
@@ -684,6 +684,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   for (Long64_t jentry=0; jentry<nentries;jentry++) {
       //begin event
       if(jentry % 1000 == 0) cout << "Processing entry " << jentry << endl;
+      //if (jentry > 10000) break;
       Long64_t ientry = LoadTree(jentry);
       delete ecalRechit_ID, ecalRechit_Eta, ecalRechit_Phi, ecalRechit_X, 
              ecalRechit_Y, ecalRechit_Z, ecalRechit_E, ecalRechit_T, 

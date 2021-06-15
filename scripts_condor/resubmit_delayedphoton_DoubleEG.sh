@@ -1,12 +1,12 @@
 #!/bin/sh
-export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
+export X509_USER_PROXY=/storage/af/user/$(whoami)/my_proxy
 
 mkdir -p log
 mkdir -p submit
 
 if [ -z "${CMSSW_BASE}" ]
 then
-    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_9_4_9/
+    CMSSW_BASE=/storage/af/user/$(whoami)/DelayedPhoton/CMSSW_10_6_12/
     echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
 fi
 
@@ -15,21 +15,20 @@ RazorAnalyzerDir=`pwd`
 cd -
 
 job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
-filesPerJob=15
+filesPerJob=1
 
 for sample in \
-DoubleEG_2016B_ver1_25Mar2019 \
-DoubleEG_2016B_ver2_25Mar2019 \
-DoubleEG_2016C_25Mar2019 \
-DoubleEG_2016D_25Mar2019 \
-DoubleEG_2016E_25Mar2019 \
-DoubleEG_2016F_25Mar2019 \
-DoubleEG_2016G_25Mar2019 \
-DoubleEG_2016H_25Mar2019
+DoubleEG_Run2016B_v2 \
+DoubleEG_Run2016C \
+DoubleEG_Run2016D \
+DoubleEG_Run2016E \
+DoubleEG_Run2016F \
+DoubleEG_Run2016G \
+DoubleEG_Run2016H
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/DelayedPhoton/lists/Run2/razorNtuplerV4p1/Data_2016_reMINIAOD/${sample}.caltech.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2016/Data2016/${sample}.caltech.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
 	analyzer=DelayedPhotonAnalyzer
@@ -40,7 +39,7 @@ do
 	do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		#noFail=`grep YYYY log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}*.out`
-		outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/reproduce/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
+		outRoot="/storage/cms/store/group/phys_llp/DelayedPhoton/2016/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
 
 		minimumsize=50000
                 actualsize=0

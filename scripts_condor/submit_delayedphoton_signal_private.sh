@@ -1,11 +1,11 @@
 #!/bin/sh
-export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
+export X509_USER_PROXY=/storage/af/user/$(whoami)/my_proxy
 mkdir -p log
 mkdir -p submit
 
 if [ -z "${CMSSW_BASE}" ]
 then
-    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_6/
+    CMSSW_BASE=/storage/af/user/$(whoami)/DelayedPhoton/CMSSW_10_6_12/
     echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
 fi
 
@@ -18,34 +18,34 @@ filesPerJob=1
 maximumjob=20
 
 for sample in \
+GMSB_L100TeV_Ctau50cm_13TeV-pythia8 \
+GMSB_L150TeV_Ctau50cm_13TeV-pythia8 \
+GMSB_L200TeV_Ctau50cm_13TeV-pythia8 \
+GMSB_L250TeV_Ctau50cm_13TeV-pythia8 \
+GMSB_L300TeV_Ctau50cm_13TeV-pythia8 \
+GMSB_L350TeV_Ctau50cm_13TeV-pythia8 \
+GMSB_L400TeV_Ctau50cm_13TeV-pythia8 \
 GMSB_L100TeV_Ctau10000cm_13TeV-pythia8 \
 GMSB_L100TeV_Ctau100cm_13TeV-pythia8 \
 GMSB_L100TeV_Ctau1cm_13TeV-pythia8 \
-GMSB_L100TeV_Ctau50cm_13TeV-pythia8 \
 GMSB_L150TeV_Ctau10000cm_13TeV-pythia8 \
 GMSB_L150TeV_Ctau100cm_13TeV-pythia8 \
 GMSB_L150TeV_Ctau1cm_13TeV-pythia8 \
-GMSB_L150TeV_Ctau50cm_13TeV-pythia8 \
 GMSB_L200TeV_Ctau10000cm_13TeV-pythia8 \
 GMSB_L200TeV_Ctau100cm_13TeV-pythia8 \
 GMSB_L200TeV_Ctau1cm_13TeV-pythia8 \
-GMSB_L200TeV_Ctau50cm_13TeV-pythia8 \
 GMSB_L250TeV_Ctau10000cm_13TeV-pythia8 \
 GMSB_L250TeV_Ctau100cm_13TeV-pythia8 \
 GMSB_L250TeV_Ctau1cm_13TeV-pythia8 \
-GMSB_L250TeV_Ctau50cm_13TeV-pythia8 \
 GMSB_L300TeV_Ctau10000cm_13TeV-pythia8 \
 GMSB_L300TeV_Ctau100cm_13TeV-pythia8 \
 GMSB_L300TeV_Ctau1cm_13TeV-pythia8 \
-GMSB_L300TeV_Ctau50cm_13TeV-pythia8 \
 GMSB_L350TeV_Ctau10000cm_13TeV-pythia8 \
 GMSB_L350TeV_Ctau100cm_13TeV-pythia8 \
 GMSB_L350TeV_Ctau1cm_13TeV-pythia8 \
-GMSB_L350TeV_Ctau50cm_13TeV-pythia8 \
 GMSB_L400TeV_Ctau10000cm_13TeV-pythia8 \
 GMSB_L400TeV_Ctau100cm_13TeV-pythia8 \
 GMSB_L400TeV_Ctau1cm_13TeV-pythia8 \
-GMSB_L400TeV_Ctau50cm_13TeV-pythia8
 
 do
 	echo "Sample " ${sample}
@@ -64,7 +64,7 @@ do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		echo "Universe = vanilla" > ${jdl_file}
 		echo "Executable = ${job_script}" >> ${jdl_file}
-		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2016/legacy/jobs/ ${analyzer} ${inputfilelist} no 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
+		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /store/group/phys_llp/DelayedPhoton/2016/jobs/ ${analyzer} ${inputfilelist} no 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
 		echo "Log = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_PC.log" >> ${jdl_file}
 		echo "Output = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).out" >> ${jdl_file}
 		echo "Error = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).err" >> ${jdl_file}
@@ -75,8 +75,9 @@ do
             echo "+RunAsOwner = True" >> ${jdl_file}
             echo "+InteractiveUser = true" >> ${jdl_file}
             #echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel7"' >> ${jdl_file}
-            echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel7-m202006"' >> ${jdl_file}
+            echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel7"' >> ${jdl_file}
             echo "+SingularityBindCVMFS = True" >> ${jdl_file}
+            echo "+Requirements=(regexp(\"blade-.*\", TARGET.Machine))" >> ${jdl_file}
             echo "run_as_owner = True" >> ${jdl_file}
 		    echo "+JobBatchName = \"GMSBPrivate\"" >> ${jdl_file}
 		echo "when_to_transfer_output = ON_EXIT" >> ${jdl_file}
