@@ -48,7 +48,7 @@ then
 		cp $CMSSW_BASE/src/DelayedPhoton/RazorRun_T2 ./
 
 		#get grid proxy
-		export X509_USER_PROXY=/storage/af/user/qnguyen/my_proxy
+		export X509_USER_PROXY=/storage/af/user/${whoami}/my_proxy
 		
 		#run the job
 		cat ${CMSSW_BASE}${inputfilelist} | awk "NR > (${jobnumber}*${filePerJob}) && NR <= ((${jobnumber}+1)*${filePerJob})" > inputfilelistForThisJob_${jobnumber}.txt
