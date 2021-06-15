@@ -9,7 +9,7 @@
 
 #include "TFile.h"
 #include "TH1F.h"
-#include "TH2F.h"
+#include "TH2D.h"
 #include "TRandom.h"
 #include "FactorizedJetCorrector.h"
 #include "JetCorrectorParameters.h"
@@ -166,25 +166,25 @@ class RazorHelper {
         void loadTag_Razor2018_Rereco_DelayedPhoton(); // Configuration for 2018 Rereco Delayed Photon
         void loadTag_Null(); // Default when tag is not provided
         void loadCMSSWPath();
-        double lookupPtEtaScaleFactor(TH2F *hist, double pt, double eta, double ptmin=10.01, double ptmax=199.9, bool useAbsEta=true);
-        double lookupPtEtaScaleFactorError(TH2F *hist, double pt, double eta, double ptmin=10.01, double ptmax=199.9, bool useAbsEta=true);
-        double lookupEtaPtScaleFactor(TH2F *hist, double pt, double eta, double ptmin=10.01, double ptmax=199.9, bool useAbsEta=true);
-        double lookupEtaPtScaleFactorError(TH2F *hist, double pt, double eta, double ptmin=10.01, double ptmax=199.9, bool useAbsEta=true);
+        double lookupPtEtaScaleFactor(TH2D *hist, double pt, double eta, double ptmin=10.01, double ptmax=199.9, bool useAbsEta=true);
+        double lookupPtEtaScaleFactorError(TH2D *hist, double pt, double eta, double ptmin=10.01, double ptmax=199.9, bool useAbsEta=true);
+        double lookupEtaPtScaleFactor(TH2D *hist, double pt, double eta, double ptmin=10.01, double ptmax=199.9, bool useAbsEta=true);
+        double lookupEtaPtScaleFactorError(TH2D *hist, double pt, double eta, double ptmin=10.01, double ptmax=199.9, bool useAbsEta=true);
         double getPassOrFailScaleFactor(double eff, double sf, bool passes);
-        std::vector<double> getLeptonScaleFactors(TH2F *effHist, TH2F *sfHist, TH2F *fastsimHist,
+        std::vector<double> getLeptonScaleFactors(TH2D *effHist, TH2D *sfHist, TH2D *fastsimHist,
                 double pt, double eta, bool passes, double smear=0.0);
-        double getLeptonScaleFactor(TH2F *effHist, TH2F *sfHist, TH2F *fastsimHist,
+        double getLeptonScaleFactor(TH2D *effHist, TH2D *sfHist, TH2D *fastsimHist,
                 double pt, double eta, bool passes);
-        double getLeptonScaleFactorError(TH2F *effHist, TH2F *sfHist, TH2F *fastsimHist,
+        double getLeptonScaleFactorError(TH2D *effHist, TH2D *sfHist, TH2D *fastsimHist,
                 double pt, double eta, bool passes);
-        void updateScaleFactors(TH2F *effHist, TH2F *sfHist, TH2F *fastsimHist, float pt,
+        void updateScaleFactors(TH2D *effHist, TH2D *sfHist, TH2D *fastsimHist, float pt,
                 float eta, bool passes, float &sf, float &sfUp, float &sfDown,
                 float &sfFastsimUp, float &sfFastsimDown, float smear=0.0);
-        double getTriggerScaleFactor(TH2F *sfHist, TH2F *fastsimHist, float pt, float eta,
+        double getTriggerScaleFactor(TH2D *sfHist, TH2D *fastsimHist, float pt, float eta,
                 bool isTight, bool passedTrigger, float fastsimPtCut = 10.01, float ptCut=10.01);
-        double getTriggerEfficiency(TH2F *effHist, float pt, float eta,
+        double getTriggerEfficiency(TH2D *effHist, float pt, float eta,
                 bool isTight, bool passedTrigger, float ptCut=10.01);
-        void updateTriggerScaleFactors(TH2F *sfHist, TH2F *fastsimHist,
+        void updateTriggerScaleFactors(TH2D *sfHist, TH2D *fastsimHist,
             float pt, float eta, bool isTight, bool passedTrigger, float &sf, float &sfUp,
             float &sfDown, float fastsimPtCut = 10.01, float extraSyst = 0.);
         float getElectronScaleCorrection( float eta ); //for electron energy corrections
@@ -303,17 +303,17 @@ class RazorHelper {
 	TFile *eleTightEffFastsimSFFile;
 	TFile *eleLooseEffFastsimSFFile;
         TFile *eleVetoEffFastsimSFFile;
-	TH2F *eleTightEfficiencyHist;
-        TH2F *eleLooseEfficiencyHist;
-        TH2F *eleVetoEfficiencyHist;
-        TH2F *eleTightEffFastsimSFHist;
-        TH2F *eleLooseEffFastsimSFHist;
-        TH2F *eleVetoEffFastsimSFHist;
-        TH2F *eleTightEffSFHist;
-        TH2F *eleLooseEffSFHist;
-        TH2F *eleVetoEffSFHist;
-        TH2F *eleGSFTrackEffSFHist;
-        TH2F *eleGSFTrackEffHist;
+	TH2D *eleTightEfficiencyHist;
+        TH2D *eleLooseEfficiencyHist;
+        TH2D *eleVetoEfficiencyHist;
+        TH2D *eleTightEffFastsimSFHist;
+        TH2D *eleLooseEffFastsimSFHist;
+        TH2D *eleVetoEffFastsimSFHist;
+        TH2D *eleTightEffSFHist;
+        TH2D *eleLooseEffSFHist;
+        TH2D *eleVetoEffSFHist;
+        TH2D *eleGSFTrackEffSFHist;
+        TH2D *eleGSFTrackEffHist;
 	double eleVetoEffSFMinPt;
 	double eleLooseEffSFMinPt;
 
@@ -329,53 +329,53 @@ class RazorHelper {
 	TFile *muTightEffFastsimSFFile;
         TFile *muVetoEffFastsimSFFile;
         TFile *muLooseEffFastsimSFFile;
-        TH2F *muTightEfficiencyHist;
-        TH2F *muVetoEfficiencyHist;
-        TH2F *muLooseEfficiencyHist;
-        TH2F *muTightEffFastsimSFHist;
-        TH2F *muVetoEffFastsimSFHist;
-        TH2F *muLooseEffFastsimSFHist;
-        TH2F *muTightEffSFHist;
-        TH2F *muVetoEffSFHist;
-        TH2F *muLooseEffSFHist;
-        TH2F *muTrackEffSFHist;
-        TH2F *muTrackEffHist;
+        TH2D *muTightEfficiencyHist;
+        TH2D *muVetoEfficiencyHist;
+        TH2D *muLooseEfficiencyHist;
+        TH2D *muTightEffFastsimSFHist;
+        TH2D *muVetoEffFastsimSFHist;
+        TH2D *muLooseEffFastsimSFHist;
+        TH2D *muTightEffSFHist;
+        TH2D *muVetoEffSFHist;
+        TH2D *muLooseEffSFHist;
+        TH2D *muTrackEffSFHist;
+        TH2D *muTrackEffHist;
 	double muVetoEffSFMinPt;
 	double muLooseEffSFMinPt;
 
         // for taus
         TFile *tauEfficiencyFile;
-        TH2F *tauLooseEfficiencyHist;
+        TH2D *tauLooseEfficiencyHist;
 
 	// for photons
         TFile *phoEffSFFile;
         TFile *phoTrkVetoEffSFFile;
         TFile *phoTightEffSFFile;
         TFile *phoEffFastsimSFFile;
-        TH2F *phoLooseEffSFHist;
-        TH2F *phoTightEffSFHist;
-        TH2F *phoLooseEffFastsimSFHist;
-        TH2F *phoTrkVetoEffSFHist;
+        TH2D *phoLooseEffSFHist;
+        TH2D *phoTightEffSFHist;
+        TH2D *phoLooseEffFastsimSFHist;
+        TH2D *phoTrkVetoEffSFHist;
 
         // for single lepton triggers
         TFile *eleTrigEffFile;
         TFile *muTrigEffFile;
         TFile *eleTrigSFFile;
         TFile *muTrigSFFile;
-        TH2F *eleTrigEffHist;
-        TH2F *muTrigEffHist;
-        TH2F *eleTrigSFHist;
-        TH2F *muTrigSFHist;
+        TH2D *eleTrigEffHist;
+        TH2D *muTrigEffHist;
+        TH2D *eleTrigSFHist;
+        TH2D *muTrigSFHist;
 
 	//for photon triggers
         TFile *diphotonTrigLeadingLegEffSFFile;
         TFile *diphotonTrigTrailingLegEffSFFile;
         TFile *diphotonTrigLeadingLegEffFile;
         TFile *diphotonTrigTrailingLegEffFile;
-	TH2F *diphotonTrigLeadingLegEffSFHist;
-	TH2F *diphotonTrigTrailingLegEffSFHist;
-	TH2F *diphotonTrigLeadingLegEffHist;
-	TH2F *diphotonTrigTrailingLegEffHist;
+	TH2D *diphotonTrigLeadingLegEffSFHist;
+	TH2D *diphotonTrigTrailingLegEffSFHist;
+	TH2D *diphotonTrigLeadingLegEffHist;
+	TH2D *diphotonTrigTrailingLegEffHist;
 
 	//Trigger indices
         std::vector<int> dileptonTriggerNums;
@@ -394,9 +394,9 @@ class RazorHelper {
         TFile *btagEfficiencyFile;
         TFile *btagCharmEfficiencyFile;
         TFile *btagLightJetsEfficiencyFile;
-        TH2F *btagMediumEfficiencyHist;
-        TH2F *btagMediumCharmEfficiencyHist;
-        TH2F *btagMediumLightJetsEfficiencyHist;
+        TH2D *btagMediumEfficiencyHist;
+        TH2D *btagMediumCharmEfficiencyHist;
+        TH2D *btagMediumLightJetsEfficiencyHist;
         BTagCalibration *btagcalib;
         BTagCalibration *btagcalibfastsim;
         BTagCalibrationReader *btagreader;

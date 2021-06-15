@@ -5,36 +5,36 @@ if [ "$1" == "" ] || [ "$2" == "" ]; then
 else
     cp ${CMSSW_BASE}/src/DelayedPhoton/bin/Run$2 .
     
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/csvv2_13TEV_17_6_3_2019.csv ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/CSVv2_94XSF_V2_B_F.csv ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/CSVv2_Moriond17_B_H.csv ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/CSVv2_Moriond17_G_H.csv ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/CSVv2_ichep.csv ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/fastsim_csvv2_ttbar_26_1_2017.csv ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/CSV_13TEV_Combined_20_11_2015.csv ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/JEC_Summer16_23Sep2016V3.tgz ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/JEC_Summer16_23Sep2016V4.tgz ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Fall17_17Nov2017_V6_DATA_V8_MC.tgz ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Fall17_17Nov2017_V32_DATA_MC.tgz ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Fall17_FastsimV1_AK4PFchs.tgz ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Spring16_FastSimV1.tgz ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/JetResolutionInputAK5PF.txt ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Autumn18_RunsABCD_V19_DATA.tar.gz ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Autumn18_V19_MC.tar.gz ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonCorrections/Winter_2016_reReco_v1_ele_smearings.dat ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonCorrections/Winter_2016_reReco_v1_ele_scales.dat ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/efficiency_results_LooseElectronSelectionEffDenominatorGen_2017_17Nov2017Rereco_Golden.root ./
-    #cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/efficiency_results_VetoMuonSelectionEffDenominatorGen_2017_17Nov2017Rereco_Golden.root ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/efficiency_results_LooseElectronSelectionEffDenominatorGen_2017_31Mar2018_Golden.root ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/efficiency_results_VetoMuonSelectionEffDenominatorGen_2017_31Mar2018_Golden.root ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/*.root ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2016_23SepRereco/*.root ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/FastsimToFullsim/detailed_ele_full_fast_sf_17.root ./
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/ElectronScaleFactors_Run2017_31Mar2018.root ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/csvv2_13TEV_17_6_3_2019.csv ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/CSVv2_94XSF_V2_B_F.csv ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/CSVv2_Moriond17_B_H.csv ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/CSVv2_Moriond17_G_H.csv ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/CSVv2_ichep.csv ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/fastsim_csvv2_ttbar_26_1_2017.csv ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/BTagEfficiencies/CSV_13TEV_Combined_20_11_2015.csv ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/JEC_Summer16_23Sep2016V3.tgz ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/JEC_Summer16_23Sep2016V4.tgz ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Fall17_17Nov2017_V6_DATA_V8_MC.tgz ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Fall17_17Nov2017_V32_DATA_MC.tgz ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Fall17_FastsimV1_AK4PFchs.tgz ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Spring16_FastSimV1.tgz ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/JetResolutionInputAK5PF.txt ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Autumn18_RunsABCD_V19_DATA.tar.gz ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/JEC/Autumn18_V19_MC.tar.gz ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonCorrections/Winter_2016_reReco_v1_ele_smearings.dat ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/PhotonCorrections/Winter_2016_reReco_v1_ele_scales.dat ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/efficiency_results_LooseElectronSelectionEffDenominatorGen_2017_17Nov2017Rereco_Golden.root ./
+    #cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/efficiency_results_VetoMuonSelectionEffDenominatorGen_2017_17Nov2017Rereco_Golden.root ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/efficiency_results_LooseElectronSelectionEffDenominatorGen_2017_31Mar2018_Golden.root ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/efficiency_results_VetoMuonSelectionEffDenominatorGen_2017_31Mar2018_Golden.root ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/*.root ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2016_23SepRereco/*.root ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/FastsimToFullsim/detailed_ele_full_fast_sf_17.root ./
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/LeptonEfficiencies/2017/ElectronScaleFactors_Run2017_31Mar2018.root ./
     
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/ScaleFactors_07Aug2017Rereco_2016data.tgz ./    
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_IC_2016/IC_average_timing_2016.root ./    
-    cp /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_IC_2016/IC_map_SingleElectron_2016_test_iter19.root ./    
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/ScaleFactors/ScaleFactors_07Aug2017Rereco_2016data.tgz ./    
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_IC_2016/IC_average_timing_2016.root ./    
+    cp /storage/cms/store/group/phys_susy/razor/Run2Analysis/EcalTiming/EcalTimeCalibConstants_IC_2016/IC_map_SingleElectron_2016_test_iter19.root ./    
 
     tar vxzf ScaleFactors_07Aug2017Rereco_2016data.tgz
     tar vxzf JEC_Summer16_23Sep2016V3.tgz
