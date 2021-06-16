@@ -1031,19 +1031,9 @@ if(!isData)
         TR_SHIFT1 = 0.001*timecorr_shift[E_bin1];
         TR_SHIFT2 = 0.001*timecorr_shift[E_bin2];
 
-        if(ele1E>0.0) 
-        {
-            if (ele1E>110) TR_SMEAR1 = 0.001*timecorr_smear[E_bin1]; //0.001*sqrt((timecorr_smear_aa/(ele1E*ele1E) + timecorr_smear_bb));
-            else if (ele1E>70) TR_SMEAR1 = 0.001*timecorr_smear[E_bin1];
-            else TR_SMEAR1 = 0.001*timecorr_smear[E_bin1];
-
-        }
-        if(ele2E>0.0) 
-        {
-            if (ele2E>110) TR_SMEAR2 = 0.001*timecorr_smear[E_bin2]; //0.001*sqrt((timecorr_smear_aa/(ele2E*ele2E) + timecorr_smear_bb));
-            else if (ele2E>70) TR_SMEAR2 = 0.001*timecorr_smear[E_bin2];
-            else TR_SMEAR2 = 0.001*timecorr_smear[E_bin2];
-        }
+        TR_SMEAR1 = 0.001*timecorr_smear[E_bin1]; //0.001*sqrt((timecorr_smear_aa/(ele1E*ele1E) + timecorr_smear_bb));
+        TR_SMEAR2 = 0.001*timecorr_smear[E_bin2]; //0.001*sqrt((timecorr_smear_aa/(ele2E*ele2E) + timecorr_smear_bb));
+        
         std::random_device rd;
         std::mt19937 e2(rd());
         std::normal_distribution<> dist1(t1, TR_SMEAR1);

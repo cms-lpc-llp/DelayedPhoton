@@ -1725,8 +1725,9 @@ mll = (lep1+lep2).M();
  if (nPho >= 1) // require at least one photon
  { 
     	//cout << "THIS IS THE 2 PHOTON LOOP" << endl;
- 	if(nPho == 1) n_Photons = 1;
- 	if(nPho > 1) n_Photons = 2;
+ 	//if(nPho == 1) n_Photons = 1;
+ 	//if(nPho > 1) n_Photons = 2;
+    n_Photons = nPho; 
 
 	bool isMatched = false;
 
@@ -1741,13 +1742,13 @@ mll = (lep1+lep2).M();
 		// finding the neutralino and photon index
 		for(int ind_gen = 0; ind_gen < nGenParticle; ind_gen++)
 		{ //this is gen particle loop within event and photon loop
-			if ( !foundN1 && gParticleId[ind_gen] == 22 && gParticleMotherId[ind_gen] == 1000022 )
+			if ( !foundN1 && gParticleId[ind_gen] == 22 && abs(gParticleMotherId[ind_gen]) == 58 )
 			{ //finds a photon from a neutralino
 				pho1index = ind_gen;
 				neu1_index = gParticleMotherIndex[ind_gen];
 				foundN1 = true;
 			}
-			else if ( foundN1 && !foundN2 && gParticleId[ind_gen] == 22 && gParticleMotherId[ind_gen] == 1000022 ) 
+			else if ( foundN1 && !foundN2 && gParticleId[ind_gen] == 22 && abs(gParticleMotherId[ind_gen]) == 58 ) 
 			{
 				pho2index = ind_gen;
 				neu2_index = gParticleMotherIndex[ind_gen];
@@ -1910,115 +1911,7 @@ mll = (lep1+lep2).M();
 			}//if isMatched
 		}//if gen found
 	}//if !isData
-
-    else if (!isData && nPho==1) //  
-    {
-        bool foundN1 = false;
-        int pho1index = 0;
-        int neu1_index = 0;
-        // finding the neutralino and photon index
-        for(int ind_gen = 0; ind_gen < nGenParticle; ind_gen++)
-        { //this is gen particle loop within event and photon loop
-            if ( !foundN1 && gParticleId[ind_gen] == 22 && gParticleMotherId[ind_gen] == 1000022 )
-            { //finds a photon from a neutralino
-                pho1index = ind_gen;
-                neu1_index = gParticleMotherIndex[ind_gen];
-                foundN1 = true;
-            }
-        }
-
-        //bool insideECAL = false;
-        //if((gParticleDecayVertexX[neu1_index]*gParticleDecayVertexX[neu1_index]+gParticleDecayVertexY[neu1_index]*gParticleDecayVertexY[neu1_index] < EB_R*EB_R) && abs(gParticleDecayVertexZ[neu1_index])<300.0 && (gParticleDecayVertexX[neu2_index]*gParticleDecayVertexX[neu2_index]+gParticleDecayVertexY[neu2_index]*gParticleDecayVertexY[neu2_index] < EB_R*EB_R) && abs(gParticleDecayVertexZ[neu2_index])<300.0 ) insideECAL = true;
-        //if(foundN1==1 && foundN2==1 && insideECAL)
-        if(foundN1==1)
-        {
-
-            float decay_x1 = gParticleDecayVertexX[neu1_index];
-            float decay_y1 = gParticleDecayVertexY[neu1_index];
-            float decay_z1 = gParticleDecayVertexZ[neu1_index];
-            TVector3 vec_decay1(decay_x1, decay_y1, decay_z1);
-
-            // need to match up the photon index and the reco photon - this is done based on momentum
-            // pho1Pt is reco level, gpho1Pt is gen level information
-            float gpho1Pt = gParticlePt[pho1index];
-            float deltaPt11 = fabs(pho1Pt - gpho1Pt);
-
-            TVector3 genSeed1;
-
-            float norm1 = pow((pow(gParticlePx[pho1index],2)+pow(gParticlePy[pho1index],2)+pow(gParticlePz[pho1index],2)),0.5);
-            float px1 = (gParticlePx[pho1index]) / norm1;
-            float py1 = (gParticlePy[pho1index]) / norm1;
-            float pz1 = (gParticlePz[pho1index]) / norm1;
-            genSeed1 = intersectPoint(decay_x1, decay_y1, decay_z1, px1, py1, pz1, EB_R); // using intersection function written above, radius as 129.7 cm
-
-            TVector3 recoSeed1(pho1SeedX,pho1SeedY,pho1SeedZ);
-
-            float deltaR11 = genSeed1.DeltaR(recoSeed1); 
-
-            float deltaEta11 = recoSeed1.Eta()-genSeed1.Eta();
-            float deltaPhi11 = deltaPhi(recoSeed1.Phi(), genSeed1.Phi());
-
-            reco_eta1 = recoSeed1.Eta();
-
-            bool is1To1 = false;
-            //cout << "deltaR11  "<<deltaR11<<"  deltaR12  "<<deltaR12<<"  deltaR21  "<<deltaR21<<"  deltaR22  "<<deltaR22<<endl;
-
-            if ( deltaR11 < 0.4) 
-            {
-                isMatched = true;
-            }
-
-            if(isMatched)
-            {
-                pho1isDelayedPhoton = true;
-
-                pho1GenE = gParticleE[pho1index]; 
-                pho1GenPt = gParticlePt[pho1index];
-                pho1GenEta = gParticleEta[pho1index]; 
-                pho1GenPhi = gParticlePhi[pho1index];
-
-                R1 = pow(decay_x1*decay_x1 + decay_y1*decay_y1, 0.5); 
-                pho1_genVtxX = decay_x1;
-                pho1_genVtxY = decay_y1;
-                pho1_genVtxZ = decay_z1;
-                pho1_genVtxEta = vec_decay1.Eta(); 
-                pho1_genVtxPhi = vec_decay1.Phi();
-
-                ZD1 = decay_z1;
-
-                gen_eta1 = genSeed1.Eta(); 
-                deltaR_pho1 = deltaR11;
-                deltaEta_pho1 = deltaEta11; 
-                deltaPhi_pho1 = deltaPhi11;
-                deltaPt_pho1 = deltaPt11;
-
-                float massNeu = 1000.0;
-                float p_neu1 = pow(gParticlePx[neu1_index]*gParticlePx[neu1_index]+gParticlePy[neu1_index]*gParticlePy[neu1_index]+gParticlePz[neu1_index]*gParticlePz[neu1_index],0.5); 
-
-                TVector3 point_genPV(genVertexX,genVertexY,genVertexZ);    
-                TVector3 point_decayV1(decay_x1, decay_y1, decay_z1);
-
-                TOF_neu1 = (point_decayV1-point_genPV).Mag() / (SPEED_OF_LIGHT*p_neu1) * pow((pow(massNeu,2) + pow(p_neu1,2)),0.5);
-                TOF_neu1_RF = TOF_neu1*massNeu*pow((pow(massNeu,2) + pow(p_neu1,2)),-0.5);
-
-                TOF_pho1 = (recoSeed1 - point_decayV1).Mag() / SPEED_OF_LIGHT ;
-
-                if(abs(genVertexTime) < 100.)
-                {
-                    TOF_total1 = genVertexTime + TOF_neu1 + TOF_pho1 - recoSeed1.Mag() / SPEED_OF_LIGHT;
-                    TOF_total1_genV = genVertexTime + TOF_neu1 + TOF_pho1 - (recoSeed1 - point_genPV).Mag() / SPEED_OF_LIGHT;
-                }
-                else
-                {
-                    TOF_total1 = TOF_neu1 + TOF_pho1 - recoSeed1.Mag() / SPEED_OF_LIGHT;
-                    TOF_total1_genV = TOF_neu1 + TOF_pho1 - (recoSeed1 - point_genPV).Mag() / SPEED_OF_LIGHT;
-                }
-
-                pho1angle_xtal = recoSeed1.Angle(recoSeed1 - point_decayV1); 
-
-            }//if isMatched
-        }//if gen found
-    }//if !isData
+    
     //apply photon ID according to whether it's GED or OOT photon
 
     pho1passIsoLoose_comboIso = pho1isStandardPhoton ? pho1passIsoLoose : pho1passIsoLoose_OOT;

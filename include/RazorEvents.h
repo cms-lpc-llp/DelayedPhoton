@@ -387,6 +387,9 @@ public :
    Float_t         gParticleDecayVertexX[4000];   //[nGenParticle]
    Float_t         gParticleDecayVertexY[4000];   //[nGenParticle]
    Float_t         gParticleDecayVertexZ[4000];   //[nGenParticle]
+   Float_t         gParticleProductionVertexX[4000];   //[nGenParticle]
+   Float_t         gParticleProductionVertexY[4000];   //[nGenParticle]
+   Float_t         gParticleProductionVertexZ[4000];   //[nGenParticle]
 
    // List of branches
    TBranch        *b_isData;   //!
@@ -752,6 +755,9 @@ public :
    TBranch        *b_gParticleDecayVertexX;   //!
    TBranch        *b_gParticleDecayVertexY;   //!
    TBranch        *b_gParticleDecayVertexZ;   //!
+   TBranch        *b_gParticleProductionVertexX;   //!
+   TBranch        *b_gParticleProductionVertexY;   //!
+   TBranch        *b_gParticleProductionVertexZ;   //!
 
    RazorEvents(TTree *tree=0);
    virtual ~RazorEvents();
@@ -1219,6 +1225,9 @@ void RazorEvents::Init(TTree *tree)
    fChain->SetBranchAddress("gParticleDecayVertexX", gParticleDecayVertexX, &b_gParticleDecayVertexX);
    fChain->SetBranchAddress("gParticleDecayVertexY", gParticleDecayVertexY, &b_gParticleDecayVertexY);
    fChain->SetBranchAddress("gParticleDecayVertexZ", gParticleDecayVertexZ, &b_gParticleDecayVertexZ);
+   fChain->SetBranchAddress("gParticleProductionVertexX", gParticleProductionVertexX, &b_gParticleProductionVertexX);
+   fChain->SetBranchAddress("gParticleProductionVertexY", gParticleProductionVertexY, &b_gParticleProductionVertexY);
+   fChain->SetBranchAddress("gParticleProductionVertexZ", gParticleProductionVertexZ, &b_gParticleProductionVertexZ);
    Notify();
 }
 

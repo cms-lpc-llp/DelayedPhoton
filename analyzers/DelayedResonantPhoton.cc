@@ -223,6 +223,7 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
   int n_Photons;
   int n_Photons_reco;
   float pho1E, pho1Pt, pho1Pt_scaleUp, pho1Pt_scaleDown, pho1Pt_smearUp, pho1Pt_smearDown, pho1Eta, pho1Phi, pho1SeedE, pho1SeedPt, pho1SeedEta, pho1SeedPhi, pho1SC_E, pho1SC_Pt, pho1SC_Eta, pho1SC_Phi, pho1angle_xtal, pho1SigmaIetaIeta, pho1R9, pho1HoverE, pho1sumChargedHadronPt, pho1sumNeutralHadronEt, pho1sumPhotonEt, pho1PFsumChargedHadronPt, pho1PFsumNeutralHadronEt, pho1PFsumPhotonEt, pho1ecalPFClusterIso, pho1hcalPFClusterIso, pho1trkSumPtHollowConeDR03, pho1sigmaEOverE, pho1SeedTimeRaw, pho1SeedTimeCalib, pho1SeedTimeCalibTOF, pho1SeedTimeGenV, pho1ClusterTime, pho1ClusterTime_SmearToData, pho1Sminor, pho1Smajor, pho1Setaeta, pho1Sphiphi, pho1Setaphi, pho1GenE, pho1GenPt, pho1GenEta, pho1GenPhi, pho1ClusterTime_scaleUp, pho1ClusterTime_scaleDown, pho1ClusterTime_smearUp, pho1ClusterTime_smearDown;
+  int pho1MotherIndex, pho2MotherIndex;
   float pho2E, pho2Pt, pho2Pt_scaleUp, pho2Pt_scaleDown, pho2Pt_smearUp, pho2Pt_smearDown, pho2Eta, pho2Phi, pho2SeedE, pho2SeedPt, pho2SeedEta, pho2SeedPhi, pho2SC_E, pho2SC_Pt, pho2SC_Eta, pho2SC_Phi, pho2angle_xtal, pho2SigmaIetaIeta, pho2R9, pho2HoverE, pho2sumChargedHadronPt, pho2sumNeutralHadronEt, pho2sumPhotonEt, pho2PFsumChargedHadronPt, pho2PFsumNeutralHadronEt, pho2PFsumPhotonEt, pho2ecalPFClusterIso, pho2hcalPFClusterIso, pho2trkSumPtHollowConeDR03, pho2sigmaEOverE, pho2SeedTimeRaw, pho2SeedTimeCalib, pho2SeedTimeCalibTOF, pho2SeedTimeGenV, pho2ClusterTime, pho2ClusterTime_SmearToData, pho2Smajor, pho2Sminor, pho2Setaeta, pho2Sphiphi, pho2Setaphi, pho2GenE, pho2GenPt, pho2GenEta, pho2GenPhi;
   bool pho1passEleVeto, pho1passTrackVeto, pho1passIsoLoose, pho1passIsoMedium, pho1passIsoTight, pho1isStandardPhoton, pho1isPromptPhoton, pho1isDelayedPhoton;
   bool pho1passHLTFilter[100], pho2passHLTFilter[100];
@@ -282,6 +283,7 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
   float pho1_genVtxEta, pho2_genVtxEta;
   float pho1_genVtxPhi, pho2_genVtxPhi;
   float ZD1, ZD2;
+  float m_diphoton;
 
   //leptons
   float lep1Pt, lep2Pt, mll;
@@ -363,6 +365,7 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("n_Photons", &n_Photons, "n_Photons/I"); // 1 or 2
   outputTree->Branch("n_Photons_reco", &n_Photons_reco, "n_Photons_reco/I"); // 1 or 2
   outputTree->Branch("nPhotons_overlap", &nPhotons_overlap, "nPhotons_overlap/I"); // 1 or 2
+  outputTree->Branch("pho1MotherIndex", &pho1MotherIndex, "pho1MotherIndex/I");
   outputTree->Branch("pho1E", &pho1E, "pho1E/F");
   outputTree->Branch("pho1Pt", &pho1Pt, "pho1Pt/F");
   outputTree->Branch("pho1Pt_scaleUp", &pho1Pt_scaleUp, "pho1Pt_scaleUp/F");
@@ -457,6 +460,7 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho1GenEta", &pho1GenEta, "pho1GenEta/F");
   outputTree->Branch("pho1GenPhi", &pho1GenPhi, "pho1GenPhi/F");
 
+  outputTree->Branch("pho2MotherIndex", &pho2MotherIndex, "pho2MotherIndex/I");
   outputTree->Branch("pho2E", &pho2E, "pho2E/F");
   outputTree->Branch("pho2Pt", &pho2Pt, "pho2Pt/F");
   outputTree->Branch("pho2Pt_scaleUp", &pho2Pt_scaleUp, "pho2Pt_scaleUp/F");
@@ -547,6 +551,7 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
   outputTree->Branch("pho2GenPt", &pho2GenPt, "pho2GenPt/F");
   outputTree->Branch("pho2GenEta", &pho2GenEta, "pho2GenEta/F");
   outputTree->Branch("pho2GenPhi", &pho2GenPhi, "pho2GenPhi/F");
+  outputTree->Branch("m_diphoton", &m_diphoton, "m_diphoton/F");
 
   outputTree->Branch("hasJetL1PreFiring", &hasJetL1PreFiring, "hasJetL1PreFiring/O");
   outputTree->Branch("n_Jets", &n_Jets, "n_Jets/I");
@@ -725,6 +730,7 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
     n_Photons_reco = 0;
     pho1E = -999, pho1Pt = -999, pho1Pt_scaleUp = -999, pho1Pt_scaleDown = -999, pho1Pt_smearUp = -999, pho1Pt_smearDown = -999, pho1Eta = -999, pho1Phi = -999, pho1SeedE = -999, pho1SeedPt = -999, pho1SeedEta = -999, pho1SeedPhi = -999, pho1SC_E = -999, pho1SC_Pt = -999, pho1SC_Eta = -999, pho1SC_Phi = -999, pho1angle_xtal = -999, pho1SigmaIetaIeta = -999, pho1R9 = -999, pho1HoverE = -999, pho1sumChargedHadronPt = -999, pho1sumNeutralHadronEt = -999, pho1sumPhotonEt = -999, pho1PFsumChargedHadronPt = -999, pho1PFsumNeutralHadronEt = -999, pho1PFsumPhotonEt = -999, pho1ecalPFClusterIso = -999, pho1hcalPFClusterIso = -999, pho1trkSumPtHollowConeDR03 = -999, pho1sigmaEOverE = -999, pho1SeedTimeRaw = -999, pho1SeedTimeCalib = -999, pho1SeedTimeCalibTOF = -999, pho1SeedTimeGenV = -999, pho1ClusterTime = -999, pho1ClusterTime_SmearToData, pho1Sminor = -999, pho1Smajor = -999, pho1Setaeta = -999, pho1Sphiphi = -999, pho1Setaphi = -999, pho1GenE = -999, pho1GenPt = -999, pho1GenEta = -999, pho1GenPhi = -999, pho1ClusterTime_scaleUp=-999, pho1ClusterTime_scaleDown=-999, pho1ClusterTime_smearUp=-999, pho1ClusterTime_smearDown=-999;
     pho2E = -999, pho2Pt = -999, pho2Pt_scaleDown = -999, pho2Pt_scaleDown = -999, pho1Pt_smearUp = -999, pho2Pt_smearDown = -999, pho2Eta = -999, pho2Phi = -999, pho2SeedE = -999, pho2SeedPt = -999, pho2SeedEta = -999, pho2SeedPhi = -999, pho2SC_E = -999, pho2SC_Pt = -999, pho2SC_Eta = -999, pho2SC_Phi = -999, pho2angle_xtal = -999, pho2SigmaIetaIeta = -999, pho2R9 = -999, pho2HoverE = -999, pho2sumChargedHadronPt = -999, pho2sumNeutralHadronEt = -999, pho2sumPhotonEt = -999, pho2PFsumChargedHadronPt = -999, pho2PFsumNeutralHadronEt = -999, pho2PFsumPhotonEt = -999, pho2ecalPFClusterIso = -999, pho2hcalPFClusterIso = -999, pho2trkSumPtHollowConeDR03 = -999, pho2sigmaEOverE = -999, pho2SeedTimeRaw = -999, pho2SeedTimeCalib = -999, pho2SeedTimeCalibTOF = -999, pho2SeedTimeGenV = -999, pho2ClusterTime = -999, pho2ClusterTime_SmearToData, pho2Sminor = -999, pho2Smajor = -999, pho2Setaeta = -999, pho2Sphiphi = -999, pho2Setaphi = -999, pho2GenE = -999, pho2GenPt = -999, pho2GenEta = -999, pho2GenPhi = -999;
+    pho1MotherIndex = -999, pho2MotherIndex = -999;
     pho1passEleVeto = false, pho1passTrackVeto = false; pho1passIsoLoose = false, pho1passIsoMedium = false, pho1passIsoTight = false, pho1isStandardPhoton = false, pho1isPromptPhoton = false, pho1isDelayedPhoton = false;
     pho1passIsoLoose_privatePF = false, pho1passIsoMedium_privatePF = false, pho1passIsoTight_privatePF = false;
     pho1passIsoLoose_OOT = false, pho1passIsoMedium_OOT = false, pho1passIsoTight_OOT = false;
@@ -745,6 +751,8 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
     n_Jets_JESDown = 0;
     minDPhiMetToJets = 9999;
     minDPhiMetToPhoJets = 9999;
+    
+    m_diphoton = -999;
 
     jet1E = -999, jet1Pt = -999, jet1Eta = -999, jet1Phi = -999;	
     jet2E = -999, jet2Pt = -999, jet2Eta = -999, jet2Phi = -999;	
@@ -1271,6 +1279,10 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
         }    
     } //end photon loop
 
+    if (nPho < 2) continue;
+    m_diphoton = (pho1 + pho2).M();
+
+
     //smear photon time in MC
     if(!isData)
     {
@@ -1291,19 +1303,9 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
 
         TR_SHIFT1 = 0.001*timecorr_shift[E_bin1]; 
         TR_SHIFT2 = 0.001*timecorr_shift[E_bin2]; 
-
-        if(pho1Pt>0.0) 
-        {
-            if (pho1Pt>110) TR_SMEAR1 = 0.80*0.001*timecorr_smear[E_bin1];//0.001*sqrt((timecorr_smear_aa/(pho1Pt*pho1Pt) + timecorr_smear_bb));
-            else if (pho1Pt>70) TR_SMEAR1 = 0.78*0.001*timecorr_smear[E_bin1];
-            else TR_SMEAR1 = 0.75*0.001*timecorr_smear[E_bin1];
-        }
-        if (pho2Pt>0.0) 
-        {
-            if (pho2Pt>110) TR_SMEAR2 = 0.80*0.001*timecorr_smear[E_bin2];//0.001*sqrt((timecorr_smear_aa/(pho2Pt*pho2Pt) + timecorr_smear_bb));
-            else if (pho2Pt>70) TR_SMEAR2 = 0.78*0.001*timecorr_smear[E_bin2];
-            else TR_SMEAR2 = 0.75*0.001*timecorr_smear[E_bin2];
-        }
+        
+        TR_SMEAR1 = 0.001*timecorr_smear[E_bin1];
+        TR_SMEAR2 = 0.001*timecorr_smear[E_bin2];
 
         std::random_device rd;
         std::mt19937 e2(rd());
@@ -1646,12 +1648,13 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
     if (nPho >= 1) // require at least one photon
     { 
         //cout << "THIS IS THE 2 PHOTON LOOP" << endl;
-        if(nPho == 1) n_Photons = 1;
-        if(nPho > 1) n_Photons = 2;
+        //if(nPho == 1) n_Photons = 1;
+        //if(nPho > 1) n_Photons = 2;
+        n_Photons = nPho;
 
         bool isMatched = false;
 
-        if(!isData && nPho>=2) //for two neutralino -> photon + gravitino signal MC studies only
+        if(!isData && nPho>=2) 
         {
             bool foundN1 = false;
             bool foundN2 = false; 
@@ -1756,11 +1759,13 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
                     pho2isDelayedPhoton = true;
 
                     pho1GenE = is1To1 ? gParticleE[pho1index] : gParticleE[pho2index];
+                    pho1MotherIndex = is1To1 ? neu1_index : neu2_index;
                     pho1GenPt = is1To1 ? gParticlePt[pho1index] : gParticlePt[pho2index];
                     pho1GenEta = is1To1 ? gParticleEta[pho1index] : gParticleEta[pho2index];
                     pho1GenPhi = is1To1 ? gParticlePhi[pho1index] : gParticlePhi[pho2index];
 
                     pho2GenE = is1To1 ? gParticleE[pho2index] : gParticleE[pho1index];
+                    pho2MotherIndex = is1To1 ? neu2_index : neu1_index;
                     pho2GenPt = is1To1 ? gParticlePt[pho2index] : gParticlePt[pho1index];
                     pho2GenEta = is1To1 ? gParticleEta[pho2index] : gParticleEta[pho1index];
                     pho2GenPhi = is1To1 ? gParticlePhi[pho2index] : gParticlePhi[pho1index];
@@ -1792,7 +1797,7 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
                     deltaPhi_pho2 = is1To1 ? deltaPhi22 : deltaPhi12;
                     deltaPt_pho2 = is1To1 ? deltaPt22 : deltaPt12;
 
-                    float massNeu = 1000.0;
+                    float massNeu = 100.0;
                     //float p_neu1 = is1To1 ? (gParticlePt[neu1_index]*cosh(gParticleEta[neu1_index])) : (gParticlePt[neu2_index]*cosh(gParticleEta[neu2_index]) );
                     float p_neu1 = is1To1 ? pow(gParticlePx[neu1_index]*gParticlePx[neu1_index]+gParticlePy[neu1_index]*gParticlePy[neu1_index]+gParticlePz[neu1_index]*gParticlePz[neu1_index],0.5) : pow(gParticlePx[neu2_index]*gParticlePx[neu2_index]+gParticlePy[neu2_index]*gParticlePy[neu2_index]+gParticlePz[neu2_index]*gParticlePz[neu2_index],0.5);
                     //float p_neu2 = is1To1 ? (gParticlePt[neu2_index]*cosh(gParticleEta[neu2_index])) : (gParticlePt[neu1_index]*cosh(gParticleEta[neu1_index]) );
@@ -1831,116 +1836,6 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
                 }//if isMatched
             }//if gen found
         }//if !isData
-
-        else if (!isData && nPho==1) //  
-        {
-            bool foundN1 = false;
-            int pho1index = 0;
-            int neu1_index = 0;
-            // finding the neutralino and photon index
-            for(int ind_gen = 0; ind_gen < nGenParticle; ind_gen++)
-            { //this is gen particle loop within event and photon loop
-                if ( !foundN1 && gParticleId[ind_gen] == 22 && gParticleMotherId[ind_gen] == 1000022 )
-                { //finds a photon from a neutralino
-                    pho1index = ind_gen;
-                    neu1_index = gParticleMotherIndex[ind_gen];
-                    foundN1 = true;
-                }
-            }
-
-            //bool insideECAL = false;
-            //if((gParticleDecayVertexX[neu1_index]*gParticleDecayVertexX[neu1_index]+gParticleDecayVertexY[neu1_index]*gParticleDecayVertexY[neu1_index] < EB_R*EB_R) && abs(gParticleDecayVertexZ[neu1_index])<300.0 && (gParticleDecayVertexX[neu2_index]*gParticleDecayVertexX[neu2_index]+gParticleDecayVertexY[neu2_index]*gParticleDecayVertexY[neu2_index] < EB_R*EB_R) && abs(gParticleDecayVertexZ[neu2_index])<300.0 ) insideECAL = true;
-            //if(foundN1==1 && foundN2==1 && insideECAL)
-            if(foundN1==1)
-            {
-
-                float decay_x1 = gParticleDecayVertexX[neu1_index];
-                float decay_y1 = gParticleDecayVertexY[neu1_index];
-                float decay_z1 = gParticleDecayVertexZ[neu1_index];
-                TVector3 vec_decay1(decay_x1, decay_y1, decay_z1);
-
-                // need to match up the photon index and the reco photon - this is done based on momentum
-                // pho1Pt is reco level, gpho1Pt is gen level information
-                float gpho1Pt = gParticlePt[pho1index];
-                float deltaPt11 = fabs(pho1Pt - gpho1Pt);
-
-                TVector3 genSeed1;
-
-                float norm1 = pow((pow(gParticlePx[pho1index],2)+pow(gParticlePy[pho1index],2)+pow(gParticlePz[pho1index],2)),0.5);
-                float px1 = (gParticlePx[pho1index]) / norm1;
-                float py1 = (gParticlePy[pho1index]) / norm1;
-                float pz1 = (gParticlePz[pho1index]) / norm1;
-                genSeed1 = intersectPoint(decay_x1, decay_y1, decay_z1, px1, py1, pz1, EB_R); // using intersection function written above, radius as 129.7 cm
-
-                TVector3 recoSeed1(pho1SeedX,pho1SeedY,pho1SeedZ);
-
-                float deltaR11 = genSeed1.DeltaR(recoSeed1); 
-
-                float deltaEta11 = recoSeed1.Eta()-genSeed1.Eta();
-                float deltaPhi11 = deltaPhi(recoSeed1.Phi(), genSeed1.Phi());
-
-                reco_eta1 = recoSeed1.Eta();
-
-                bool is1To1 = false;
-                //cout << "deltaR11  "<<deltaR11<<"  deltaR12  "<<deltaR12<<"  deltaR21  "<<deltaR21<<"  deltaR22  "<<deltaR22<<endl;
-
-                if ( deltaR11 < 0.4) 
-                {
-                    isMatched = true;
-                }
-
-                if(isMatched)
-                {
-                    pho1isDelayedPhoton = true;
-
-                    pho1GenE = gParticleE[pho1index]; 
-                    pho1GenPt = gParticlePt[pho1index];
-                    pho1GenEta = gParticleEta[pho1index]; 
-                    pho1GenPhi = gParticlePhi[pho1index];
-
-                    R1 = pow(decay_x1*decay_x1 + decay_y1*decay_y1, 0.5); 
-                    pho1_genVtxX = decay_x1;
-                    pho1_genVtxY = decay_y1;
-                    pho1_genVtxZ = decay_z1;
-                    pho1_genVtxEta = vec_decay1.Eta(); 
-                    pho1_genVtxPhi = vec_decay1.Phi();
-
-                    ZD1 = decay_z1;
-
-                    gen_eta1 = genSeed1.Eta(); 
-                    deltaR_pho1 = deltaR11;
-                    deltaEta_pho1 = deltaEta11; 
-                    deltaPhi_pho1 = deltaPhi11;
-                    deltaPt_pho1 = deltaPt11;
-
-                    float massNeu = 1000.0;
-                    float p_neu1 = pow(gParticlePx[neu1_index]*gParticlePx[neu1_index]+gParticlePy[neu1_index]*gParticlePy[neu1_index]+gParticlePz[neu1_index]*gParticlePz[neu1_index],0.5); 
-
-                    TVector3 point_genPV(genVertexX,genVertexY,genVertexZ);    
-                    TVector3 point_decayV1(decay_x1, decay_y1, decay_z1);
-
-                    TOF_neu1 = (point_decayV1-point_genPV).Mag() / (SPEED_OF_LIGHT*p_neu1) * pow((pow(massNeu,2) + pow(p_neu1,2)),0.5);
-                    TOF_neu1_RF = TOF_neu1*massNeu*pow((pow(massNeu,2) + pow(p_neu1,2)),-0.5);
-
-                    TOF_pho1 = (recoSeed1 - point_decayV1).Mag() / SPEED_OF_LIGHT ;
-
-                    if(abs(genVertexTime) < 100.)
-                    {
-                        TOF_total1 = genVertexTime + TOF_neu1 + TOF_pho1 - recoSeed1.Mag() / SPEED_OF_LIGHT;
-                        TOF_total1_genV = genVertexTime + TOF_neu1 + TOF_pho1 - (recoSeed1 - point_genPV).Mag() / SPEED_OF_LIGHT;
-                    }
-                    else
-                    {
-                        TOF_total1 = TOF_neu1 + TOF_pho1 - recoSeed1.Mag() / SPEED_OF_LIGHT;
-                        TOF_total1_genV = TOF_neu1 + TOF_pho1 - (recoSeed1 - point_genPV).Mag() / SPEED_OF_LIGHT;
-                    }
-
-                    pho1angle_xtal = recoSeed1.Angle(recoSeed1 - point_decayV1); 
-
-                }//if isMatched
-            }//if gen found
-        }//if !isData
-        //apply photon ID according to whether it's GED or OOT photon
 
         pho1passIsoLoose_comboIso = pho1isStandardPhoton ? pho1passIsoLoose : pho1passIsoLoose_OOT;
         pho1passIsoMedium_comboIso = pho1isStandardPhoton ? pho1passIsoMedium : pho1passIsoMedium_OOT;
