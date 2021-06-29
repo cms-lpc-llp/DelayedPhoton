@@ -1,11 +1,11 @@
 #!/bin/sh
-export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
+export X509_USER_PROXY=/storage/af/user/$(whoami)/my_proxy
 mkdir -p log
 mkdir -p submit
 
 if [ -z "${CMSSW_BASE}" ]
 then
-    CMSSW_BASE=/storage/user/$(whoami)/DelayedPhoton/CMSSW_10_6_12/
+    CMSSW_BASE=/storage/af/user/$(whoami)/DelayedPhoton/CMSSW_10_6_12/
     echo 'Setting CMSSW_BASE to be \${CMSSW_BASE}'
 fi
 
@@ -24,7 +24,7 @@ for sample in \
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2018_pho_corr/Data2018/${sample}.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2018/DataUL/${sample}.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
 	analyzer=DelayedPhotonAnalyzer
@@ -38,7 +38,7 @@ do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		echo "Universe = vanilla" > ${jdl_file}
 		echo "Executable = ${job_script}" >> ${jdl_file}
-		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2018_pho_corr/jobs/ ${analyzer} ${inputfilelist} yes 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
+		echo "Arguments = ${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob} /store/group/phys_llp/DelayedPhoton/2018/jobs/ ${analyzer} ${inputfilelist} yes 10 ${filesPerJob} ${jobnumber} ${sample}_Job${jobnumber}_Of_${maxjob}.root" >> ${jdl_file}
 		echo "Log = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_PC.log" >> ${jdl_file}
 		echo "Output = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).out" >> ${jdl_file}
 		echo "Error = log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}_\$(Cluster).\$(Process).err" >> ${jdl_file}

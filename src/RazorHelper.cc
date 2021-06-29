@@ -2050,14 +2050,14 @@ void RazorHelper::loadPileup_Razor2017_17Nov2017Rereco() {
     std::cout << "RazorHelper: loading pileup weight histograms" << std::endl;
 
     if (!isFastsim) {
-      pileupWeightFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/PileupReweight_2017_41p2ifb.root");
+      pileupWeightFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/PileupReweight_2017_41p2ifb.root").c_str());
       pileupWeightHist = (TH1F*)pileupWeightFile->Get("PileupReweight");
       pileupWeightSysUpHist = (TH1F*)pileupWeightFile->Get("PileupReweightSysUp");
       pileupWeightSysDownHist = (TH1F*)pileupWeightFile->Get("PileupReweightSysDown");
       std::cout << "PileupReweight_2017Rereco_41p2ifb.root\n";
     } else {
       // Will do something for Fastsim in the future
-      pileupWeightFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/PileupReweight_2017_41p2ifb.root");
+      pileupWeightFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/PileupReweight_2017_41p2ifb.root").c_str());
       pileupWeightHist = (TH1F*)pileupWeightFile->Get("PileupReweight");
       pileupWeightSysUpHist = (TH1F*)pileupWeightFile->Get("PileupReweightSysUp");
       pileupWeightSysDownHist = (TH1F*)pileupWeightFile->Get("PileupReweightSysDown");
@@ -2070,14 +2070,14 @@ void RazorHelper::loadPileup_Razor2018_Rereco() {
     std::cout << "RazorHelper: loading pileup weight histograms" << std::endl;
 
     if (!isFastsim) {
-      pileupWeightFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/data/PileupWeights/PileupReweight2018.root");
+      pileupWeightFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/PileupWeights/PileupReweight2018.root").c_str());
       pileupWeightHist = (TH1F*)pileupWeightFile->Get("PileupReweight");
       pileupWeightSysUpHist = (TH1F*)pileupWeightFile->Get("PileupReweightSysUp");
       pileupWeightSysDownHist = (TH1F*)pileupWeightFile->Get("PileupReweightSysDown");
       std::cout << "PileupReweight2018.root\n";
     } else {
       // Will do something for Fastsim in the future
-      pileupWeightFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/data/PileupWeights/PileupReweight2018.root");
+      pileupWeightFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/PileupWeights/PileupReweight2018.root").c_str());
       pileupWeightHist = (TH1F*)pileupWeightFile->Get("PileupReweight");
       pileupWeightSysUpHist = (TH1F*)pileupWeightFile->Get("PileupReweightSysUp");
       pileupWeightSysDownHist = (TH1F*)pileupWeightFile->Get("PileupReweightSysDown");
@@ -2410,10 +2410,10 @@ void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco(){
     // photon efficiency scale factors
     // use avaerage results for run 2017BCDEF for now
     std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
-    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_GEDTightAbsSmajSminVLSieie94X.root");
+    phoEffSFFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_GEDTightAbsSmajSminVLSieie94X.root").c_str());
     phoTightEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
 
-    phoTrkVetoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
+    phoTrkVetoEffSFFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root").c_str());
     phoTrkVetoEffSFHist = (TH2F*)phoTrkVetoEffSFFile->Get("EGamma_SF2D");
 
     //std::cout << "[DEBUG loadPhoton_Razor2017_31Mar2018] phoTightEffSFHist = " << phoTightEffSFHist << std::endl;
@@ -2429,10 +2429,10 @@ void RazorHelper::loadPhoton_Razor2017_31Mar2018Rereco_DelayedPhoton(){
     // photon efficiency scale factors
     // use avaerage results for run 2017BCDEF for now
     std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
-    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_OOTTightAbsSmajSminVLSieie94X.root");
+    phoEffSFFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_OOTTightAbsSmajSminVLSieie94X.root").c_str());
     phoTightEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
 
-    phoTrkVetoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_6/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
+    phoTrkVetoEffSFFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root").c_str());
     phoTrkVetoEffSFHist = (TH2F*)phoTrkVetoEffSFFile->Get("EGamma_SF2D");
 
 
@@ -2446,10 +2446,10 @@ void RazorHelper::loadPhoton_Razor2018_Rereco(){
     // photon efficiency scale factors
     // use avaerage results for run 2017BCDEF for now
     std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
-    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_GEDTightAbsSmajSminVLSieie94X.root");
+    phoEffSFFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_GEDTightAbsSmajSminVLSieie94X.root").c_str());
     phoTightEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
 
-    phoTrkVetoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
+    phoTrkVetoEffSFFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root").c_str());
     phoTrkVetoEffSFHist = (TH2F*)phoTrkVetoEffSFFile->Get("EGamma_SF2D");
 
     //std::cout << "[DEBUG loadPhoton_Razor2017_31Mar2018] phoTightEffSFHist = " << phoTightEffSFHist << std::endl;
@@ -2465,10 +2465,10 @@ void RazorHelper::loadPhoton_Razor2018_Rereco_DelayedPhoton(){
     // photon efficiency scale factors
     // use avaerage results for run 2017BCDEF for now
     std::cout << "RazorHelper: loading photon efficiency scale factor histograms" << std::endl;
-    phoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_OOTTightAbsSmajSminVLSieie94X.root");
+    phoEffSFFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_OOTTightAbsSmajSminVLSieie94X.root").c_str());
     phoTightEffSFHist = (TH2F*)phoEffSFFile->Get("EGamma_SF2D");
 
-    phoTrkVetoEffSFFile = TFile::Open("/storage/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root");
+    phoTrkVetoEffSFFile = TFile::Open((cmsswPath+"/src/DelayedPhoton/data/ScaleFactors/DelayedPhoton/SF_TrkVetoEff_2017.root").c_str());
     phoTrkVetoEffSFHist = (TH2F*)phoTrkVetoEffSFFile->Get("EGamma_SF2D");
 
     // results for 2017MC is not available yet, use 2016 version for now

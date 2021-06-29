@@ -146,7 +146,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   //Settings
   //*****************************************************************************
   TRandom3 random(3003);
-  bool doPhotonScaleCorrection = true;
+  bool doPhotonScaleCorrection = false;
 
   string analysisTag = "Razor2018_Rereco_DelayedPhoton";
   if ( label != "") analysisTag = label;
