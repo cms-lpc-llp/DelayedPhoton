@@ -1,1 +1,1 @@
-/mnt/hadoop/store/group/phys_susy/razor/run2/Run2DelayedPhotonNtuple/Data2016/DoubleEG/crab_prod_Run2DelayedPhotonNtupler_Data2016_DoubleEG_Run2016B_v2/200426_022155/0000/razorNtuple_112.root
+/storage/cms/store/group/phys_susy/razor/run2/Run2DelayedPhotonNtuple/Data2016/DoubleEG/crab_prod_Run2DelayedPhotonNtupler_Data2016_DoubleEG_Run2016B_v2/200426_022155/0000/razorNtuple_112.root

@@ -702,8 +702,8 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
  
 
 
-      double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 2.0;
-      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 2.0;
+      double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.543;
+      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.543;
       //double seedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[seedhitIndex]) : 1.0;
       //double subseedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[subseedhitIndex]) : 1.0;
 	  double ADCToGeV = getADCToGeV(runNum, isFromEB);
@@ -776,7 +776,7 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
           eleRechit_IPhiIY->push_back(iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , false));
         }	
 
-	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 2; // 42 MeV for MC
+	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.543; // 1.543 for EB 2016;  1.842 for EB 2017
 	//double pedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex]) : 0.042; // 42 MeV for MC
 	double sigmaE = pedNoise * ADCToGeV;
         eleRechit_pedestal->push_back(sigmaE); 
@@ -1041,16 +1041,12 @@ if(!isData)
 
         if(ele1E>0.0) 
         {
-            if (ele1E>110) TR_SMEAR1 = 0.001*timecorr_smear[E_bin1]; //0.001*sqrt((timecorr_smear_aa/(ele1E*ele1E) + timecorr_smear_bb));
-            else if (ele1E>70) TR_SMEAR1 = 0.001*timecorr_smear[E_bin1];
-            else TR_SMEAR1 = 0.001*timecorr_smear[E_bin1];
+            TR_SMEAR1 = 0.001*timecorr_smear[E_bin1]; //0.001*sqrt((timecorr_smear_aa/(ele1E*ele1E) + timecorr_smear_bb));
 
         }
         if(ele2E>0.0) 
         {
-            if (ele2E>110) TR_SMEAR2 = 0.001*timecorr_smear[E_bin2]; //0.001*sqrt((timecorr_smear_aa/(ele2E*ele2E) + timecorr_smear_bb));
-            else if (ele2E>70) TR_SMEAR2 = 0.001*timecorr_smear[E_bin2];
-            else TR_SMEAR2 = 0.001*timecorr_smear[E_bin2];
+            TR_SMEAR2 = 0.001*timecorr_smear[E_bin2]; //0.001*sqrt((timecorr_smear_aa/(ele2E*ele2E) + timecorr_smear_bb));
         }
         std::random_device rd;
         std::mt19937 e2(rd());
