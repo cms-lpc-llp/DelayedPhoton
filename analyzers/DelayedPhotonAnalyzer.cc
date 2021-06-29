@@ -1046,9 +1046,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
               //double pedNoise = 1.0;//isData ? (getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex])) : 1.0;
               //double pedNoise = isData ? (getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex])) : 1.0;
-              double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.0;  
+              double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.543;  
               //double pedNoise = 1;
-              double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1;
+              double ADCToGeV = getADCToGeV(runNum, isFromEB);
               double sigmaE = pedNoise * ADCToGeV;
 
               double sigmaT2 = N_EB*N_EB / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + 2.0 * C_EB * C_EB;

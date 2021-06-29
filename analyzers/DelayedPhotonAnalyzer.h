@@ -15,10 +15,10 @@ class DelayedPhotonAnalyzer: public RazorAnalyzer {
         vector <float> *rms_G6_all;
         vector <int> *detID_all;
 	
-	const double N_EB = 33.6;   //ns
-        const double C_EB = 0.083; //ns
-        const double N_EB_MC = 46.3; //ns
-        const double C_EB_MC = 0.091; //ns
+	const double N_EB = 31.3;   //ns
+        const double C_EB = 0.079; //ns
+        const double N_EB_MC = 33.3; //ns
+        const double C_EB_MC = 0.088; //ns
 
         DelayedPhotonAnalyzer(TTree *tree=0): RazorAnalyzer(tree) { }
         void Analyze(bool isData, int option, string outputFileName, string label);
