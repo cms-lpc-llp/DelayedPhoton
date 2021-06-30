@@ -8,21 +8,18 @@ RazorAnalyzerDir=`pwd`
 cd -
 
 job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
-filesPerJob=15
+filesPerJob=1
 
 for sample in \
-DoubleEG_2016B_ver1_06Aug2018 \
-DoubleEG_2016B_ver2_06Aug2018 \
-DoubleEG_2016C_06Aug2018 \
-DoubleEG_2016D_06Aug2018 \
-DoubleEG_2016E_06Aug2018 \
-DoubleEG_2016F_06Aug2018 \
-DoubleEG_2016G_06Aug2018 \
-DoubleEG_2016H_06Aug2018
+DoubleEG_2017B_31Mar2018 \
+DoubleEG_2017C_31Mar2018 \
+DoubleEG_2017D_31Mar2018 \
+DoubleEG_2017E_31Mar2018 \
+DoubleEG_2017F_31Mar2018
 
 do
 	echo "Sample " ${sample}
-	inputfilelist=/src/RazorAnalyzer/lists/Run2/razorNtuplerV4p1/Data_2016_reMINIAOD/${sample}.cern.txt
+	inputfilelist=/src/DelayedPhoton/lists/DelayedPhoton2017/Data2017/${sample}.txt
 	nfiles=`cat ${CMSSW_BASE}$inputfilelist | wc | awk '{print $1}' `
 	maxjob=`python -c "print int($nfiles.0/$filesPerJob)-1"`
 	analyzer=ZeeTiming
@@ -33,7 +30,7 @@ do
 	do
 		jdl_file=submit/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}.jdl
 		#noFail=`grep YYYY log/${analyzer}_${sample}_Job${jobnumber}_Of_${maxjob}*.out`
-		outRoot="/mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/EcalTiming/ntuples_V4p1_31Aug2018/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
+		outRoot="/storage/cms/store/group/phys_llp/ZeeTiming/2017/jobs/${sample}_Job${jobnumber}_Of_${maxjob}.root"
 
 		minimumsize=50000
                 actualsize=0

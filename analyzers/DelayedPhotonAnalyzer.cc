@@ -1095,9 +1095,9 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
 
             double corrT = calibratedSeedHitTime_this + (std::sqrt(pow((*ecalRechit_X)[rechitIndex],2)+pow((*ecalRechit_Y)[rechitIndex],2)+pow((*ecalRechit_Z)[rechitIndex],2))-std::sqrt(pow((*ecalRechit_X)[rechitIndex]-pvX,2)+pow((*ecalRechit_Y)[rechitIndex]-pvY,2)+pow((*ecalRechit_Z)[rechitIndex]-pvZ,2)))/SPEED_OF_LIGHT;
 
-            double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.0;  
+            double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.842;  
             //double pedNoise = 1;
-            double ADCToGeV = isData ? getADCToGeV(runNum, isFromEB) : 1;
+            double ADCToGeV = getADCToGeV(runNum, isFromEB);
             double sigmaE = pedNoise * ADCToGeV;
 
             double sigmaT2 = N_EB*N_EB / ((*ecalRechit_E)[rechitIndex] * (*ecalRechit_E)[rechitIndex] / (sigmaE*sigmaE)) + 2.0 * C_EB * C_EB;

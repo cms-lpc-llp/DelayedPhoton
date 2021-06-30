@@ -13,10 +13,10 @@ class ZeeTiming: public RazorAnalyzer {
 		float getADCToGeV( uint run, int isFromEB);
 
 		// for 2017
-        const double N_EB = 34.7;   //ns
-        const double C_EB = 0.077; //ns
-        const double N_EB_MC = 36.9; //ns
-        const double C_EB_MC = 0.087; //ns
+        const double N_EB = 31.9;   //ns
+        const double C_EB = 0.074; //ns
+        const double N_EB_MC = 38.2; //ns
+        const double C_EB_MC = 0.090; //ns
         uint start_run_tmp;
         uint end_run_tmp;	
         uint start_time_tmp;

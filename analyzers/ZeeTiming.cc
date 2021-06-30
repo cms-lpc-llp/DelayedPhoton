@@ -694,8 +694,8 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
  
 
 
-      double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 2.0;
-      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 2.0;
+      double seedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.842;
+      double subseedPedNoise = isData ? (*ecalRechit_pedrms12)[seedhitIndex] : 1.842;
       //double seedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[seedhitIndex]) : 1.0;
       //double subseedPedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[subseedhitIndex]) : 1.0;
 	  double ADCToGeV = getADCToGeV(runNum, isFromEB);
@@ -768,7 +768,7 @@ void ZeeTiming::Analyze(bool isData, int option, string outFileName, string labe
           eleRechit_IPhiIY->push_back(iPhi_or_iY_from_detID( (*ecalRechit_ID)[rechitIndex] , false));
         }	
 
-	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 2; // 42 MeV for MC
+	double pedNoise = isData ? (*ecalRechit_pedrms12)[rechitIndex] : 1.842; // 42 MeV for MC
 	//double pedNoise = isData ? getPedestalNoise(tree_pedestal, start_time,end_time, eventTime, (*ecalRechit_ID)[rechitIndex]) : 0.042; // 42 MeV for MC
 	double sigmaE = pedNoise * ADCToGeV;
         eleRechit_pedestal->push_back(sigmaE); 
