@@ -16,10 +16,10 @@ class DelayedPhotonAnalyzer: public RazorAnalyzer {
         vector <int> *detID_all;
 		
         // for 2018ABC pre-legacy
-        const double N_EB = 34.9;   //ns
+        const double N_EB = 33.8;   //ns
         const double C_EB = 0.095; //ns
-        const double N_EB_MC = 72.4; //ns
-        const double C_EB_MC = 0.092; //ns
+        const double N_EB_MC = 38.4; //ns
+        const double C_EB_MC = 0.090; //ns
 
 //		// for 2018ABC ultra-legacy
 //        const double N_EB = 33.2;   //ns
