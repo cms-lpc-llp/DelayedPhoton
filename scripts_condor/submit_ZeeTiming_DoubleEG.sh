@@ -16,15 +16,16 @@ cd ../
 RazorAnalyzerDir=`pwd`
 cd -
 
+#job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2_local.sh
 job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
 filesPerJob=1
 
 for sample in \
 DoubleEG_2017B_31Mar2018 \
-DoubleEG_2017C_31Mar2018 \
-DoubleEG_2017D_31Mar2018 \
-DoubleEG_2017E_31Mar2018 \
-DoubleEG_2017F_31Mar2018
+#DoubleEG_2017C_31Mar2018 \
+#DoubleEG_2017D_31Mar2018 \
+#DoubleEG_2017E_31Mar2018 \
+#DoubleEG_2017F_31Mar2018
 
 do
 	echo "Sample " ${sample}

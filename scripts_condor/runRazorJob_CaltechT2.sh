@@ -104,8 +104,8 @@ then
 		##job finished, copy file to T2
 		echo "copying output file to /storage/cms/${outputDirectory}"
         eval `scram unsetenv -sh`
-		echo "gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer-lb.ultralight.org/storage/cms/${outputDirectory}/${outputfile}"
-		env -i X509_USER_PROXY=${x509loc} gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer-lb.ultralight.org/storage/cms/${outputDirectory}/${outputfile}
+		echo "gfal-copy -vvv -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer-lb.ultralight.org/storage/cms/${outputDirectory}/${outputfile}"
+		env -i X509_USER_PROXY=${x509loc} gfal-copy -vvv -t 2400 -T 2400 -p -f --checksum-mode=both ${outputfile} gsiftp://transfer-lb.ultralight.org/storage/cms/${outputDirectory}/${outputfile}
 		if [ -f /storage/cms/${outputDirectory}/${outputfile} ]
 		then
 			echo "SUCCESS ============ good news, job finished successfully "
