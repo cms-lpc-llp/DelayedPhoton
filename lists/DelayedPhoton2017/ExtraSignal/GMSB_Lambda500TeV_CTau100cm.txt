@@ -1,0 +1,1 @@
+/storage/af/user/yeseo/DelayedPhoton_origin/CMSSW_10_6_6/src/Tuplizer/DelayedPhotonTuplizer/python/GMSB_2017signal/GMSB_Lambda500TeV_CTau100cm.root
