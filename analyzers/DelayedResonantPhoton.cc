@@ -1853,7 +1853,7 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
             pho3isStandardPhoton = pho_isStandardPhoton[ind_pho];
             pho3isPromptPhoton = isPromptPhoton;
             }
-            else if ( ( photonOrderByTime ? ( weightedTime > pho2ClusterTime) : (thisPhoton.Pt() > pho3.Pt())  ) )
+            else if ( ( photonOrderByTime ? ( weightedTime > pho2ClusterTime) : (thisPhoton.Pt() > pho4.Pt())  ) )
             {
             pho4E = thisPhoton.E();
             pho4Pt = thisPhoton.Pt();
