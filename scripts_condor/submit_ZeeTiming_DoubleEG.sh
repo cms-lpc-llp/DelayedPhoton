@@ -16,7 +16,7 @@ cd ../
 RazorAnalyzerDir=`pwd`
 cd -
 
-job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
+job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2_local.sh
 filesPerJob=1
 
 for sample in \
@@ -56,7 +56,7 @@ do
 		echo "x509userproxy = \$ENV(X509_USER_PROXY)" >> ${jdl_file}
                 echo "+RunAsOwner = True" >> ${jdl_file}
                 echo "+InteractiveUser = true" >> ${jdl_file}
-                echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/bbockelm/cms:rhel7"' >> ${jdl_file}
+                echo '+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel7"' >> ${jdl_file}
                 echo "+SingularityBindCVMFS = True" >> ${jdl_file}
                 echo "+JobBatchName = \"DoubleEG2016_ZeeTiming\"" >> ${jdl_file}
                 echo "run_as_owner = True" >> ${jdl_file}
