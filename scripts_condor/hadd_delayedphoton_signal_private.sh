@@ -1,12 +1,12 @@
 #!/bin/sh
-export X509_USER_PROXY=/storage/user/$(whoami)/my_proxy
+export X509_USER_PROXY=/storage/af/user/$(whoami)/my_proxy
 
-OUTDIR=/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2017/hadd/
+OUTDIR=/storage/af/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/local_storage///store/group/phys_llp/DelayedPhoton/2017/hadd/
 
-if [ ! -d /mnt/hadoop/${OUTDIR} ]
+if [ ! -d ${OUTDIR} ]
 then
     echo "${OUTDIR} does not exist. Creating one..."
-    hadoop fs -mkdir ${OUTDIR}
+    mkdir -p ${OUTDIR}
 fi
     
 for sample in \
@@ -36,10 +36,8 @@ do
     correctSample=${sample/L/L-}
     correctSample=${correctSample/Ctau/Ctau-}
     echo "${correctSample}"
-    hadd -k -f ${correctSample}.root /mnt/hadoop/store/group/phys_susy/razor/Run2Analysis/DelayedPhotonAnalysis/2017/jobs/${sample}_Job*.root
-    eval `scram unsetenv -sh`
-    gfal-copy -t 2400 -T 2400 -p -f --checksum-mode=both ${correctSample}.root gsiftp://transfer.ultralight.org/${OUTDIR}/${correctSample}.root
-	eval `scram runtime -sh`
+    hadd -k -f ${correctSample}.root /storage/af/user/qnguyen/DelayedPhoton/CMSSW_10_6_12/src/DelayedPhoton/local_storage///store/group/phys_llp/DelayedPhoton/2017/jobs/${sample}_Job*.root
+    cp ${correctSample}.root ${OUTDIR}/${correctSample}.root
 
     rm ${correctSample}.root
 done
