@@ -13,7 +13,7 @@ cd ../
 RazorAnalyzerDir=`pwd`
 cd -
 
-job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2.sh
+job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2_local.sh
 filesPerJob=1
 maximumjob=20
 

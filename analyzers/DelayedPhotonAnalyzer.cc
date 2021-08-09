@@ -164,7 +164,7 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   //Settings
   //*****************************************************************************
   TRandom3 random(3003);
-  bool doPhotonScaleCorrection = true;
+  bool doPhotonScaleCorrection = false;
 
   string analysisTag = "Razor2016_07Aug2017Rereco";
   if ( label != "") analysisTag = label;
@@ -1391,8 +1391,8 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
           TR_SHIFT1 = 0.001*timecorr_shift[E_bin1]; 
           TR_SHIFT2 = 0.001*timecorr_shift[E_bin2]; 
 
-          if(pho1Pt>0.0) TR_SMEAR1 = 0.001*sqrt((timecorr_smear_aa/(pho1Pt*pho1Pt) + timecorr_smear_bb));
-          if(pho2Pt>0.0) TR_SMEAR2 = 0.001*sqrt((timecorr_smear_aa/(pho2Pt*pho2Pt) + timecorr_smear_bb));
+          if(pho1Pt>0.0) TR_SMEAR1 = 0.001*timecorr_smear[E_bin1]; //0.001*sqrt((timecorr_smear_aa/(ele1E*ele1E) + timecorr_smear_bb));
+          if(pho2Pt>0.0) TR_SMEAR2 = 0.001*timecorr_smear[E_bin2]; //0.001*sqrt((timecorr_smear_aa/(ele2E*ele2E) + timecorr_smear_bb));
 
           std::random_device rd;
           std::mt19937 e2(rd());
