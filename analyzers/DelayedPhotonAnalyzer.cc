@@ -324,12 +324,12 @@ void DelayedPhotonAnalyzer::Analyze(bool isData, int option, string outFileName,
   float pho2E, pho2Pt, pho2Pt_scaleUp, pho2Pt_scaleDown, pho2Pt_smearUp, pho2Pt_smearDown, pho2Eta, pho2Phi, pho2SeedE, pho2SeedPt, pho2SeedEta, pho2SeedPhi, pho2SC_E, pho2SC_Pt, pho2SC_Eta, pho2SC_Phi, pho2angle_xtal, pho2SigmaIetaIeta, pho2R9, pho2HoverE, pho2sumChargedHadronPt, pho2sumNeutralHadronEt, pho2sumPhotonEt, pho2PFsumChargedHadronPt, pho2PFsumNeutralHadronEt, pho2PFsumPhotonEt, pho2ecalPFClusterIso, pho2hcalPFClusterIso, pho2trkSumPtHollowConeDR03, pho2sigmaEOverE, pho2SeedTimeRaw, pho2SeedTimeCalib, pho2SeedTimeCalibTOF, pho2SeedTimeGenV, pho2ClusterTime, pho2ClusterTime_SmearToData, pho2Smajor, pho2Sminor, pho2Setaeta, pho2Sphiphi, pho2Setaphi, pho2GenE, pho2GenPt, pho2GenEta, pho2GenPhi;
   bool pho1passEleVeto, pho1passTrackVeto, pho1passIsoLoose, pho1passIsoMedium, pho1passIsoTight, pho1isStandardPhoton, pho1isPromptPhoton, pho1isDelayedPhoton;
   bool pho1passHLTFilter[100], pho2passHLTFilter[100];
-  float pho1_rechitE[100], pho1_rechitX[100], pho1_rechitY[100], pho1_rechitZ[100], 
-        pho1_rechitEta[100], pho1_rechitPhi[100], pho1_rechitT[100];
-  float pho2_rechitE[100], pho2_rechitX[100], pho2_rechitY[100], pho2_rechitZ[100], 
-        pho2_rechitEta[100], pho2_rechitPhi[100], pho2_rechitT[100];
-  float phorechitE[100], phorechitX[100], phorechitY[100], phorechitZ[100], 
-        phorechitEta[100], phorechitPhi[100], phorechitT[100];
+  float pho1_rechitE[400], pho1_rechitX[400], pho1_rechitY[400], pho1_rechitZ[400], 
+        pho1_rechitEta[400], pho1_rechitPhi[400], pho1_rechitT[400];
+  float pho2_rechitE[400], pho2_rechitX[400], pho2_rechitY[400], pho2_rechitZ[400], 
+        pho2_rechitEta[400], pho2_rechitPhi[400], pho2_rechitT[400];
+  float phorechitE[400], phorechitX[400], phorechitY[400], phorechitZ[400], 
+        phorechitEta[400], phorechitPhi[400], phorechitT[400];
   bool pho1passIsoLoose_privatePF, pho1passIsoMedium_privatePF, pho1passIsoTight_privatePF;
   bool pho1passIsoLoose_OOT, pho1passIsoMedium_OOT, pho1passIsoTight_OOT;
   bool pho1passIsoLoose_comboIso, pho1passIsoMedium_comboIso, pho1passIsoTight_comboIso;

@@ -18,26 +18,26 @@ job_script=${RazorAnalyzerDir}/scripts_condor/runRazorJob_CaltechT2_local.sh
 maximumjob=20
 
 for sample in \
-GMSB_Lambda450TeV_CTau10000cm \
-GMSB_Lambda450TeV_CTau1000cm \
 GMSB_Lambda450TeV_CTau100cm \
-GMSB_Lambda450TeV_CTau10cm \
-GMSB_Lambda450TeV_CTau1200cm \
-GMSB_Lambda450TeV_CTau200cm \
-GMSB_Lambda450TeV_CTau400cm \
-GMSB_Lambda450TeV_CTau50cm \
-GMSB_Lambda450TeV_CTau600cm \
-GMSB_Lambda450TeV_CTau800cm \
-GMSB_Lambda500TeV_CTau10000cm \
-GMSB_Lambda500TeV_CTau1000cm \
-GMSB_Lambda500TeV_CTau100cm \
-GMSB_Lambda500TeV_CTau10cm \
-GMSB_Lambda500TeV_CTau1200cm \
-GMSB_Lambda500TeV_CTau200cm \
-GMSB_Lambda500TeV_CTau400cm \
-GMSB_Lambda500TeV_CTau50cm \
-GMSB_Lambda500TeV_CTau600cm \
-GMSB_Lambda500TeV_CTau800cm \
+#GMSB_Lambda450TeV_CTau10000cm \
+#GMSB_Lambda450TeV_CTau1000cm \
+#GMSB_Lambda450TeV_CTau10cm \
+#GMSB_Lambda450TeV_CTau1200cm \
+#GMSB_Lambda450TeV_CTau200cm \
+#GMSB_Lambda450TeV_CTau400cm \
+#GMSB_Lambda450TeV_CTau50cm \
+#GMSB_Lambda450TeV_CTau600cm \
+#GMSB_Lambda450TeV_CTau800cm \
+#GMSB_Lambda500TeV_CTau10000cm \
+#GMSB_Lambda500TeV_CTau1000cm \
+#GMSB_Lambda500TeV_CTau100cm \
+#GMSB_Lambda500TeV_CTau10cm \
+#GMSB_Lambda500TeV_CTau1200cm \
+#GMSB_Lambda500TeV_CTau200cm \
+#GMSB_Lambda500TeV_CTau400cm \
+#GMSB_Lambda500TeV_CTau50cm \
+#GMSB_Lambda500TeV_CTau600cm \
+#GMSB_Lambda500TeV_CTau800cm \
 
 do
 	echo "Sample " ${sample}
