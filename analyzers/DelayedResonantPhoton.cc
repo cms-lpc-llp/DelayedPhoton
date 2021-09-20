@@ -2295,61 +2295,87 @@ mll = (lep1+lep2).M();
 	{
 		bool foundN1 = false;
 		bool foundN2 = false;
-		bool foundN3 = false;
-		bool foundN4 = false;
+    bool foundP1 = false;
+    bool foundP2 = false;
+    bool foundP3 = false;
+    bool foundP4 = false;
 		int pho1index = 0;
 		int pho2index = 0;
-		int neu1_index = 0;
-		int neu2_index = 0;
 		int pho3index = 0;
 		int pho4index = 0;
-		int neu3_index = 0;
-		int neu4_index = 0;
+		int neu1_index = 0;
+		int neu2_index = 0;
+    int temp;
+
+
 		// finding the neutralino and photon index
-		for(int ind_gen = 0; ind_gen < nGenParticle; ind_gen++)
-		{ //this is gen particle loop within event and photon loop
-			if ( !foundN1 && gParticleId[ind_gen] == 22 && gParticleMotherId[ind_gen] == 58 )
-			{ //finds a photon from a neutralino
-				pho1index = ind_gen;
-				neu1_index = gParticleMotherIndex[ind_gen];
-				foundN1 = true;
-			}
-			if ( foundN1 && !foundN2 && gParticleId[ind_gen] == 22 && gParticleMotherId[ind_gen] == 58 && gParticleMotherIndex[ind_gen] == neu1_index )
-			{
-				pho2index = ind_gen;
-				foundN2 = true;
-			}
-			if (!foundN3 && gParticleId[ind_gen] == 22 && gParticleMotherId[ind_gen] == -58 )
-			{ //finds a photon from a neutralino
-				pho3index = ind_gen;
-				neu2_index = gParticleMotherIndex[ind_gen];
-				foundN3 = true;
-			}
-			if ( foundN3 && !foundN4 && gParticleId[ind_gen] == 22 && gParticleMotherId[ind_gen] == -58 && gParticleMotherIndex[ind_gen] == neu1_index )
-			{
-				pho4index = ind_gen;
-				foundN4 = true;
-			}
-		}
+    for (int ind_gen = 0; ind_gen < nGenParticle; ind_gen++){
+        if (gParticleId[ind_gen] == 58 && gParticleStatus[ind_gen] == 22){
+            neu1_index = ind_gen;
+        }
+        if (gParticleId[ind_gen] == -58 && gParticleStatus[ind_gen] == 22){
+            neu2_index = ind_gen;
+        }
+
+    } //neutralino index (neu*_index), z prime index (zP_index)
+    if (gParticlePt[neu1_index] < gParticlePt[neu2_index]){
+        temp = neu2_index;
+        neu2_index = neu1_index;
+        neu1_index = temp;
+    }
+
+    // pick 1~4 photons and sort by pT
+    for (int ind_gen = 0; ind_gen < nGenParticle; ind_gen++){ 
+        if (!foundP1 && gParticleId[ind_gen] == 22 && gParticleMotherIndex[ind_gen] == neu1_index){
+            pho1index = ind_gen;
+            foundP1 = true;
+        }
+        else if (foundP1 && !foundP2 && gParticleId[ind_gen] == 22 && gParticleMotherIndex[ind_gen] == neu1_index){
+            pho2index = ind_gen;
+            foundP2 = true;
+        }
+    }
+
+    if (gParticlePt[pho1index] < gParticlePt[pho2index]){
+        temp = pho2index;
+        pho2index = pho1index;
+        pho1index = temp;
+    }
+
+    for (int ind_gen = 0; ind_gen < nGenParticle; ind_gen++){
+        if (!foundP3 && gParticleId[ind_gen] == 22 && gParticleMotherIndex[ind_gen] == neu2_index){
+            pho3index = ind_gen;
+            foundP3 = true;
+        }
+        else if (foundP3 && !foundP4 && gParticleId[ind_gen] == 22 && gParticleMotherIndex[ind_gen] == neu2_index){
+            pho4index = ind_gen;
+            foundP4 = true;
+        }
+
+    } 
+
+    if (gParticlePt[pho3index] < gParticlePt[pho4index]){
+        temp = pho4index;
+        pho4index = pho3index;
+        pho3index = temp;
+    }
+    
+    //1-2 and 3-4 have the same mother for each
+    //finding the neutralino and photon index
+    
 
 		//bool insideECAL = false;
 		//if((gParticleDecayVertexX[neu1_index]*gParticleDecayVertexX[neu1_index]+gParticleDecayVertexY[neu1_index]*gParticleDecayVertexY[neu1_index] < EB_R*EB_R) && abs(gParticleDecayVertexZ[neu1_index])<300.0 && (gParticleDecayVertexX[neu2_index]*gParticleDecayVertexX[neu2_index]+gParticleDecayVertexY[neu2_index]*gParticleDecayVertexY[neu2_index] < EB_R*EB_R) && abs(gParticleDecayVertexZ[neu2_index])<300.0 ) insideECAL = true;
 		//if(foundN1==1 && foundN2==1 && insideECAL)
-		if(foundN1==1 && foundN2==1 && foundN3==1 && foundN4==1)
+    if (pho1index != 0 && pho2index != 0 && pho3index != 0 && pho4index != 0)
 		{
 
-			float decay_x1 = gParticleDecayVertexX[pho1index];
-			float decay_y1 = gParticleDecayVertexY[pho1index];
-			float decay_z1 = gParticleDecayVertexZ[pho1index];
-			float decay_x2 = gParticleDecayVertexX[pho2index];
-			float decay_y2 = gParticleDecayVertexY[pho2index];
-			float decay_z2 = gParticleDecayVertexZ[pho2index];
-			float decay_x3 = gParticleDecayVertexX[pho3index];
-			float decay_y3 = gParticleDecayVertexY[pho3index];
-			float decay_z3 = gParticleDecayVertexZ[pho3index];
-			float decay_x4 = gParticleDecayVertexX[pho4index];
-			float decay_y4 = gParticleDecayVertexY[pho4index];
-			float decay_z4 = gParticleDecayVertexZ[pho4index];
+			float decay_x1 = gParticleDecayVertexX[neu1index];
+			float decay_y1 = gParticleDecayVertexY[neu1index];
+			float decay_z1 = gParticleDecayVertexZ[neu1index];
+			float decay_x2 = gParticleDecayVertexX[neu2index];
+			float decay_y2 = gParticleDecayVertexY[neu2index];
+			float decay_z2 = gParticleDecayVertexZ[neu2index];
 
 			TVector3 vec_decay1(decay_x1, decay_y1, decay_z1);
 			TVector3 vec_decay2(decay_x2, decay_y2, decay_z2);
@@ -2362,7 +2388,7 @@ mll = (lep1+lep2).M();
 			float gpho2Pt = gParticlePt[pho2index];
 			float deltaPt11 = fabs(pho1Pt - gpho1Pt);
 			float deltaPt12 = fabs(pho2Pt - gpho1Pt);
-            float deltaPt13 = fabs(pho3Pt - gpho1Pt);
+      float deltaPt13 = fabs(pho3Pt - gpho1Pt);
 			float deltaPt14 = fabs(pho4Pt - gpho1Pt);
 
 			float deltaPt21 = fabs(pho1Pt - gpho2Pt);
@@ -2392,18 +2418,18 @@ mll = (lep1+lep2).M();
 			float px2 = (gParticlePx[pho2index]) / norm2;
 			float py2 = (gParticlePy[pho2index]) / norm2;
 			float pz2 = (gParticlePz[pho2index]) / norm2;
-			genSeed2 = intersectPoint(decay_x2, decay_y2, decay_z2, px2, py2, pz2, EB_R); // using intersection function written above, radius as 129 cm
+			genSeed2 = intersectPoint(decay_x1, decay_y1, decay_z1, px2, py2, pz2, EB_R); // using intersection function written above, radius as 129 cm
 			
 			float norm3 = pow((pow(gParticlePx[pho3index],4)+pow(gParticlePy[pho3index],4)+pow(gParticlePz[pho3index],4)),0.5);
 			float px3 = (gParticlePx[pho3index]) / norm3;
 			float py3 = (gParticlePy[pho3index]) / norm3;
 			float pz3 = (gParticlePz[pho3index]) / norm3;
-			genSeed3 = intersectPoint(decay_x3, decay_y3, decay_z3, px3, py3, pz3, EB_R); // using intersection function written above, radius as 349.7 cm
+			genSeed3 = intersectPoint(decay_x2, decay_y2, decay_z2, px3, py3, pz3, EB_R); // using intersection function written above, radius as 349.7 cm
 			float norm4 = pow((pow(gParticlePx[pho4index],4)+pow(gParticlePy[pho4index],4)+pow(gParticlePz[pho4index],4)),0.5);
 			float px4 = (gParticlePx[pho4index]) / norm4;
 			float py4 = (gParticlePy[pho4index]) / norm4;
 			float pz4 = (gParticlePz[pho4index]) / norm4;
-			genSeed4 = intersectPoint(decay_x4, decay_y4, decay_z4, px4, py4, pz4, EB_R); // using intersection function written above, radius as 349 cm
+			genSeed4 = intersectPoint(decay_x2, decay_y2, decay_z2, px4, py4, pz4, EB_R); // using intersection function written above, radius as 349 cm
 
 			TVector3 recoSeed1(pho1SeedX,pho1SeedY,pho1SeedZ);
 			TVector3 recoSeed2(pho2SeedX,pho2SeedY,pho2SeedZ);
@@ -2482,6 +2508,39 @@ mll = (lep1+lep2).M();
             for (size_t i = 0; i < 4; ++i){
                 std::cout << temp[i].first << " " << temp[i].second << "\n";
             }
+
+
+      
+      TVector3 reco_pho1, reco_pho2, reco_pho3, reco_pho4;
+      bool trigger_check = false;
+
+      reco_pho1.SetXYZ(pho1SeedX, pho1SeedY, pho1SeedZ);
+      reco_pho3.SetXYZ(pho2SeedX, pho2SeedY, pho2SeedZ);
+
+      float DeltaR12 = pho1.DeltaR(pho2); 
+      float DeltaR13 = pho1.DeltaR(pho3); 
+      float DeltaR14 = pho1.DeltaR(pho4); 
+
+      if (DeltaR13 > DeltaR14)
+      {
+          reco_pho2.SetXYZ(pho4SeedX, pho4SeedY, pho4SeedZ);
+          reco_pho4.SetXYZ(pho3SeedX, pho3SeedY, pho3SeedZ);
+      }
+      else
+      {
+          reco_pho2.SetXYZ(pho3SeedX, pho3SeedY, pho3SeedZ);
+          reco_pho4.SetXYZ(pho4SeedX, pho4SeedY, pho4SeedZ);
+      }
+
+
+
+      for (int k = 0; k < 20; k++)
+      {
+          float DR_ = float(k) * 0.05;
+          if ((reco_pho1.DeltaR(genSeed1) < DR_ && reco_pho2.DeltaR(genSeed2) < DR_ && reco_pho3.DeltaR(genSeed3) < DR_ && reco_pho4.DeltaR(genSeed4) < DR_) || (reco_pho1.DeltaR(genSeed3) < DR_ && reco_pho2.DeltaR(genSeed4) < DR_ && reco_pho3.DeltaR(genSeed1) < DR_ && reco_pho4.DeltaR(genSeed2) < DR_)) trigger_check = true;
+      }
+
+
 
 			bool is1To1 = false;
 	  //cout << "deltaR11  "<<deltaR11<<"  deltaR12  "<<deltaR12<<"  deltaR21  "<<deltaR21<<"  deltaR22  "<<deltaR22<<endl;
