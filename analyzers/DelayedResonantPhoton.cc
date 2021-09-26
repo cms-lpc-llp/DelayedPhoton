@@ -220,11 +220,15 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
 
   float TOF_total1;
   float TOF_total2;
+  float TOF_total3;
+  float TOF_total4;
   float TOF_total1_genV;
   float TOF_total2_genV;
-  float TOF_neu1, TOF_neu2;
-  float TOF_neu1_RF, TOF_neu2_RF;
-  float TOF_pho1, TOF_pho2;
+  float TOF_total3_genV;
+  float TOF_total4_genV;
+  float TOF_neu1, TOF_neu2, TOF_neu3, TOF_neu4;
+  float TOF_neu1_RF, TOF_neu2_RF, TOF_neu3_RF, TOF_neu4_RF;
+  float TOF_pho1, TOF_pho2, TOF_pho3, TOF_pho4;
 
   int n_Photons;
   int n_Photons_reco;
@@ -390,14 +394,24 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
 
   outputTree->Branch("TOF_total1", &TOF_total1, "TOF_total1/F");
   outputTree->Branch("TOF_total2", &TOF_total2, "TOF_total2/F");
+  outputTree->Branch("TOF_total3", &TOF_total3, "TOF_total3/F");
+  outputTree->Branch("TOF_total4", &TOF_total4, "TOF_total4/F");
   outputTree->Branch("TOF_total1_genV", &TOF_total1_genV, "TOF_total1_genV/F");
   outputTree->Branch("TOF_total2_genV", &TOF_total2_genV, "TOF_total2_genV/F");
+  outputTree->Branch("TOF_total3_genV", &TOF_total3_genV, "TOF_total3_genV/F");
+  outputTree->Branch("TOF_total4_genV", &TOF_total4_genV, "TOF_total4_genV/F");
   outputTree->Branch("TOF_neu1", &TOF_neu1, "TOF_neu1/F");
   outputTree->Branch("TOF_neu1_RF", &TOF_neu1_RF, "TOF_neu1_RF/F");
   outputTree->Branch("TOF_neu2", &TOF_neu2, "TOF_neu2/F");
   outputTree->Branch("TOF_neu2_RF", &TOF_neu2_RF, "TOF_neu2_RF/F");
+  outputTree->Branch("TOF_neu3", &TOF_neu3, "TOF_neu3/F");
+  outputTree->Branch("TOF_neu3_RF", &TOF_neu3_RF, "TOF_neu3_RF/F");
+  outputTree->Branch("TOF_neu4", &TOF_neu4, "TOF_neu4/F");
+  outputTree->Branch("TOF_neu4_RF", &TOF_neu4_RF, "TOF_neu4_RF/F");
   outputTree->Branch("TOF_pho1", &TOF_pho1, "TOF_pho1/F");
   outputTree->Branch("TOF_pho2", &TOF_pho2, "TOF_pho2/F");
+  outputTree->Branch("TOF_pho3", &TOF_pho3, "TOF_pho3/F");
+  outputTree->Branch("TOF_pho4", &TOF_pho4, "TOF_pho4/F");
 
   outputTree->Branch("n_Photons", &n_Photons, "n_Photons/I"); // 1 or 2
   outputTree->Branch("n_Photons_reco", &n_Photons_reco, "n_Photons_reco/I"); // 1 or 2
@@ -914,14 +928,24 @@ void DelayedResonantPhoton::Analyze(bool isData, int option, string outFileName,
 
     TOF_total1 = -999;
     TOF_total2 = -999;
+    TOF_total3 = -999;
+    TOF_total4 = -999;
     TOF_total1_genV = -999;
     TOF_total2_genV = -999;
+    TOF_total3_genV = -999;
+    TOF_total4_genV = -999;
     TOF_neu1 = -999;
     TOF_neu2 = -999;
+    TOF_neu3 = -999;
+    TOF_neu4 = -999;
     TOF_pho1 = -999;
     TOF_pho2 = -999;
+    TOF_pho3 = -999;
+    TOF_pho4 = -999;
     TOF_neu1_RF = -999;
     TOF_neu2_RF = -999;
+    TOF_neu3_RF = -999;
+    TOF_neu4_RF = -999;
 
     n_Photons = 0;
     n_Photons_reco = 0;
@@ -2289,7 +2313,8 @@ mll = (lep1+lep2).M();
  	if(nPho == 1) n_Photons = 1;
  	if(nPho > 1) n_Photons = 4;
 
-	bool isMatched = false;
+	bool isMatchedSet1 = false;
+	bool isMatchedSet2 = false;
 
 	if(!isData && nPho>=2) //for two neutralino -> photon + gravitino signal MC studies only
 	{
@@ -2370,17 +2395,15 @@ mll = (lep1+lep2).M();
     if (pho1index != 0 && pho2index != 0 && pho3index != 0 && pho4index != 0)
 		{
 
-			float decay_x1 = gParticleDecayVertexX[neu1index];
-			float decay_y1 = gParticleDecayVertexY[neu1index];
-			float decay_z1 = gParticleDecayVertexZ[neu1index];
-			float decay_x2 = gParticleDecayVertexX[neu2index];
-			float decay_y2 = gParticleDecayVertexY[neu2index];
-			float decay_z2 = gParticleDecayVertexZ[neu2index];
+			float decay_x1 = gParticleDecayVertexX[neu1_index];
+			float decay_y1 = gParticleDecayVertexY[neu1_index];
+			float decay_z1 = gParticleDecayVertexZ[neu1_index];
+			float decay_x2 = gParticleDecayVertexX[neu2_index];
+			float decay_y2 = gParticleDecayVertexY[neu2_index];
+			float decay_z2 = gParticleDecayVertexZ[neu2_index];
 
 			TVector3 vec_decay1(decay_x1, decay_y1, decay_z1);
 			TVector3 vec_decay2(decay_x2, decay_y2, decay_z2);
-			TVector3 vec_decay3(decay_x3, decay_y3, decay_z3);
-			TVector3 vec_decay4(decay_x4, decay_y4, decay_z4);
 
 			// need to match up the photon index and the reco photon - this is done based on momentum
 			// pho1Pt is reco level, gpho1Pt is gen level information
@@ -2399,9 +2422,14 @@ mll = (lep1+lep2).M();
 			float gpho3Pt = gParticlePt[pho3index];
 			float gpho4Pt = gParticlePt[pho4index];
 			float deltaPt31 = fabs(pho3Pt - gpho1Pt);
-			float deltaPt41 = fabs(pho4Pt - gpho1Pt);
 			float deltaPt32 = fabs(pho3Pt - gpho2Pt);
+			float deltaPt33 = fabs(pho3Pt - gpho3Pt);
+			float deltaPt34 = fabs(pho3Pt - gpho4Pt);
+
+			float deltaPt41 = fabs(pho4Pt - gpho1Pt);
 			float deltaPt42 = fabs(pho4Pt - gpho2Pt);
+			float deltaPt43 = fabs(pho4Pt - gpho3Pt);
+			float deltaPt44 = fabs(pho4Pt - gpho4Pt);
 
 
 			TVector3 genSeed1;
@@ -2431,10 +2459,10 @@ mll = (lep1+lep2).M();
 			float pz4 = (gParticlePz[pho4index]) / norm4;
 			genSeed4 = intersectPoint(decay_x2, decay_y2, decay_z2, px4, py4, pz4, EB_R); // using intersection function written above, radius as 349 cm
 
-			TVector3 recoSeed1(pho1SeedX,pho1SeedY,pho1SeedZ);
-			TVector3 recoSeed2(pho2SeedX,pho2SeedY,pho2SeedZ);
-			TVector3 recoSeed3(pho3SeedX,pho3SeedY,pho3SeedZ);
-			TVector3 recoSeed4(pho4SeedX,pho4SeedY,pho4SeedZ);
+      TVector3 recoSeed1(pho1SeedX, pho1SeedY, pho1SeedZ);
+      TVector3 recoSeed2(pho2SeedX, pho2SeedY, pho2SeedZ);
+      TVector3 recoSeed3(pho3SeedX, pho3SeedY, pho3SeedZ);
+      TVector3 recoSeed4(pho4SeedX, pho4SeedY, pho4SeedZ);
 
 			float deltaR11 = genSeed1.DeltaR(recoSeed1);
 			float deltaR12 = genSeed1.DeltaR(recoSeed2);
@@ -2450,19 +2478,19 @@ mll = (lep1+lep2).M();
 			float deltaPhi11 = deltaPhi(recoSeed1.Phi(),genSeed1.Phi());
 			float deltaEta12 = recoSeed2.Eta()-genSeed1.Eta();
 			float deltaPhi12 = deltaPhi(recoSeed2.Phi(),genSeed1.Phi());
-			float deltaEta11 = recoSeed1.Eta()-genSeed1.Eta();
-			float deltaPhi11 = deltaPhi(recoSeed1.Phi(),genSeed1.Phi());
-			float deltaEta12 = recoSeed2.Eta()-genSeed1.Eta();
-			float deltaPhi12 = deltaPhi(recoSeed2.Phi(),genSeed1.Phi());
+			float deltaEta13 = recoSeed3.Eta()-genSeed1.Eta();
+			float deltaPhi13 = deltaPhi(recoSeed3.Phi(),genSeed1.Phi());
+			float deltaEta14 = recoSeed4.Eta()-genSeed1.Eta();
+			float deltaPhi14 = deltaPhi(recoSeed4.Phi(),genSeed1.Phi());
 
-			float deltaEta21 = recoSeed1.Eta()-genSeed2.Eta();
-			float deltaPhi21 = deltaPhi(recoSeed1.Phi(),genSeed2.Phi());
+			float deltaEta21 = recoSeed2.Eta()-genSeed1.Eta();
+			float deltaPhi21 = deltaPhi(recoSeed2.Phi(),genSeed1.Phi());
 			float deltaEta22 = recoSeed2.Eta()-genSeed2.Eta();
 			float deltaPhi22 = deltaPhi(recoSeed2.Phi(),genSeed2.Phi());
-			float deltaEta21 = recoSeed1.Eta()-genSeed2.Eta();
-			float deltaPhi21 = deltaPhi(recoSeed1.Phi(),genSeed2.Phi());
-			float deltaEta22 = recoSeed2.Eta()-genSeed2.Eta();
-			float deltaPhi22 = deltaPhi(recoSeed2.Phi(),genSeed2.Phi());
+			float deltaEta23 = recoSeed3.Eta()-genSeed2.Eta();
+			float deltaPhi23 = deltaPhi(recoSeed3.Phi(),genSeed2.Phi());
+			float deltaEta24 = recoSeed4.Eta()-genSeed2.Eta();
+			float deltaPhi24 = deltaPhi(recoSeed4.Phi(),genSeed2.Phi());
 
 			reco_eta1 = recoSeed1.Eta();
 			reco_eta2 = recoSeed2.Eta();
@@ -2472,183 +2500,368 @@ mll = (lep1+lep2).M();
 			float deltaR31 = genSeed3.DeltaR(recoSeed1);
 			float deltaR32 = genSeed3.DeltaR(recoSeed2);
 			float deltaR33 = genSeed3.DeltaR(recoSeed3);
-			float deltaR33 = genSeed3.DeltaR(recoSeed4);
+			float deltaR34 = genSeed3.DeltaR(recoSeed4);
 
-            float deltaR41 = genSeed4.DeltaR(recoSeed1);
+      float deltaR41 = genSeed4.DeltaR(recoSeed1);
 			float deltaR42 = genSeed4.DeltaR(recoSeed2);
-            float deltaR43 = genSeed4.DeltaR(recoSeed3);
-            float deltaR44 = genSeed4.DeltaR(recoSeed4);
+      float deltaR43 = genSeed4.DeltaR(recoSeed3);
+      float deltaR44 = genSeed4.DeltaR(recoSeed4);
 
-			float deltaEta31 = recoSeed1.Eta()-genSeed3.Eta();
-			float deltaPhi31 = deltaPhi(recoSeed1.Phi(),genSeed3.Phi());
-			float deltaEta32 = recoSeed2.Eta()-genSeed3.Eta();
-			float deltaPhi32 = deltaPhi(recoSeed2.Phi(),genSeed3.Phi());
+			float deltaEta31 = recoSeed3.Eta()-genSeed1.Eta();
+			float deltaPhi31 = deltaPhi(recoSeed3.Phi(),genSeed1.Phi());
+			float deltaEta32 = recoSeed3.Eta()-genSeed2.Eta();
+			float deltaPhi32 = deltaPhi(recoSeed3.Phi(),genSeed2.Phi());
 			float deltaEta33 = recoSeed3.Eta()-genSeed3.Eta();
 			float deltaPhi33 = deltaPhi(recoSeed3.Phi(),genSeed3.Phi());
 			float deltaEta34 = recoSeed4.Eta()-genSeed3.Eta();
 			float deltaPhi34 = deltaPhi(recoSeed4.Phi(),genSeed3.Phi());
 
-			float deltaEta41 = recoSeed1.Eta()-genSeed4.Eta();
-			float deltaPhi41 = deltaPhi(recoSeed1.Phi(),genSeed4.Phi());
-			float deltaEta42 = recoSeed2.Eta()-genSeed4.Eta();
-			float deltaPhi42 = deltaPhi(recoSeed2.Phi(),genSeed4.Phi());
-			float deltaEta43 = recoSeed3.Eta()-genSeed4.Eta();
-			float deltaPhi43 = deltaPhi(recoSeed3.Phi(),genSeed4.Phi());
+			float deltaEta41 = recoSeed4.Eta()-genSeed1.Eta();
+			float deltaPhi41 = deltaPhi(recoSeed4.Phi(),genSeed1.Phi());
+			float deltaEta42 = recoSeed4.Eta()-genSeed2.Eta();
+			float deltaPhi42 = deltaPhi(recoSeed4.Phi(),genSeed2.Phi());
+			float deltaEta43 = recoSeed4.Eta()-genSeed3.Eta();
+			float deltaPhi43 = deltaPhi(recoSeed4.Phi(),genSeed3.Phi());
 			float deltaEta44 = recoSeed4.Eta()-genSeed4.Eta();
 			float deltaPhi44 = deltaPhi(recoSeed4.Phi(),genSeed4.Phi());
 
-            std::vector<double> deltaR_vector {deltaR11, deltaR12,deltaR13,deltaR14,deltaR21,deltaR22,deltaR23,deltaR24,deltaR31,deltaR32,deltaR33,deltaR34,deltaR41,deltaR42,deltaR43,deltaR44};
+      std::vector<double> deltaR_vector {deltaR11, deltaR12,deltaR13,deltaR14,deltaR21,deltaR22,deltaR23,deltaR24,deltaR31,deltaR32,deltaR33,deltaR34,deltaR41,deltaR42,deltaR43,deltaR44};
 
-            std::vector<std::pair<size_t,double>> temp;
-            for (size_t i=0;i<deltaR_vector.size();++i)
-            {
-                temp.emplace_back(i,deltaR_vector[i]);
-            }
-            std::partial_sort(temp.begin(),temp.begin()+4,temp.end(),[](const auto& a,const auto& b){ return a.second<b.second; });
-            for (size_t i = 0; i < 4; ++i){
-                std::cout << temp[i].first << " " << temp[i].second << "\n";
-            }
+      std::vector<std::pair<size_t,double>> temp;
+      for (size_t i=0;i<deltaR_vector.size();++i)
+      {
+          temp.emplace_back(i,deltaR_vector[i]);
+      }
+      std::partial_sort(temp.begin(),temp.begin()+4,temp.end(),[](const auto& a,const auto& b){ return a.second<b.second; });
+      for (size_t i = 0; i < 4; ++i){
+          std::cout << temp[i].first << " " << temp[i].second << "\n";
+      }
 
+
+      bool setIs13 = false;
+			bool neutrinoIs1To1 = false;
+			int is1To = 0;
+      int is2To = 0;
+      int is3To = 0;
+      int is4To = 0;
+
+      TVector3 matchGenSeed1, matchGenSeed2, matchGenSeed3, matchGenSeed4;
+	  //cout << "deltaR11  "<<deltaR11<<"  deltaR12  "<<deltaR12<<"  deltaR21  "<<deltaR21<<"  deltaR22  "<<deltaR22<<endl;
+    
+      //modified
 
       
-      TVector3 reco_pho1, reco_pho2, reco_pho3, reco_pho4;
-      bool trigger_check = false;
-
-      reco_pho1.SetXYZ(pho1SeedX, pho1SeedY, pho1SeedZ);
-      reco_pho3.SetXYZ(pho2SeedX, pho2SeedY, pho2SeedZ);
-
-      float DeltaR12 = pho1.DeltaR(pho2); 
-      float DeltaR13 = pho1.DeltaR(pho3); 
-      float DeltaR14 = pho1.DeltaR(pho4); 
-
-      if (DeltaR13 > DeltaR14)
+      if ( recoSeed1.DeltaR(recoSeed3) < recoSeed1.DeltaR(recoSeed4) )
       {
-          reco_pho2.SetXYZ(pho4SeedX, pho4SeedY, pho4SeedZ);
-          reco_pho4.SetXYZ(pho3SeedX, pho3SeedY, pho3SeedZ);
+        setIs13 = true;
+      }
+
+      if ( setIs13 )
+      {
+        if ( (recoSeed1 + recoSeed3).DeltaR(genSeed1 + genSeed2) < (recoSeed1 + recoSeed3).DeltaR(genSeed3 + genSeed4) )
+        {
+          neutrinoIs1To1 = true;
+        }
       }
       else
       {
-          reco_pho2.SetXYZ(pho3SeedX, pho3SeedY, pho3SeedZ);
-          reco_pho4.SetXYZ(pho4SeedX, pho4SeedY, pho4SeedZ);
+        if ( (recoSeed1 + recoSeed4).DeltaR(genSeed1 + genSeed2) < (recoSeed1 + recoSeed4).DeltaR(genSeed3 + genSeed4) )
+        {
+          neutrinoIs1To1 = true;
+        }
       }
 
-
-
-      for (int k = 0; k < 20; k++)
+      if ( neutrinoIs1To1 )
       {
-          float DR_ = float(k) * 0.05;
-          if ((reco_pho1.DeltaR(genSeed1) < DR_ && reco_pho2.DeltaR(genSeed2) < DR_ && reco_pho3.DeltaR(genSeed3) < DR_ && reco_pho4.DeltaR(genSeed4) < DR_) || (reco_pho1.DeltaR(genSeed3) < DR_ && reco_pho2.DeltaR(genSeed4) < DR_ && reco_pho3.DeltaR(genSeed1) < DR_ && reco_pho4.DeltaR(genSeed2) < DR_)) trigger_check = true;
+        if ( setIs13 )
+        {
+          if ( deltaR11 < deltaR13 && deltaPt11 < deltaPt13 )
+          {
+            isMatchedSet1 = true;
+            is1To = 1;
+            matchGenSeed1 = genSeed1;
+            is3To = 2;
+            matchGenSeed3 = genSeed2;
+          }
+          else if ( deltaR13 < deltaR11 && deltaPt13 < deltaPt11 )
+          {
+            isMatchedSet1 = true;
+            is3To = 1;
+            matchGenSeed3 = genSeed1;
+            is1To = 2;
+            matchGenSeed1 = genSeed2;
+          }
+
+          if (deltaR32 < deltaR34 && deltaPt32 < deltaPt34 )
+          {
+            isMatchedSet2 = true;
+            is2To = 3;
+            matchGenSeed2 = genSeed3;
+            is4To = 4;
+            matchGenSeed4 = genSeed4;
+          }
+          else if ( deltaR34 < deltaR32 && deltaPt34 < deltaPt32 )
+          {
+            isMatchedSet2 = true;
+            is4To = 3;
+            matchGenSeed4 = genSeed3;
+            is2To = 4;
+            matchGenSeed2 = genSeed4;
+          }
+        }
+        else
+        {
+          if ( deltaR11 < deltaR14 && deltaPt11 < deltaPt14 )
+          {
+            isMatchedSet1 = true;
+            is1To = 1;
+            matchGenSeed1 = genSeed1;
+            is4To = 2;
+            matchGenSeed4 = genSeed2;
+          }
+          else if ( deltaR14 < deltaR11 && deltaPt14 < deltaPt11 )
+          {
+            isMatchedSet1 = true;
+            is4To = 1;
+            matchGenSeed4 = genSeed1;
+            is1To = 2;
+            matchGenSeed1 = genSeed2;
+          }
+
+          if (deltaR32 < deltaR33 && deltaPt32 < deltaPt33 )
+          {
+            isMatchedSet2 = true;
+            is2To = 3;
+            matchGenSeed2 = genSeed3;
+            is3To = 4;
+            matchGenSeed3 = genSeed4;
+          }
+          else if ( deltaR33 < deltaR32 && deltaPt33 < deltaPt32 )
+          {
+            isMatchedSet2 = true;
+            is3To = 3;
+            matchGenSeed3 = genSeed3;
+            is2To = 4;
+            matchGenSeed2 = genSeed4;
+          }
+        }
+      }
+      else
+      {
+        if ( setIs13 )
+        {
+          if ( deltaR12 < deltaR14 && deltaPt12 < deltaPt14 )
+          {
+            isMatchedSet1 = true;
+            is2To = 1;
+            matchGenSeed2 = genSeed1;
+            is4To = 2;
+            matchGenSeed4 = genSeed2;
+          }
+          else if ( deltaR14 < deltaR12 && deltaPt14 < deltaPt12 )
+          {
+            isMatchedSet1 = true;
+            is4To = 1;
+            matchGenSeed4 = genSeed1;
+            is2To = 2;
+            matchGenSeed2 = genSeed2;
+          }
+
+
+          if ( deltaR31 < deltaR33 && deltaPt31 < deltaPt33)
+          {
+            isMatchedSet2 = true;
+            is1To = 3;
+            matchGenSeed1 = genSeed3;
+            is3To = 4;
+            matchGenSeed3 = genSeed4;
+          }
+          else if ( deltaR33 < deltaR31 && deltaPt33 < deltaPt31 )
+          {
+            isMatchedSet2 = true;
+            is3To = 3;
+            matchGenSeed3 = genSeed3;
+            is1To = 4;
+            matchGenSeed1 = genSeed4;
+          }
+        }
+        else
+        {
+          if ( deltaR12 < deltaR13 && deltaPt12 < deltaPt13 )
+          {
+            isMatchedSet1 = true;
+            is2To = 1;
+            matchGenSeed2 = genSeed1;
+            is3To = 2;
+            matchGenSeed3 =  genSeed2;
+          }
+          else if ( deltaR13 < deltaR12 && deltaPt13 < deltaPt12 )
+          {
+            isMatchedSet1 = true;
+            is3To = 1;
+            matchGenSeed3 = genSeed1;
+            is2To = 2;
+            matchGenSeed2 = genSeed2;
+          }
+
+
+          if ( deltaR31 < deltaR34 && deltaPt31 < deltaPt34)
+          {
+            isMatchedSet2 = true;
+            is1To = 3;
+            matchGenSeed1 = genSeed3;
+            is4To = 4;
+            matchGenSeed4 = genSeed4;
+          }
+          else if ( deltaR34 < deltaR31 && deltaPt34 < deltaPt31 )
+          {
+            isMatchedSet2 = true;
+            is4To = 3;
+            matchGenSeed4 = genSeed3;
+            is1To = 4;
+            matchGenSeed1 = genSeed4;
+          }
+        }
       }
 
+      int temp_array[4] = {pho1index, pho2index, pho3index, pho4index};
+      int is1ToIndex = 0, is2ToIndex = 0, is3ToIndex = 0, is4ToIndex = 0;
 
-
-			bool is1To1 = false;
-	  //cout << "deltaR11  "<<deltaR11<<"  deltaR12  "<<deltaR12<<"  deltaR21  "<<deltaR21<<"  deltaR22  "<<deltaR22<<endl;
-
-			if ( deltaR11 < deltaR12 && deltaPt11 < deltaPt12)
-			{
-				is1To1 = true;
-				isMatched = true;
-			}
-			else if(deltaR12 < deltaR11 && deltaPt12 < deltaPt11)
-			{
-				is1To1 = false;
-				isMatched = true;
-			}
-
-			if(isMatched)
+      for ( int i = 1 ; i < 5 ; i++ )
+      {
+        if ( is1To == i ) is1ToIndex = temp_array[i-1];
+        if ( is2To == i ) is2ToIndex = temp_array[i-1];
+        if ( is3To == i ) is3ToIndex = temp_array[i-1];
+        if ( is4To == i ) is4ToIndex = temp_array[i-1];
+      }
+      //
+    
+    
+			if( isMatchedSet1 == true && isMatchedSet2 == true )
 			{
 				pho1isDelayedPhoton = true;
 				pho2isDelayedPhoton = true;
 				pho3isDelayedPhoton = true;
 				pho4isDelayedPhoton = true;
 
-				pho1GenE = is1To1 ? gParticleE[pho1index] : gParticleE[pho2index];
-				pho1GenPt = is1To1 ? gParticlePt[pho1index] : gParticlePt[pho2index];
-				pho1GenEta = is1To1 ? gParticleEta[pho1index] : gParticleEta[pho2index];
-				pho1GenPhi = is1To1 ? gParticlePhi[pho1index] : gParticlePhi[pho2index];
+				pho1GenE = gParticleE[is1ToIndex];
+				pho1GenPt = gParticlePt[is1ToIndex];
+				pho1GenEta = gParticleEta[is1ToIndex];
+				pho1GenPhi = gParticlePhi[is1ToIndex];
 
-				pho2GenE = is1To1 ? gParticleE[pho2index] : gParticleE[pho1index];
-				pho2GenPt = is1To1 ? gParticlePt[pho2index] : gParticlePt[pho1index];
-				pho2GenEta = is1To1 ? gParticleEta[pho2index] : gParticleEta[pho1index];
-				pho2GenPhi = is1To1 ? gParticlePhi[pho2index] : gParticlePhi[pho1index];
+				pho2GenE = gParticleE[is2ToIndex];
+				pho2GenPt = gParticlePt[is2ToIndex];
+				pho2GenEta = gParticleEta[is2ToIndex];
+				pho2GenPhi = gParticlePhi[is2ToIndex];
 				
-				pho3GenE = is1To1 ? gParticleE[pho3index] : gParticleE[pho4index];
-				pho3GenPt = is1To1 ? gParticlePt[pho3index] : gParticlePt[pho4index];
-				pho3GenEta = is1To1 ? gParticleEta[pho3index] : gParticleEta[pho4index];
-				pho3GenPhi = is1To1 ? gParticlePhi[pho3index] : gParticlePhi[pho4index];
+				pho3GenE = gParticleE[is3ToIndex];
+				pho3GenPt = gParticlePt[is3ToIndex];
+				pho3GenEta = gParticleEta[is3ToIndex];
+				pho3GenPhi = gParticlePhi[is3ToIndex];
 
-				pho4GenE = is1To1 ? gParticleE[pho4index] : gParticleE[pho3index];
-				pho4GenPt = is1To1 ? gParticlePt[pho4index] : gParticlePt[pho3index];
-				pho4GenEta = is1To1 ? gParticleEta[pho4index] : gParticleEta[pho3index];
-				pho4GenPhi = is1To1 ? gParticlePhi[pho4index] : gParticlePhi[pho3index];
+				pho4GenE = gParticleE[is4ToIndex];
+				pho4GenPt = gParticlePt[is4ToIndex];
+				pho4GenEta = gParticleEta[is4ToIndex];
+				pho4GenPhi = gParticlePhi[is4ToIndex];
 
-				R1 = is1To1 ? pow(decay_x1*decay_x1 + decay_y1*decay_y1, 0.5) : pow(decay_x2*decay_x2 + decay_y2*decay_y2, 0.5) ;
-				R2 = is1To1 ? pow(decay_x2*decay_x2 + decay_y2*decay_y2, 0.5) : pow(decay_x1*decay_x1 + decay_y1*decay_y1, 0.5) ;
-				pho1_genVtxX = is1To1 ? decay_x1 : decay_x2;
-				pho2_genVtxX = is1To1 ? decay_x2 : decay_x1;
-				pho1_genVtxY = is1To1 ? decay_y1 : decay_y2;
-				pho2_genVtxY = is1To1 ? decay_y2 : decay_y1;
-				pho1_genVtxZ = is1To1 ? decay_z1 : decay_z2;
-				pho2_genVtxZ = is1To1 ? decay_z2 : decay_z1;
-				pho1_genVtxEta = is1To1 ? vec_decay1.Eta() : vec_decay2.Eta();
-				pho2_genVtxEta = is1To1 ? vec_decay2.Eta() : vec_decay1.Eta();
-				pho1_genVtxPhi = is1To1 ? vec_decay1.Phi() : vec_decay2.Phi();
-				pho2_genVtxPhi = is1To1 ? vec_decay2.Phi() : vec_decay1.Phi();
+				R1 = (is1To == 1 || is1To == 2) ? pow(decay_x1*decay_x1 + decay_y1*decay_y1, 0.5) : pow(decay_x2*decay_x2 + decay_y2*decay_y2, 0.5) ;
+				R2 = (is2To == 1 || is2To == 2) ? pow(decay_x1*decay_x1 + decay_y1*decay_y1, 0.5) : pow(decay_x2*decay_x2 + decay_y2*decay_y2, 0.5) ;
 
-				R3 = is1To1 ? pow(decay_x3*decay_x3 + decay_y3*decay_y3, 0.5) : pow(decay_x4*decay_x4 + decay_y4*decay_y4, 0.5) ;
-				R4 = is1To1 ? pow(decay_x4*decay_x4 + decay_y4*decay_y4, 0.5) : pow(decay_x3*decay_x3 + decay_y3*decay_y3, 0.5) ;
-				pho3_genVtxX = is1To1 ? decay_x3 : decay_x4;
-				pho4_genVtxX = is1To1 ? decay_x4 : decay_x3;
-				pho3_genVtxY = is1To1 ? decay_y3 : decay_y4;
-				pho4_genVtxY = is1To1 ? decay_y4 : decay_y3;
-				pho3_genVtxZ = is1To1 ? decay_z3 : decay_z4;
-				pho4_genVtxZ = is1To1 ? decay_z4 : decay_z3;
-				pho3_genVtxEta = is1To1 ? vec_decay3.Eta() : vec_decay4.Eta();
-				pho4_genVtxEta = is1To1 ? vec_decay4.Eta() : vec_decay3.Eta();
-				pho3_genVtxPhi = is1To1 ? vec_decay3.Phi() : vec_decay4.Phi();
-				pho4_genVtxPhi = is1To1 ? vec_decay4.Phi() : vec_decay3.Phi();
+				pho1_genVtxX = (is1To == 1 || is1To == 2) ? decay_x1 : decay_x2;
+				pho1_genVtxY = (is1To == 1 || is1To == 2) ? decay_y1 : decay_y2;
+				pho1_genVtxZ = (is1To == 1 || is1To == 2) ? decay_z1 : decay_z2;
+				pho1_genVtxEta = (is1To == 1 || is1To == 2) ? vec_decay1.Eta() : vec_decay2.Eta();
+				pho1_genVtxPhi = (is1To == 1 || is1To == 2) ? vec_decay1.Phi() : vec_decay2.Phi();
+                         
+				pho2_genVtxX = (is2To == 1 || is2To == 2) ? decay_x1 : decay_x2;
+				pho2_genVtxY = (is2To == 1 || is2To == 2) ? decay_y1 : decay_y2;
+				pho2_genVtxZ = (is2To == 1 || is2To == 2) ? decay_z1 : decay_z2;
+				pho2_genVtxEta = (is2To == 1 || is2To == 2) ? vec_decay1.Eta() : vec_decay2.Eta();
+				pho2_genVtxPhi = (is2To == 1 || is2To == 2) ? vec_decay1.Phi() : vec_decay2.Phi();
 
-				ZD1 = is1To1 ? decay_z1 : decay_z2 ;
-				ZD2 = is1To1 ? decay_z2 : decay_z1 ;
-				ZD3 = is1To1 ? decay_z3 : decay_z4 ;
-				ZD4 = is1To1 ? decay_z4 : decay_z3 ;
+				R3 = (is3To == 1 || is3To == 2) ? pow(decay_x1*decay_x1 + decay_y1*decay_y1, 0.5) : pow(decay_x2*decay_x2 + decay_y2*decay_y2, 0.5) ;
+				R4 = (is4To == 1 || is4To == 2) ? pow(decay_x1*decay_x1 + decay_y1*decay_y1, 0.5) : pow(decay_x2*decay_x2 + decay_y2*decay_y2, 0.5) ;
 
-				gen_eta1 = is1To1 ? genSeed1.Eta() : genSeed2.Eta();
-				gen_eta2 = is1To1 ? genSeed2.Eta() : genSeed1.Eta();
-				deltaR_pho1 = is1To1 ? deltaR11 : deltaR21;
-				deltaEta_pho1 = is1To1 ? deltaEta11 : deltaEta21;
-				deltaPhi_pho1 = is1To1 ? deltaPhi11 : deltaPhi21;
-				deltaPt_pho1 = is1To1 ? deltaPt11 : deltaPt21;
-				deltaR_pho2 = is1To1 ? deltaR22 : deltaR12;
-				deltaEta_pho2 = is1To1 ? deltaEta22 : deltaEta12;
-				deltaPhi_pho2 = is1To1 ? deltaPhi22 : deltaPhi12;
-				deltaPt_pho2 = is1To1 ? deltaPt22 : deltaPt12;
+				pho3_genVtxX = (is3To == 1 || is3To == 2) ? decay_x1 : decay_x2;
+				pho3_genVtxY = (is3To == 1 || is3To == 2) ? decay_y1 : decay_y2;
+				pho3_genVtxZ = (is3To == 1 || is3To == 2) ? decay_z1 : decay_z2;
+				pho3_genVtxEta = (is3To == 1 || is3To == 2) ? vec_decay1.Eta() : vec_decay2.Eta();
+				pho3_genVtxPhi = (is3To == 1 || is3To == 2) ? vec_decay1.Phi() : vec_decay2.Phi();
+
+				pho4_genVtxX = (is4To == 1 || is4To == 2) ? decay_x1 : decay_x2;
+				pho4_genVtxY = (is4To == 1 || is4To == 2) ? decay_y1 : decay_y2;
+				pho4_genVtxZ = (is4To == 1 || is4To == 2) ? decay_z1 : decay_z2;
+				pho4_genVtxEta = (is4To == 1 || is4To == 2) ? vec_decay1.Eta() : vec_decay2.Eta();
+				pho4_genVtxPhi = (is4To == 1 || is4To == 2) ? vec_decay1.Phi() : vec_decay2.Phi();
+
+				ZD1 = (is1To == 1 || is1To == 2) ? decay_z1 : decay_z2 ;
+				ZD2 = (is2To == 1 || is2To == 2) ? decay_z1 : decay_z2 ;
+				ZD3 = (is3To == 1 || is3To == 2) ? decay_z1 : decay_z2 ;
+				ZD4 = (is4To == 1 || is4To == 2) ? decay_z1 : decay_z2 ;
+
+				gen_eta1 = matchGenSeed1.Eta();
+				gen_eta2 = matchGenSeed2.Eta();;
+
+				deltaR_pho1 = matchGenSeed1.DeltaR(recoSeed1);
+				deltaEta_pho1 = recoSeed1.Eta() - matchGenSeed1.Eta();
+				deltaPhi_pho1 = deltaPhi(recoSeed1.Phi(), matchGenSeed1.Phi());
+				deltaPt_pho1 = fabs(pho1Pt - gParticlePt[is1ToIndex]);
+
+				deltaR_pho2 = matchGenSeed2.DeltaR(recoSeed2);
+				deltaEta_pho2 = recoSeed2.Eta() - matchGenSeed2.Eta();
+				deltaPhi_pho2 = deltaPhi(recoSeed2.Phi(), matchGenSeed2.Phi());
+				deltaPt_pho2 = fabs(pho2Pt - gParticlePt[is2ToIndex]);
+
+				gen_eta3 = matchGenSeed3.Eta();
+				gen_eta4 = matchGenSeed4.Eta();;
+
+				deltaR_pho3 = matchGenSeed3.DeltaR(recoSeed3);
+				deltaEta_pho3 = recoSeed3.Eta() - matchGenSeed3.Eta();
+				deltaPhi_pho3 = deltaPhi(recoSeed3.Phi(), matchGenSeed3.Phi());
+				deltaPt_pho3 = fabs(pho3Pt - gParticlePt[is3ToIndex]);
+
+				deltaR_pho4 = matchGenSeed4.DeltaR(recoSeed4);
+				deltaEta_pho4 = recoSeed4.Eta() - matchGenSeed4.Eta();
+				deltaPhi_pho4 = deltaPhi(recoSeed4.Phi(), matchGenSeed4.Phi());
+				deltaPt_pho4 = fabs(pho4Pt - gParticlePt[is4ToIndex]);
 
 				float massNeu = 1000.0;
-				//float p_neu1 = is1To1 ? (gParticlePt[neu1_index]*cosh(gParticleEta[neu1_index])) : (gParticlePt[neu2_index]*cosh(gParticleEta[neu2_index]) );
-				float p_neu1 = is1To1 ? pow(gParticlePx[neu1_index]*gParticlePx[neu1_index]+gParticlePy[neu1_index]*gParticlePy[neu1_index]+gParticlePz[neu1_index]*gParticlePz[neu1_index],0.5) : pow(gParticlePx[neu2_index]*gParticlePx[neu2_index]+gParticlePy[neu2_index]*gParticlePy[neu2_index]+gParticlePz[neu2_index]*gParticlePz[neu2_index],0.5);
-				//float p_neu2 = is1To1 ? (gParticlePt[neu2_index]*cosh(gParticleEta[neu2_index])) : (gParticlePt[neu1_index]*cosh(gParticleEta[neu1_index]) );
-				float p_neu2 = is1To1 ? pow(gParticlePx[neu2_index]*gParticlePx[neu2_index]+gParticlePy[neu2_index]*gParticlePy[neu2_index]+gParticlePz[neu2_index]*gParticlePz[neu2_index],0.5) : pow(gParticlePx[neu1_index]*gParticlePx[neu1_index]+gParticlePy[neu1_index]*gParticlePy[neu1_index]+gParticlePz[neu1_index]*gParticlePz[neu1_index],0.5);
+				float p_neu1 = (is1To == 1 || is1To == 2) ? pow(gParticlePx[neu1_index]*gParticlePx[neu1_index]+gParticlePy[neu1_index]*gParticlePy[neu1_index]+gParticlePz[neu1_index]*gParticlePz[neu1_index],0.5) : pow(gParticlePx[neu2_index]*gParticlePx[neu2_index]+gParticlePy[neu2_index]*gParticlePy[neu2_index]+gParticlePz[neu2_index]*gParticlePz[neu2_index],0.5);
+				float p_neu2 = (is1To == 1 || is1To == 2) ? pow(gParticlePx[neu1_index]*gParticlePx[neu1_index]+gParticlePy[neu1_index]*gParticlePy[neu1_index]+gParticlePz[neu1_index]*gParticlePz[neu1_index],0.5) : pow(gParticlePx[neu2_index]*gParticlePx[neu2_index]+gParticlePy[neu2_index]*gParticlePy[neu2_index]+gParticlePz[neu2_index]*gParticlePz[neu2_index],0.5);
+				float p_neu3 = (is1To == 1 || is1To == 2) ? pow(gParticlePx[neu1_index]*gParticlePx[neu1_index]+gParticlePy[neu1_index]*gParticlePy[neu1_index]+gParticlePz[neu1_index]*gParticlePz[neu1_index],0.5) : pow(gParticlePx[neu2_index]*gParticlePx[neu2_index]+gParticlePy[neu2_index]*gParticlePy[neu2_index]+gParticlePz[neu2_index]*gParticlePz[neu2_index],0.5);
+				float p_neu4 = (is1To == 1 || is1To == 2) ? pow(gParticlePx[neu1_index]*gParticlePx[neu1_index]+gParticlePy[neu1_index]*gParticlePy[neu1_index]+gParticlePz[neu1_index]*gParticlePz[neu1_index],0.5) : pow(gParticlePx[neu2_index]*gParticlePx[neu2_index]+gParticlePy[neu2_index]*gParticlePy[neu2_index]+gParticlePz[neu2_index]*gParticlePz[neu2_index],0.5);
 
 				TVector3 point_genPV(genVertexX,genVertexY,genVertexZ);
-				TVector3 point_decayV1(is1To1 ? decay_x1: decay_x2,is1To1 ? decay_y1: decay_y2, is1To1 ? decay_z1: decay_z2);
-				TVector3 point_decayV2(is1To1 ? decay_x2: decay_x1,is1To1 ? decay_y2: decay_y1, is1To1 ? decay_z2: decay_z1);
+				TVector3 point_decayV1((is1To == 1 || is1To == 2) ? decay_x1: decay_x2, (is1To == 1 || is1To == 2)? decay_y1: decay_y2, (is1To == 1 || is1To == 2) ? decay_z1: decay_z2);
+				TVector3 point_decayV2((is1To == 1 || is1To == 2) ? decay_x1: decay_x2, (is1To == 1 || is1To == 2)? decay_y1: decay_y2, (is1To == 1 || is1To == 2) ? decay_z1: decay_z2);
+				TVector3 point_decayV3((is1To == 1 || is1To == 2) ? decay_x1: decay_x2, (is1To == 1 || is1To == 2)? decay_y1: decay_y2, (is1To == 1 || is1To == 2) ? decay_z1: decay_z2);
+				TVector3 point_decayV4((is1To == 1 || is1To == 2) ? decay_x1: decay_x2, (is1To == 1 || is1To == 2)? decay_y1: decay_y2, (is1To == 1 || is1To == 2) ? decay_z1: decay_z2);
 
 				TOF_neu1 = (point_decayV1-point_genPV).Mag() / (SPEED_OF_LIGHT*p_neu1) * pow((pow(massNeu,2) + pow(p_neu1,2)),0.5);
 				TOF_neu2 = (point_decayV2-point_genPV).Mag() / (SPEED_OF_LIGHT*p_neu2) * pow((pow(massNeu,2) + pow(p_neu2,2)),0.5);
+				TOF_neu3 = (point_decayV3-point_genPV).Mag() / (SPEED_OF_LIGHT*p_neu3) * pow((pow(massNeu,2) + pow(p_neu3,2)),0.5);
+				TOF_neu4 = (point_decayV4-point_genPV).Mag() / (SPEED_OF_LIGHT*p_neu4) * pow((pow(massNeu,2) + pow(p_neu4,2)),0.5);
+
 				TOF_neu1_RF = TOF_neu1*massNeu*pow((pow(massNeu,2) + pow(p_neu1,2)),-0.5);
 				TOF_neu2_RF = TOF_neu2*massNeu*pow((pow(massNeu,2) + pow(p_neu2,2)),-0.5);
+				TOF_neu3_RF = TOF_neu3*massNeu*pow((pow(massNeu,2) + pow(p_neu3,2)),-0.5);
+				TOF_neu4_RF = TOF_neu4*massNeu*pow((pow(massNeu,2) + pow(p_neu4,2)),-0.5);
 
 				TOF_pho1 = (recoSeed1 - point_decayV1).Mag() / SPEED_OF_LIGHT ;
 				TOF_pho2 = (recoSeed2 - point_decayV2).Mag() / SPEED_OF_LIGHT ;
+				TOF_pho3 = (recoSeed3 - point_decayV3).Mag() / SPEED_OF_LIGHT ;
+				TOF_pho4 = (recoSeed4 - point_decayV4).Mag() / SPEED_OF_LIGHT ;
 
 				if(abs(genVertexTime) < 100.)
 				{
 					TOF_total1 = genVertexTime + TOF_neu1 + TOF_pho1 - recoSeed1.Mag() / SPEED_OF_LIGHT;
 					TOF_total1_genV = genVertexTime + TOF_neu1 + TOF_pho1 - (recoSeed1 - point_genPV).Mag() / SPEED_OF_LIGHT;
 					TOF_total2 = genVertexTime + TOF_neu2 + TOF_pho2 - recoSeed2.Mag() / SPEED_OF_LIGHT;
-				TOF_total2_genV = genVertexTime + TOF_neu2 + TOF_pho2 - (recoSeed2 - point_genPV).Mag() / SPEED_OF_LIGHT;
+				  TOF_total2_genV = genVertexTime + TOF_neu2 + TOF_pho2 - (recoSeed2 - point_genPV).Mag() / SPEED_OF_LIGHT;
+					TOF_total3 = genVertexTime + TOF_neu3 + TOF_pho3 - recoSeed3.Mag() / SPEED_OF_LIGHT;
+				  TOF_total3_genV = genVertexTime + TOF_neu3 + TOF_pho3 - (recoSeed3 - point_genPV).Mag() / SPEED_OF_LIGHT;
+					TOF_total4 = genVertexTime + TOF_neu4 + TOF_pho4 - recoSeed4.Mag() / SPEED_OF_LIGHT;
+				  TOF_total4_genV = genVertexTime + TOF_neu4 + TOF_pho4 - (recoSeed4 - point_genPV).Mag() / SPEED_OF_LIGHT;
 				}
 				else
 				{
@@ -2656,24 +2869,30 @@ mll = (lep1+lep2).M();
 					TOF_total1_genV = TOF_neu1 + TOF_pho1 - (recoSeed1 - point_genPV).Mag() / SPEED_OF_LIGHT;
 					TOF_total2 = TOF_neu2 + TOF_pho2 - recoSeed2.Mag() / SPEED_OF_LIGHT;
 					TOF_total2_genV = TOF_neu2 + TOF_pho2 - (recoSeed2 - point_genPV).Mag() / SPEED_OF_LIGHT;
+					TOF_total3 = TOF_neu3 + TOF_pho3 - recoSeed3.Mag() / SPEED_OF_LIGHT;
+					TOF_total3_genV = TOF_neu3 + TOF_pho3 - (recoSeed3 - point_genPV).Mag() / SPEED_OF_LIGHT;
+					TOF_total4 = TOF_neu4 + TOF_pho4 - recoSeed4.Mag() / SPEED_OF_LIGHT;
+					TOF_total4_genV = TOF_neu4 + TOF_pho4 - (recoSeed4 - point_genPV).Mag() / SPEED_OF_LIGHT;
 				}
 
 				pho1angle_xtal = recoSeed1.Angle(recoSeed1 - point_decayV1);
 				pho2angle_xtal = recoSeed2.Angle(recoSeed2 - point_decayV2);
+				pho3angle_xtal = recoSeed3.Angle(recoSeed3 - point_decayV3);
+				pho4angle_xtal = recoSeed4.Angle(recoSeed4 - point_decayV4);
 
 			}//if isMatched
 		}//if gen found
 	}//if !isData
 
 
-       //apply photon ID according to whether it's GED or OOT photon
+  //apply photon ID according to whether it's GED or OOT photon
 
-        pho1passIsoLoose_comboIso = pho1isStandardPhoton ? pho1passIsoLoose : pho1passIsoLoose_OOT;
-        pho1passIsoMedium_comboIso = pho1isStandardPhoton ? pho1passIsoMedium : pho1passIsoMedium_OOT;
-        pho1passIsoTight_comboIso = pho1isStandardPhoton ? pho1passIsoTight : pho1passIsoTight_OOT;
-        pho2passIsoLoose_comboIso = pho2isStandardPhoton ? pho2passIsoLoose : pho2passIsoLoose_OOT;
-        pho2passIsoMedium_comboIso = pho2isStandardPhoton ? pho2passIsoMedium : pho2passIsoMedium_OOT;
-        pho2passIsoTight_comboIso = pho2isStandardPhoton ? pho2passIsoTight : pho2passIsoTight_OOT;
+  pho1passIsoLoose_comboIso = pho1isStandardPhoton ? pho1passIsoLoose : pho1passIsoLoose_OOT;
+  pho1passIsoMedium_comboIso = pho1isStandardPhoton ? pho1passIsoMedium : pho1passIsoMedium_OOT;
+  pho1passIsoTight_comboIso = pho1isStandardPhoton ? pho1passIsoTight : pho1passIsoTight_OOT;
+  pho2passIsoLoose_comboIso = pho2isStandardPhoton ? pho2passIsoLoose : pho2passIsoLoose_OOT;
+  pho2passIsoMedium_comboIso = pho2isStandardPhoton ? pho2passIsoMedium : pho2passIsoMedium_OOT;
+  pho2passIsoTight_comboIso = pho2isStandardPhoton ? pho2passIsoTight : pho2passIsoTight_OOT;
 
 	pho1passHoverELoose = pho1isStandardPhoton ? ((abs(pho1Eta)<1.4442) ? (pho1HoverE < 0.04596) : (pho1HoverE < 0.0590)) : true;
 	pho1passHoverEMedium = pho1isStandardPhoton ? ((abs(pho1Eta)<1.4442) ? (pho1HoverE < 0.02197) : (pho1HoverE < 0.0326)) : true;
@@ -2698,13 +2917,51 @@ mll = (lep1+lep2).M();
 	pho2passSmajorMedium  =  pho2isStandardPhoton ?  true : (pho2Smajor < 1.5);
 	pho2passSmajorTight  =  pho2isStandardPhoton ?  true : (pho2Smajor < 1.3);
 
-    pho1passSminorLoose  =  pho1isStandardPhoton ?  true : (pho1Sminor < 0.8);
+  pho1passSminorLoose  =  pho1isStandardPhoton ?  true : (pho1Sminor < 0.8);
 	pho1passSminorMedium  =  pho1isStandardPhoton ?  true : (pho1Sminor < 0.6);
 	pho1passSminorTight  =  pho1isStandardPhoton ?  true : (pho1Sminor < 0.4);
 
 	pho2passSminorLoose  =  pho2isStandardPhoton ?  true : (pho2Sminor < 0.8);
 	pho2passSminorMedium  =  pho2isStandardPhoton ?  true : (pho2Sminor < 0.6);
 	pho2passSminorTight  =  pho2isStandardPhoton ?  true : (pho2Sminor < 0.4);
+
+  pho3passIsoLoose_comboIso = pho3isStandardPhoton ? pho3passIsoLoose : pho3passIsoLoose_OOT;
+  pho3passIsoMedium_comboIso = pho3isStandardPhoton ? pho3passIsoMedium : pho3passIsoMedium_OOT;
+  pho3passIsoTight_comboIso = pho3isStandardPhoton ? pho3passIsoTight : pho3passIsoTight_OOT;
+  pho4passIsoLoose_comboIso = pho4isStandardPhoton ? pho4passIsoLoose : pho4passIsoLoose_OOT;
+  pho4passIsoMedium_comboIso = pho4isStandardPhoton ? pho4passIsoMedium : pho4passIsoMedium_OOT;
+  pho4passIsoTight_comboIso = pho4isStandardPhoton ? pho4passIsoTight : pho4passIsoTight_OOT;
+
+	pho3passHoverELoose = pho3isStandardPhoton ? ((abs(pho3Eta)<1.4442) ? (pho3HoverE < 0.04596) : (pho3HoverE < 0.0590)) : true;
+	pho3passHoverEMedium = pho3isStandardPhoton ? ((abs(pho3Eta)<1.4442) ? (pho3HoverE < 0.02197) : (pho3HoverE < 0.0326)) : true;
+	pho3passHoverETight = pho3isStandardPhoton ? ((abs(pho3Eta)<1.4442) ? (pho3HoverE < 0.02148) : (pho3HoverE < 0.0321)) : true;
+
+	pho4passHoverELoose = pho4isStandardPhoton ? ((abs(pho4Eta)<1.4442) ? (pho4HoverE < 0.04596) : (pho4HoverE < 0.0590)) : true;
+	pho4passHoverEMedium = pho4isStandardPhoton ? ((abs(pho4Eta)<1.4442) ? (pho4HoverE < 0.02197) : (pho4HoverE < 0.0326)) : true;
+	pho4passHoverETight = pho4isStandardPhoton ? ((abs(pho4Eta)<1.4442) ? (pho4HoverE < 0.02148) : (pho4HoverE < 0.0321)) : true;
+
+	pho3passSigmaIetaIetaLoose = pho3SigmaIetaIeta < 0.022;
+	pho3passSigmaIetaIetaMedium = pho3SigmaIetaIeta < 0.019;
+	pho3passSigmaIetaIetaTight = pho3SigmaIetaIeta < 0.014;
+	pho4passSigmaIetaIetaLoose = pho4SigmaIetaIeta < 0.022;
+	pho4passSigmaIetaIetaMedium = pho4SigmaIetaIeta < 0.019;
+	pho4passSigmaIetaIetaTight = pho4SigmaIetaIeta < 0.014;
+
+	pho3passSmajorLoose  =  pho3isStandardPhoton ?  true : (pho3Smajor < 1.7);
+	pho3passSmajorMedium  =  pho3isStandardPhoton ?  true : (pho3Smajor < 1.5);
+	pho3passSmajorTight  =  pho3isStandardPhoton ?  true : (pho3Smajor < 1.3);
+
+	pho4passSmajorLoose  =  pho4isStandardPhoton ?  true : (pho4Smajor < 1.7);
+	pho4passSmajorMedium  =  pho4isStandardPhoton ?  true : (pho4Smajor < 1.5);
+	pho4passSmajorTight  =  pho4isStandardPhoton ?  true : (pho4Smajor < 1.3);
+
+  pho3passSminorLoose  =  pho3isStandardPhoton ?  true : (pho3Sminor < 0.8);
+	pho3passSminorMedium  =  pho3isStandardPhoton ?  true : (pho3Sminor < 0.6);
+	pho3passSminorTight  =  pho3isStandardPhoton ?  true : (pho3Sminor < 0.4);
+
+	pho4passSminorLoose  =  pho4isStandardPhoton ?  true : (pho4Sminor < 0.8);
+	pho4passSminorMedium  =  pho4isStandardPhoton ?  true : (pho4Sminor < 0.6);
+	pho4passSminorTight  =  pho4isStandardPhoton ?  true : (pho4Sminor < 0.4);
 
 	outputTree->Fill();
 
