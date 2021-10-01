@@ -36,47 +36,32 @@ double timecorr_smear_bb = 2.0*289.1*289.1 - 2.0*168.8*168.8;
 
 #define _phodebug 0
 
-TVector3 DelayedResonantPhoton::intersectPoint(float x0,float y0,float z0,float px,float py,float pz,float R)
+TVector3 DelayedResonantPhoton::intersectPoint(float x0,float y0,float z0,float px,float py,float pz,float R, float L)
 {
-  TVector3 sol;
+  TVector3 sol(0, 0, 999);
 
+  float t1, t2;
 
-  float x1,y1,z1;
-  float x2,y2,z2;
+  if ( pow(x0*x0+y0*y0,0.5) > R || z0 > L ) return sol;
 
-  if((px*px*py*py*R*R + py*py*py*py*R*R - py*py*py*py*x0*x0 + 2.0*px*py*py*py*x0*y0 - px*px*py*py*y0*y0) > 0.0 )
+  t1 = (-1.*(x0*px + y0*py) + pow((px*px + py*py)*(R*R) - pow(x0*py - y0*px,2),0.5)) / (px*px + py*py);
+  t2 = (-1.*(x0*px + y0*py) - pow((px*px + py*py)*(R*R) - pow(x0*py - y0*px,2),0.5)) / (px*px + py*py);
+
+  t1 = t1 > 0 ? t1 : t2;
+  t2 = (L - z0)/pz;
+
+  if ( t1 > t2 )
   {
-  y1 = (-px*py*x0 + px*px*y0)/(px*px+py*py) - pow((px*px*py*py*R*R + py*py*py*py*R*R - py*py*py*py*x0*x0 + 2.0*px*py*py*py*x0*y0 - px*px*py*py*y0*y0),0.5) / (px*px+py*py);
-  x1 =  x0 + (px/py) * (y1-y0);
-  z1 =  z0 + (pz/py) * (y1-y0);
-
-  y2 = (-px*py*x0 + px*px*y0)/(px*px+py*py) + pow((px*px*py*py*R*R + py*py*py*py*R*R - py*py*py*py*x0*x0 + 2.0*px*py*py*py*x0*y0 - px*px*py*py*y0*y0),0.5) / (px*px+py*py);
-  x2 =  x0 + (px/py) * (y2-y0);
-  z2 =  z0 + (pz/py) * (y2-y0);
+      sol.SetXYZ(x0 + t2*px, y0 + t2*py, z0 + t2*pz);
+  }
+  else if ( t2 > t1 )
+  {
+      sol.SetXYZ(x0 + t1*px, y0 + t1*py, z0 + t1*pz);
   }
 
-  else
-  {
-   x1=0,y1=0,z1=0,x2=0,y2=0,z2=0;
-  }
-
-
-  if( (z1-z0)*pz > 0.0 )
-  {
-	sol.SetXYZ(x1,y1,z1);
-  }
-
-  else if( (z2-z0)*pz > 0.0 )
-  {
-	sol.SetXYZ(x2,y2,z2);
-  }
-
-  else
-  {
-	sol.SetXYZ(0,0,0);
-  }
   return sol;
-};
+}
+
 
 
 float DelayedResonantPhoton::getADCToGeV( uint run, int isFromEB) {
@@ -2441,23 +2426,23 @@ mll = (lep1+lep2).M();
 			float px1 = (gParticlePx[pho1index]) / norm1;
 			float py1 = (gParticlePy[pho1index]) / norm1;
 			float pz1 = (gParticlePz[pho1index]) / norm1;
-			genSeed1 = intersectPoint(decay_x1, decay_y1, decay_z1, px1, py1, pz1, EB_R); // using intersection function written above, radius as 129.7 cm
+			genSeed1 = intersectPoint(decay_x1, decay_y1, decay_z1, px1, py1, pz1, EB_R, EE_Z); // using intersection function written above, radius as 129.7 cm
 			float norm2 = pow((pow(gParticlePx[pho2index],2)+pow(gParticlePy[pho2index],2)+pow(gParticlePz[pho2index],2)),0.5);
 			float px2 = (gParticlePx[pho2index]) / norm2;
 			float py2 = (gParticlePy[pho2index]) / norm2;
 			float pz2 = (gParticlePz[pho2index]) / norm2;
-			genSeed2 = intersectPoint(decay_x1, decay_y1, decay_z1, px2, py2, pz2, EB_R); // using intersection function written above, radius as 129 cm
+			genSeed2 = intersectPoint(decay_x1, decay_y1, decay_z1, px2, py2, pz2, EB_R, EE_Z); // using intersection function written above, radius as 129 cm
 			
 			float norm3 = pow((pow(gParticlePx[pho3index],4)+pow(gParticlePy[pho3index],4)+pow(gParticlePz[pho3index],4)),0.5);
 			float px3 = (gParticlePx[pho3index]) / norm3;
 			float py3 = (gParticlePy[pho3index]) / norm3;
 			float pz3 = (gParticlePz[pho3index]) / norm3;
-			genSeed3 = intersectPoint(decay_x2, decay_y2, decay_z2, px3, py3, pz3, EB_R); // using intersection function written above, radius as 349.7 cm
+			genSeed3 = intersectPoint(decay_x2, decay_y2, decay_z2, px3, py3, pz3, EB_R, EE_Z); // using intersection function written above, radius as 349.7 cm
 			float norm4 = pow((pow(gParticlePx[pho4index],4)+pow(gParticlePy[pho4index],4)+pow(gParticlePz[pho4index],4)),0.5);
 			float px4 = (gParticlePx[pho4index]) / norm4;
 			float py4 = (gParticlePy[pho4index]) / norm4;
 			float pz4 = (gParticlePz[pho4index]) / norm4;
-			genSeed4 = intersectPoint(decay_x2, decay_y2, decay_z2, px4, py4, pz4, EB_R); // using intersection function written above, radius as 349 cm
+			genSeed4 = intersectPoint(decay_x2, decay_y2, decay_z2, px4, py4, pz4, EB_R, EE_Z); // using intersection function written above, radius as 349 cm
 
       TVector3 recoSeed1(pho1SeedX, pho1SeedY, pho1SeedZ);
       TVector3 recoSeed2(pho2SeedX, pho2SeedY, pho2SeedZ);

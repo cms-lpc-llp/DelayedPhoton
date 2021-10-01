@@ -25,7 +25,7 @@ class DelayedResonantPhoton: public RazorAnalyzer {
         DelayedResonantPhoton(TTree *tree=0): RazorAnalyzer(tree) { }
         void Analyze(bool isData, int option, string outputFileName, string label);
         float getADCToGeV( uint run, int isEBOrEE);
-        TVector3 intersectPoint (float x0,float y0,float z0,float px,float py,float pz,float R);
+        TVector3 intersectPoint (float x0,float y0,float z0,float px,float py,float pz,float R, float L);
         float getTimeCalibConstant(TTree *tree, vector <uint> & start_run, vector <uint> & end_run, uint run, uint detID);
 };
 
